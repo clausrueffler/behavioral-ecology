@@ -9,7 +9,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Exercise: Games Plants Play {.tabset}
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+<!-- # Exercise: Games Plants Play {.tabset} -->
 
 ## Evolution in the modified model
 
@@ -41,8 +45,12 @@ P.L.flex <- function(h.1, h.2) {
 }
 
 P.L.mean <- 0.25
-P.L.var <- 0.2 # parameter determining the maximum difference in P.L between shaded completely and maximally sun exposed
-gamma <- 10 # parameter determining how fast P.L increases with increased shading from a competitor
+# next the parameter determining the maximum difference in P.L between
+# completely shaded and maximally sun exposed
+P.L.var <- 0.2
+# next the parameter determining how fast P.L increases with increased
+# shading from a competitor
+gamma <- 10 
 
 curve(P.L.flex(x, h.2 = 0.5), from = 0, to = 1, xlab = expression("height "* h[1]), ylab = expression("minimum photosynthesis, " * P[L](h[1], h[2] * "=0.5")))
 ```
@@ -82,7 +90,9 @@ fitness <- function(h.m, h.r) {
 
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), fitness)
 par(pty="s")
-filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", xlab = expression("height " *h[1]), ylab = expression("height " *h[2]), las = 2)
+filled.contour(t(PIP), levels = c(-1, 0, 1), las = 2, main = "PIP",
+               xlab = expression("height " *h[1]),
+               ylab = expression("height " *h[2]))
 
 fitness.flipped.roles <- function(h.m, h.r) {
   w.2(h.r, h.m) - w.2(h.m, h.m)
@@ -91,7 +101,9 @@ fitness.flipped.roles <- function(h.m, h.r) {
 PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), fitness.flipped.roles)
 
 par(pty="s")
-filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), main = "PIP.mirrored", xlab = expression("height " *h[2]), ylab = expression("height " *h[1]), las = 2)
+filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), las = 2, main = "PIP.mirrored",
+               xlab = expression("height " *h[2]),
+               ylab = expression("height " *h[1]))
 
 TEP <- ifelse(PIP > 0 & PIP.mirrored > 0, 1, ifelse(PIP < 0 & PIP.mirrored < 0, -1, 0))
 

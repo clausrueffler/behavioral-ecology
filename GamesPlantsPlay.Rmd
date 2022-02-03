@@ -9,7 +9,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Exercise: Games Plants Play {.tabset}
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+<!-- # Exercise: Games Plants Play {.tabset} -->
 
 ## A simple model for plant growth
 
@@ -25,13 +29,13 @@ $$
 
 where the parameter $\alpha$ determines how fast *f* increases with *h*. To explore this function we can plot it for different values of $\alpha$. First, let us define the function *f(h)* in R:
 
-```{r}
+```{r klippy, r}
 f <- function(h) {
   1 - h^alpha
 }
 ```
 
-Next, let us plot is for several different values of the parameter $\alpha$:
+Next, let us plot $f(h)$ for several different values of the parameter $\alpha$:
 
 ```{r}
 alpha <- 2
@@ -42,7 +46,8 @@ alpha <- 5
 curve(f(x), from = 0, to = 1, col ="green", add = TRUE)
 legend("topright", legend = c(expression(paste(alpha, " = ", 2)),
                               expression(paste(alpha, " = ", 3)),
-                              expression(paste(alpha, " = ", 5))), lty =1, col = c("blue", "orange", "green"))
+                              expression(paste(alpha, " = ", 5))),
+       lty =1, col = c("blue", "orange", "green"))
 ```
 
 Thus, the larger $\alpha$, the slower does *f* decrease with plant height *h*. Said differently, small values of $\alpha$ mean that growing taller has immediate large costs for leaf biomass, while large values allow the plant to grow quite tall quite easily before the full cost kicks in. For example, a plant species whose structural tissue is mechanically very stable will need less of it, and it will have a high value for $\alpha$ as a consequence. One might therefore interpret $\alpha$ as a kind of ‘efficiency’ or ‘stability’ of the structural tissue. However, regardless of $\alpha$ there are no resources left for leaves to grow when *h* reaches the maximum value *h=1*.
@@ -63,7 +68,9 @@ g <- function(h.1, h.2) {
 beta <- 10
 P.L <- 0.2
 P.H <- 1
-curve(g(x, h.2 = 0.5), from = 0, to = 1, xlab = expression("plant height, " * h[1]), ylim = c(0,1), ylab = expression("photosythesis/leaf, " * g(h[1], h[2])), col = "blue")
+curve(g(x, h.2 = 0.5), from = 0, to = 1, ylim = c(0,1), col = "blue",
+      xlab = expression("plant height, " * h[1]),
+      ylab = expression("photosythesis/leaf, " * g(h[1], h[2])))
 
 P.L <- 0.2
 P.H <- 1
@@ -74,9 +81,10 @@ P.L <- 0.4
 P.H <- 0.8
 beta <- 10
 curve(g(x, h.2 = 0.5), from = 0, to = 1, add = TRUE, col = "green")
-legend("topleft", legend = c(expression(paste(beta, " = 10, ", I[L], " = 0.2, ", I[H], " = 1")),
-                              expression(paste(beta, " = 5, ", I[L], " = 0.2, ", I[H], " = 1")),
-                              expression(paste(beta, " = 10, ", I[L], " = 0.4, ", I[H], " = 0.8"))), lty =1, col = c("blue", "orange", "green"))
+legend("topleft", lty =1, col = c("blue", "orange", "green"),
+       legend = c(expression(paste(beta, " = 10, ", I[L], " = 0.2, ", I[H], " = 1")),
+                  expression(paste(beta, " = 5, ", I[L], " = 0.2, ", I[H], " = 1")),
+                  expression(paste(beta, " = 10, ", I[L], " = 0.4, ", I[H], " = 0.8"))))
 ```
 
 The shape of the function is S-shaped as a function of the height $h_1$ of the focal plant. As $h_1$ approaches 0, the value of $g(h_1)$ approaches the value of $P_L$. Thus, $P_L$ can be interpreted as the amount of photosynthesis of a plant without stem that is maximally shaded by the other plant with height $h_2=0.5$. On the other end, as $h_1$ approaches 1, the value of $g(h_1)$ approaches the value of $P_H$. Thus, $P_H$ can be interpreted as the amount of photosynthesis of a plant with a stem of maximum length that experience no shading from the other plant. If both plants are equally high, $h_1=0.5=h_2$, then $g(h)$ is eaxtly halfway between $P_L$ and $P_H$.
@@ -146,7 +154,10 @@ In conclusion, if plant 2 plays strategy $h_2=0.5$, then plant 1 maximizes its p
 best.response.curve <- sapply(seq(0, 1, 0.01), best.response)
 
 par(pty="s")
-plot(seq(0, 1, 0.01), best.response.curve, type = "l", xlim = c(0,1), ylim = c(0,1), asp = 1, xlab = expression("height of plant 1, " * h[1] ), ylab = expression("height of plant 2, " * h[2] ))
+plot(seq(0, 1, 0.01), best.response.curve,
+     type = "l", xlim = c(0,1), ylim = c(0,1), asp = 1,
+     xlab = expression("height of plant 1, " * h[1] ),
+     ylab = expression("height of plant 2, " * h[2] ))
 lines(best.response.curve, seq(0, 1, 0.01), type = "l", lty = 2)
 legend("bottomright", legend = c("best resp. to 1", "best resp. to 2"), lty = c(1, 2)) 
 ```
