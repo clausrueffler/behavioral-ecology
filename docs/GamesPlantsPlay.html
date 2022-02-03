@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Games Plants Play</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Game Theory</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Games plants play
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./GamesPlantsPlay.html">1. The basic plant game</a>
+    </li>
+    <li>
+      <a href="./Evolution1.html">2. Evolutionary dynamics</a>
+    </li>
+    <li>
+      <a href="./Evolution2.html">3. The modified plant game</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<div id="exercise-games-plants-play" class="section level1 tabset">
+<h1>Exercise: Games Plants Play</h1>
+<div id="a-simple-model-for-plant-growth" class="section level2">
+<h2>A simple model for plant growth</h2>
+<p>Here, we follow re-analyse the model Hanna Kokko desribes in Chapter 6 of her book <em>Modelling for Field Biologists</em>. This model asks: Why do plants invest energy into growing a stem instead of investing all energy into leaf biomass?</p>
+<p>Kokko assumes that the fitness of a plant is determined by two factors: firstly, how much leaf tissue there is in the plant (denoted <em>f</em> ), and, secondly, how much each leaf is able to photosynthesize (denoted <em>g</em>). The amount of leaf tissue, <em>f</em>, can be expressed as the fraction of the plant’s above-ground biomass that is not ‘wasted’ on nonphotosynthesizing tissue such as the stem. Leaf tissue is important because a plant’s photo-synthesis depends completely on this tissue, and everything else such as building good roots for survival, or forming seeds or fruit for repro- duction, is ultimately limited by the amount of photosynthesis performed by the leaves. We make the simple assumption that the more photosynthesis, the more there will eventually be seeds or pollen a plant is able to produce. Therefore we can consider a plant’s fitness to be proportional to the product <em>fg</em>.</p>
+<p>The next step is to how plant height <em>h</em> affects <em>f</em> and <em>g</em>. Note that there seems to be a maximum for plant height around 100 m because plants ultimately depend on capillary action for getting water to the leaves, and gravity increasingly hinders this process at great vertical distances. So, <em>f</em> and <em>g</em> should be functions of <em>h</em>. First, <em>f</em> should be a monotonically decreasing function of <em>h</em> since more and more energy is invested into the growth of a stem. Kokkos suggest the functional</p>
+<p><span class="math display">\[
+f(h)=1-h^\alpha,
+\]</span></p>
+<p>where the parameter <span class="math inline">\(\alpha\)</span> determines how fast <em>f</em> increases with <em>h</em>. To explore this function we can plot it for different values of <span class="math inline">\(\alpha\)</span>. First, let us define the function <em>f(h)</em> in R:</p>
+<pre class="r"><code>f &lt;- function(h) {
+  1 - h^alpha
+}</code></pre>
+<p>Next, let us plot is for several different values of the parameter <span class="math inline">\(\alpha\)</span>:</p>
+<pre class="r"><code>alpha &lt;- 2
+curve(f(x), from = 0, to = 1, col =&quot;blue&quot;, xlab = &quot;plant height&quot;, ylab = &quot;proportion of leaf tissue&quot;)
+alpha &lt;- 3
+curve(f(x), from = 0, to = 1, col =&quot;orange&quot;, add = TRUE)
+alpha &lt;- 5
+curve(f(x), from = 0, to = 1, col =&quot;green&quot;, add = TRUE)
+legend(&quot;topright&quot;, legend = c(expression(paste(alpha, &quot; = &quot;, 2)),
+                              expression(paste(alpha, &quot; = &quot;, 3)),
+                              expression(paste(alpha, &quot; = &quot;, 5))), lty =1, col = c(&quot;blue&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
+<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Thus, the larger <span class="math inline">\(\alpha\)</span>, the slower does <em>f</em> decrease with plant height <em>h</em>. Said differently, small values of <span class="math inline">\(\alpha\)</span> mean that growing taller has immediate large costs for leaf biomass, while large values allow the plant to grow quite tall quite easily before the full cost kicks in. For example, a plant species whose structural tissue is mechanically very stable will need less of it, and it will have a high value for <span class="math inline">\(\alpha\)</span> as a consequence. One might therefore interpret <span class="math inline">\(\alpha\)</span> as a kind of ‘efficiency’ or ‘stability’ of the structural tissue. However, regardless of <span class="math inline">\(\alpha\)</span> there are no resources left for leaves to grow when <em>h</em> reaches the maximum value <em>h=1</em>.</p>
+<p>The shape of the function <em>g(h)</em> is more complicated because photosynthesis depends on the amount of light falling on a leaf, which depends on how high the leaf is situated relative to the leaves of other plants around. We here follow the same simplifying assumption made by Kokko and assume that the amount of light on the leaves of a focal plant with height <span class="math inline">\(h_1\)</span> is affected by the height <span class="math inline">\(h_2\)</span> of its ‘neighbour’, limiting the number of players to two. The amount of sunlight for the focal plant is then assumed to depend on the height difference between the two plants, <span class="math inline">\(g(h_1-h_2)\)</span>. Kokko suggest the following function</p>
+<p><span class="math display">\[
+g(h_1, h_2)=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h_1 - h_2)\right)}.
+\]</span></p>
+<p>This function looks rather complicated. To beter understand it is useful to plot it:</p>
+<pre class="r"><code>g &lt;- function(h.1, h.2) {
+  P.L + (P.H - P.L)/(1 + exp(-beta*(h.1 - h.2)))
+}
+  
+beta &lt;- 10
+P.L &lt;- 0.2
+P.H &lt;- 1
+curve(g(x, h.2 = 0.5), from = 0, to = 1, xlab = expression(&quot;plant height, &quot; * h[1]), ylim = c(0,1), ylab = expression(&quot;photosythesis/leaf, &quot; * g(h[1], h[2])), col = &quot;blue&quot;)
+
+P.L &lt;- 0.2
+P.H &lt;- 1
+beta &lt;- 5
+curve(g(x, h.2 = 0.5), from = 0, to = 1, add = TRUE, col = &quot;orange&quot;)
+
+P.L &lt;- 0.4
+P.H &lt;- 0.8
+beta &lt;- 10
+curve(g(x, h.2 = 0.5), from = 0, to = 1, add = TRUE, col = &quot;green&quot;)
+legend(&quot;topleft&quot;, legend = c(expression(paste(beta, &quot; = 10, &quot;, I[L], &quot; = 0.2, &quot;, I[H], &quot; = 1&quot;)),
+                              expression(paste(beta, &quot; = 5, &quot;, I[L], &quot; = 0.2, &quot;, I[H], &quot; = 1&quot;)),
+                              expression(paste(beta, &quot; = 10, &quot;, I[L], &quot; = 0.4, &quot;, I[H], &quot; = 0.8&quot;))), lty =1, col = c(&quot;blue&quot;, &quot;orange&quot;, &quot;green&quot;))</code></pre>
+<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>The shape of the function is S-shaped as a function of the height <span class="math inline">\(h_1\)</span> of the focal plant. As <span class="math inline">\(h_1\)</span> approaches 0, the value of <span class="math inline">\(g(h_1)\)</span> approaches the value of <span class="math inline">\(P_L\)</span>. Thus, <span class="math inline">\(P_L\)</span> can be interpreted as the amount of photosynthesis of a plant without stem that is maximally shaded by the other plant with height <span class="math inline">\(h_2=0.5\)</span>. On the other end, as <span class="math inline">\(h_1\)</span> approaches 1, the value of <span class="math inline">\(g(h_1)\)</span> approaches the value of <span class="math inline">\(P_H\)</span>. Thus, <span class="math inline">\(P_H\)</span> can be interpreted as the amount of photosynthesis of a plant with a stem of maximum length that experience no shading from the other plant. If both plants are equally high, <span class="math inline">\(h_1=0.5=h_2\)</span>, then <span class="math inline">\(g(h)\)</span> is eaxtly halfway between <span class="math inline">\(P_L\)</span> and <span class="math inline">\(P_H\)</span>.</p>
+<p>Now we have everything in place to look at the payoff for a plant with height <span class="math inline">\(h_1\)</span> when competing against a plant with height <span class="math inline">\(h_2\)</span>, denoted <span class="math inline">\(w(h_1, h_2)\)</span>. The payoff for a plant with height <span class="math inline">\(h_2\)</span> competing against a plant with height <span class="math inline">\(h_1\)</span> is denoted by reversing the order of the arguments in the payoff function <span class="math inline">\(w\)</span>.</p>
+<p><span class="math display">\[
+\begin{align}
+w(h_1, h_2) &amp; = f(h_1)g(h_1, h_2)\\
+w(h_2, h_1) &amp; = f(h_2)g(h_2, h_1)
+\end{align}
+\]</span></p>
+<p>Next we reproduce the pay-off matrix shown in Table 6.1 Kokko (2006). First, we define the functions for these pay-offs.</p>
+<pre class="r"><code>w.h.1.h.2 &lt;- function(h.1, h.2) {
+  f(h.1) * g(h.1, h.2)
+}
+
+w.h.2.h.1 &lt;- function(h.2, h.1) {
+  f(h.2) * g(h.2, h.1)
+}</code></pre>
+<p>Next, we compute the entries in the pay-off matrix using exactly the same parameter values as in Kokko (2006).</p>
+<pre class="r"><code>alpha &lt;- 3
+beta &lt;- 5
+h.2 &lt;- 0.5
+P.L &lt;- 0.25
+P.H &lt;- 1</code></pre>
+<p>Payoff to plant with height <span class="math inline">\(h_1\)</span> (first number in the matrix in Kokko).</p>
+<pre class="r"><code>round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), w.h.1.h.2), digits = 3)</code></pre>
+<pre><code>##       [,1]  [,2]  [,3]  [,4]
+## [1,] 0.625 0.369 0.276 0.255
+## [2,] 0.848 0.602 0.355 0.266
+## [3,] 0.686 0.620 0.440 0.260
+## [4,] 0.000 0.000 0.000 0.000</code></pre>
+<p>Payoff to plant with height <span class="math inline">\(h_2\)</span> (second number in the matrix in Kokko).</p>
+<pre class="r"><code>round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), w.h.2.h.1), digits = 3)</code></pre>
+<pre><code>##       [,1]  [,2]  [,3]  [,4]
+## [1,] 0.625 0.369 0.276 0.255
+## [2,] 0.848 0.602 0.355 0.266
+## [3,] 0.686 0.620 0.440 0.260
+## [4,] 0.000 0.000 0.000 0.000</code></pre>
+<p>The next step by Hanna Kokko is to ask about the <em>best response</em> of one plant to a given strategy by the other plant, that is, the height that maximizes the pay-off given a certain height by the competing plant. Let us do this by allowing any height, not just a height from a set of four. Thus, we aim at immediately reproducing figure 6.4(b) in Kokko (2006).</p>
+<p>First, let us plot the pay-off for all possible choices of <span class="math inline">\(h_1\)</span> given that <span class="math inline">\(h_2=0.5\)</span>. The strategy that corresponds to the maximum of this curve is the optimal response <span class="math inline">\(h_1\)</span> given <span class="math inline">\(h_2\)</span>.</p>
+<pre class="r"><code>curve(w.h.1.h.2(x, h.2), from = 0, to = 1, xlab = expression(&quot;height &quot;* h[1]), ylab = expression(&quot;payoff &quot; * w(h[1], h[2] * &quot;=0.5&quot;)))</code></pre>
+<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>In the next step we find the value of <span class="math inline">\(h_1\)</span> that results in the highest possible pay-off <span class="math inline">\(w(h_1, h_2)\)</span>.</p>
+<pre class="r"><code>best.response &lt;- function(h.2) {
+  optimize(w.h.1.h.2, interval=c(0, 1), maximum = TRUE, h.2)$maximum
+}
+
+best.response(h.2 = 0.5)</code></pre>
+<pre><code>## [1] 0.5839456</code></pre>
+<p>In conclusion, if plant 2 plays strategy <span class="math inline">\(h_2=0.5\)</span>, then plant 1 maximizes its pay-off by playing <span class="math inline">\(h_1=0.58\)</span>. To obtain the best response curve, perform the computation above for all values of <span class="math inline">\(h_2\)</span> between 0 and 1. Next we repeat the same procedure from the perspective plant 2.</p>
+<pre class="r"><code>best.response.curve &lt;- sapply(seq(0, 1, 0.01), best.response)
+
+par(pty=&quot;s&quot;)
+plot(seq(0, 1, 0.01), best.response.curve, type = &quot;l&quot;, xlim = c(0,1), ylim = c(0,1), asp = 1, xlab = expression(&quot;height of plant 1, &quot; * h[1] ), ylab = expression(&quot;height of plant 2, &quot; * h[2] ))
+lines(best.response.curve, seq(0, 1, 0.01), type = &quot;l&quot;, lty = 2)
+legend(&quot;bottomright&quot;, legend = c(&quot;best resp. to 1&quot;, &quot;best resp. to 2&quot;), lty = c(1, 2)) </code></pre>
+<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>What this shows, is that this game between two plants has exactly one Nash equilibrium given by the intersection of the two best response curve. Thus, if plants have approximatley the height 0.62, then all plants play the best response with respect to each other.</p>
+<ol style="list-style-type: decimal">
+<li>First focus on the case that both carrying capacities are equal, <code>K1=K2</code>, and that the intrinsic growth rates are relatively small, say, <code>r1, r2 &lt;1</code>. Under this scenario, look at the following cases: <span class="math display">\[
+\begin{align}
+  \mathrm{i)\,\,} &amp; \alpha&lt;1&lt;\beta\\
+  \mathrm{ii)\,\,} &amp; \alpha&gt;1&gt;\beta\\
+  \mathrm{iii)\,\,} &amp; 1&lt;\alpha, \beta\\
+  \mathrm{iv)\,\,} &amp; \alpha, \beta&lt;1
+\end{align}
+\]</span></li>
+<li><p>Allow the two carrying capacities to differ from each other, for instance, <code>K1 &lt; K2</code>. Does this alter your previous results? If yes, how?</p></li>
+<li><p>The fact that the single-species logistic equation allows for overshooting and complicated population dynamical cycles when <em>r&gt;2</em> carries over to the LV-competition model in discrete time (note, that this is not possible in the continuous time versions of both these models). Investigate this possibility for the special case that the intrinsic growth rates and carrying capacities of both species are equal to each other, <code>r1 = r2</code> and and <code>K1 = K2</code>. What happens if both growth rates are close to 2 but slightly less and what happens if you increase both growth rates slightly above 2? You could combine this investigation with the different configurations that the competition competition coefficients can take as listed under (1).</p></li>
+</ol>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

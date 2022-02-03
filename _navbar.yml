@@ -1,0 +1,33 @@
+
+name: "Behavioral Ecology"
+title: "Game Theory"
+type: inverse
+left:
+  - text: "Games plants play"
+    menu:
+      - text: "1. The basic plant game"
+        href: ./GamesPlantsPlay.html
+#      - text: "1. Excercise: Solutions"
+#        href: ./PopulationDynamicsSolutions.html        
+      - text: "2. Evolutionary dynamics"
+        href: ./Evolution1.html
+#      - text: "2. Excercise: Solutions"
+#        href: ./StructuredPopulationsSolutions.html
+      - text: "3. The modified plant game"
+        href: ./Evolution2.html
+#      - text: "3. Excercise: Solutions"
+#        href: ./CompetitionSolutions.html
+#      - text: "4. Excercise: Predator-Prey Interactions"
+#       href: ./PredatorPrey.html
+
+#- text: "Project"
+#    menu:
+#       - text: "Project part 1"
+#         href: ./project1.html
+#       - text: "Project part 2"
+#         href: ./project2.html
+#  - text: "1. Excercise: Population Dynamics"
+#    href: ./PopulationDynamics.html
+#right:
+#  - icon: fa-github fa-lg
+#    href: https://github.com/githubusername/mywebsite
