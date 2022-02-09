@@ -17,118 +17,101 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in the modified model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick and leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosytetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thiner leaves that can photosythesize more efficiently and therefore have a higher $P_L$. Let us implement this idea by making $P.L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P.L$ of a plant with strategy $h_1$ increases with increasing height difference $h_2-h_1$.
-
-
+Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosytetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thiner leaves that can photosythesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for *P_L(h', h)* that depends on *h'-h* and has the desired porperties is the following one:
 
 ```{r}
-f <- function(h) { 
-  1 - h^alpha
+P.L.flex <- function(h.m, h.r) {
+  P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 0.5)
 }
 
-g <- function(h.1, h.2) {
-  P.L + (P.H - P.L)/(1 + exp(-beta*(h.1 - h.2)))
-}
-```
-
-```{r}
-alpha <- 3
-beta <- 10
-P.L <- 0.2
-P.H <- 1
-```
-
-
-```{r}
-P.L.flex <- function(h.1, h.2) {
-  P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.1 - h.2))) - 0.5)
-}
-
+# the parameter P.L.mean gives P.L when h'=h
 P.L.mean <- 0.25
+
 # next the parameter determining the maximum difference in P.L between
 # completely shaded and maximally sun exposed
-P.L.var <- 0.2
-# next the parameter determining how fast P.L increases with increased
+P.L.var <- 0.5
+
+# finally the parameter determining how fast P.L increases with increased
 # shading from a competitor
 gamma <- 10 
 
-curve(P.L.flex(x, h.2 = 0.5), from = 0, to = 1, xlab = expression("height "* h[1]), ylab = expression("minimum photosynthesis, " * P[L](h[1], h[2] * "=0.5")))
+curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("height "* h[1]), ylab = expression("minimum photosynthesis, " * P[L](h[1], h[2] * "=0.5")))
 ```
 
-Now we can plot how the fact that $P.L$ depends on the plant heights $h_1$ and $h_2$ affects the shape of the function $g(h_1, h_2)$.
+Now we can plot how the fact that $P.L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h_1, h_2)$.
 
 ```{r}
-g.2 <- function(h.1, h.2) {
-  P.L.flex(h.1, h.2) + (P.H - P.L.flex(h.1, h.2))/(1 + exp(-beta*(h.1 - h.2)))
+g.2 <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our function for P.L
+  P.L.flex(h.m, h.r) + (P.H - P.L.flex(h.m, h.r))/(1 + exp(-beta*(h.m - h.r)))
 }
 
-P.L <- 0.25 # parameter determing the mimum photosynthesis in model with fixed P.L
+beta <- 5 # how fast does g change
 P.H <- 1 # maximum photosythesis (identical in both versions of the model)
 
-curve(g.2(x, h.2 = 0.5), from = 0, to = 1, xlab = expression("plant height, " * h[1]), ylim = c(0,1), ylab = expression("photosythesis/leaf, " * g(h[1], h[2] * "= 0.5")), col = "blue")
-curve(g(x, h.2 = 0.5), from = 0, to = 1, col = "orange", add = TRUE)
+g <- function(h.m, h.r) { # the old function g(h', h) for comparison
+  P.L + (P.H - P.L)/(1 + exp(-beta*(h.m - h.r)))
+}
 
+P.L <- 0.25 # parameter determing the mimum photosynthesis in model with fixed P.L,
+# here chosen to be equal to P.L.mean <- 0.25 for comparison
+
+curve(g.2(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
+curve(g(x, h.r = 0.5), from = 0, to = 1, col = "orange", add = TRUE)
 legend("topleft", legend = c(expression(P[L] * " fixed "),
                               expression(P[L] * " variable ")), lty =1, col = c("blue", "orange"))
 ```
 
-```{r}
-P.L.mean <- 0.25
-P.L.var <- 0.5
-alpha <- 3
-beta <- 5 #
-gamma <- 10
-P.H <- 1
+We are interested in how our new assumption affect the PIP and whether we find heights *h'* and *h* that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.
 
-w.2 <- function(h.m, h.r) {
+```{r}
+f <- function(h) { # same function f(h) as before
+  1 - h^alpha
+}
+alpha <- 3 # same parameter value as before
+
+w.2 <- function(h.m, h.r) { # payoff function now based on flexible P.L
   f(h.m) * g.2(h.m, h.r)
 }
 
-fitness <- function(h.m, h.r) {
+s <- function(h.m, h.r) { # invasion fitness
   w.2(h.m, h.r) - w.2(h.r, h.r)
 }
 
-PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), fitness)
+PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
 par(pty="s")
 filled.contour(t(PIP), levels = c(-1, 0, 1), las = 2, main = "PIP",
-               xlab = expression("height " *h[1]),
-               ylab = expression("height " *h[2]))
+               xlab = expression("height h"),
+               ylab = expression("height h'"))
+```
 
-fitness.flipped.roles <- function(h.m, h.r) {
+Next, the mirror image of the PIP.
+
+```{r}
+s.flipped.roles <- function(h.m, h.r) {
   w.2(h.r, h.m) - w.2(h.m, h.m)
 }
 
-PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), fitness.flipped.roles)
+PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s.flipped.roles)
 
 par(pty="s")
 filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), las = 2, main = "PIP.mirrored",
-               xlab = expression("height " *h[2]),
-               ylab = expression("height " *h[1]))
+               xlab = expression("height h"),
+               ylab = expression("height h'"))
+```
 
+And finally the PIP and it mirror image superimposed.
+
+```{r}
+par(pty="s")
 TEP <- ifelse(PIP > 0 & PIP.mirrored > 0, 1, ifelse(PIP < 0 & PIP.mirrored < 0, -1, 0))
 
 filled.contour(t(TEP), levels = c(-1.5, -0.5, 0.5, 1.5), col = c("red", "blue", "green"),
 plot.title={
   title(main = "PIP and PIP.mirrored superimposed")
-  title(xlab=expression("height " *h[1]))
-  title(ylab=expression("height " *h[2]))
+  title(xlab=expression("height h"))
+  title(ylab=expression("height h'"))
   abline(0, 1, lwd = 1)
 })
-
-
 ```
 
-
-  1) First focus on the case that both carrying capacities are equal, ```K1=K2```, and that the intrinsic growth rates are relatively small, say, ```r1, r2 <1```. Under this scenario, look at the following cases:
-$$
-\begin{align}
-  \mathrm{i)\,\,} & \alpha<1<\beta\\
-  \mathrm{ii)\,\,} & \alpha>1>\beta\\
-  \mathrm{iii)\,\,} & 1<\alpha, \beta\\
-  \mathrm{iv)\,\,} & \alpha, \beta<1
-\end{align}
-$$
-  2) Allow the two carrying capacities to differ from each other, for instance, ```K1 < K2```. Does this alter your previous results? If yes, how?
-  
-  3) The fact that the single-species logistic equation allows for overshooting and complicated population dynamical cycles when *r>2* carries over to the LV-competition model in discrete time (note, that this is not possible in the continuous time versions of both these models). Investigate this possibility for the special case that the intrinsic growth rates and carrying capacities of both species are equal to each other, ```r1 = r2``` and and ```K1 = K2```. What happens if both growth rates are close to 2 but slightly less and what happens if you increase both growth rates slightly above 2? You could combine this investigation with the different configurations that the competition competition coefficients can take as listed under (1).
-
+Something very interesting has happend! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a stable polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with such branching point play an important role in speciation research. 
