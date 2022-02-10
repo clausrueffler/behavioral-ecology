@@ -83,9 +83,9 @@ P.H <- 0.8
 beta <- 10
 curve(g(x, h.r = 0.5), from = 0, to = 1, add = TRUE, col = "green")
 legend("topleft", lty =1, col = c("blue", "orange", "green"),
-       legend = c(expression(paste(beta, " = 10, ", I[L], " = 0.2, ", I[H], " = 1")),
-                  expression(paste(beta, " = 5, ", I[L], " = 0.2, ", I[H], " = 1")),
-                  expression(paste(beta, " = 10, ", I[L], " = 0.4, ", I[H], " = 0.8"))))
+       legend = c(expression(paste(beta, " = 10, ", P[L], " = 0.2, ", P[H], " = 1")),
+                  expression(paste(beta, " = 5, ", P[L], " = 0.2, ", P[H], " = 1")),
+                  expression(paste(beta, " = 10, ", P[L], " = 0.4, ", P[H], " = 0.8"))))
 ```
 
 The shape of the function is S-shaped as a function of the height $h'$ of the focal plant. As $h'$ approaches 0, the value of $g(h')$ approaches the value of $P_L$. Thus, $P_L$ can be interpreted as the amount of photosynthesis of a plant without stem that is maximally shaded by the other plant with height $h = 0.5$. On the other end, as $h'$ approaches 1, the value of $g(h')$ approaches the value of $P_H$. Thus, $P_H$ can be interpreted as the amount of photosynthesis of a plant with a stem of maximum length that experience no shading from the other plant. If both plants are equally high, $h' = 0.5 = h$, then $g(h)$ is eaxtly halfway between $P_L$ and $P_H$.
@@ -99,15 +99,11 @@ w(h, h') & = f(h)g(h, h')
 \end{align}
 $$
 
-Next we reproduce the payoff matrix shown in Table 6.1 in Kokko (2007). First, we define the functions for these payoffs.
+Next we reproduce the payoff matrix shown in Table 6.1 in Kokko (2007). First, we define the payoff function.
 
 ```{r}
-w.h.m.h.r <- function(h.m, h.r) { # payoff for h'
+w <- function(h.m, h.r) { # payoff for h'
   f(h.m) * g(h.m, h.r)
-}
-
-w.h.r.h.m <- function(h.r, h.m) { # payoff for h
-  f(h.r) * g(h.r, h.m)
 }
 ```
 
@@ -124,13 +120,13 @@ P.H <- 1
 Payoff to a plant with height $h'$ (first number in the matrix in Kokko).
 
 ```{r}
-round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), w.h.m.h.r), digits = 3)
+round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), w), digits = 3)
 ```
 
-Payoff to plant with height $h$ (second number in the matrix in Kokko).
+To obtain the second entry in each cell in the matrix by Kokko (which is the the payoff if the roles of who is mutant and how resident are switched) we only have to transpose the previous payoff matrix:
 
 ```{r}
-round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), w.h.r.h.m), digits = 3)
+t(round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), w), digits = 3))
 ```
 
 The next step by Hanna Kokko is to ask about the *best response* of one plant to a given strategy by the other plant, that is, the height that maximizes the payoff given a certain height of the competing plant. Let us do this by allowing any height, not just a height from a set of four. Thus, we are going to reproduce figure 6.4(b) in Kokko (2007).
@@ -138,14 +134,14 @@ The next step by Hanna Kokko is to ask about the *best response* of one plant to
 First, let us plot the payoff for all possible choices of $h'$ given that $h = 0.5$. The strategy that corresponds to the maximum of this curve is the optimal response $h'$ given $h$. 
 
 ```{r}
-curve(w.h.m.h.r(x, h.r), from = 0, to = 1, xlab = expression("height h'"), ylab = expression("payoff w(h', h = 0.5)"))
+curve(w(x, h.r), from = 0, to = 1, xlab = expression("height h'"), ylab = expression("payoff w(h', h = 0.5)"))
 ```
 
 In the next step we find the value of $h'$ that results in the highest possible pay-off $w(h', h)$.
 
 ```{r}
 best.response <- function(h.r) {
-  optimize(w.h.m.h.r, interval=c(0, 1), maximum = TRUE, h.r)$maximum
+  optimize(w, interval=c(0, 1), maximum = TRUE, h.r)$maximum
 }
 
 best.response(h.r = 0.5)

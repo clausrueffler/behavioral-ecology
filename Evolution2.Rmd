@@ -17,7 +17,7 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in the modified model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosytetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thiner leaves that can photosythesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for *P_L(h', h)* that depends on *h'-h* and has the desired porperties is the following one:
+Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosytetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thiner leaves that can photosythesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired porperties is the following one:
 
 ```{r}
 P.L.flex <- function(h.m, h.r) {
@@ -38,7 +38,7 @@ gamma <- 10
 curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("height "* h[1]), ylab = expression("minimum photosynthesis, " * P[L](h[1], h[2] * "=0.5")))
 ```
 
-Now we can plot how the fact that $P.L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h_1, h_2)$.
+Now we can plot how the fact that $P.L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h', h)$.
 
 ```{r}
 g.2 <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our function for P.L
@@ -57,8 +57,8 @@ P.L <- 0.25 # parameter determing the mimum photosynthesis in model with fixed P
 
 curve(g.2(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
 curve(g(x, h.r = 0.5), from = 0, to = 1, col = "orange", add = TRUE)
-legend("topleft", legend = c(expression(P[L] * " fixed "),
-                              expression(P[L] * " variable ")), lty =1, col = c("blue", "orange"))
+legend("topleft", legend = c(expression(P[L] * " variable "),
+                              expression(P[L] * " fixed ")), lty =1, col = c("blue", "orange"))
 ```
 
 We are interested in how our new assumption affect the PIP and whether we find heights *h'* and *h* that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.
