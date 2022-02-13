@@ -2,10 +2,12 @@
 title: "Games Plants Play"
 ---
 
-This website explores the model presented in Chapter 6 of Kokko (2007).
+This website is part of the course *Behavioral Ecology* at Uppsala University. It explores the model presented in Chapter 6 of Kokko (2007) but takes the analysis it bit further.
 
 The first tab, *The basic plant game*, repeats the analysis presented by Hanna Kokko.
 
 The second tab, *Evolutionary dynamics*, goes a bit further by introducing *Pairwise Invadability Plots* (something that Hanna Kokko does in Chapter 7 of her book in the context of a different model.)
 
 Finally, in the third tab, *The modified plant game*, introduces a tweak to the basic model. This modification results in a model in which plants with different heights are able to coexist in a stable polymorphism, just as we see in any natural forest.
+
+Claus Rüffler

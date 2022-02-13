@@ -15,9 +15,10 @@ klippy::klippy(position = c('top', 'right'))
 
 <!-- # Games Plants Play {.tabset} -->
 
-## Evolution in the basic model
+## Pairwise Invadability Plots and Coexistence of Different Strategies.
 
-On this page we produce a *Pairwise Invadability Plot (PIP)* for the plant height game. 
+On this page, we explore the question whether two plants that differ in their height can coexist in the current model. On our way towards that goal we get to know *Pairwise Invadability Plots (PIP)*, an important tool in modern Evolutionary Game Theory. As you will see, it seems that in the current model coexistence is not possible. On the next tab we therefore explore a modification of the plant hight game. In that modified model coexistence becomes possible.
+
 We start by repeating the functions *f(h)* and *g(h)*.
 
 ```{r}
