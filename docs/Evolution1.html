@@ -393,8 +393,8 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant height h&quot;</span>),</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident height h&#39;&quot;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb5-6" data-line-number="6">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</a></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>In order to determine whether a mutant <em>h’</em> will replace the resident <em>h</em> or coexist with it we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">s.flipped.roles &lt;-<span class="st"> </span><span class="cf">function</span>(h.m, h.r) {</a>
@@ -408,7 +408,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb6-9" data-line-number="9">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&quot;</span>),</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</a></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>In order to determine there are strategies (i.e., heights) that can coeist with each other we superimpose the PIP with its mirror image.</p>
+<p>In order to determine there are strategies (i.e., heights) that can coexist with each other we superimpose the PIP with its mirror image.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">TEP &lt;-<span class="st"> </span><span class="kw">ifelse</span>(PIP <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="kw">ifelse</span>(PIP <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
