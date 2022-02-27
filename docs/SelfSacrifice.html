@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>The Evolution of Altruism</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  { color: #cccccc; background-color: #303030; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ffcfaf; } /* Alert */
+code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #dca3a3; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #f0dfaf; } /* ControlFlow */
+code span.ch { color: #dca3a3; } /* Char */
+code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+code span.co { color: #7f9f7f; } /* Comment */
+code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+code span.do { color: #7f9f7f; } /* Documentation */
+code span.dt { color: #dfdfbf; } /* DataType */
+code span.dv { color: #dcdccc; } /* DecVal */
+code span.er { color: #c3bf9f; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #c0bed1; } /* Float */
+code span.fu { color: #efef8f; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+code span.kw { color: #f0dfaf; } /* Keyword */
+code span.op { color: #f0efd0; } /* Operator */
+code span.ot { color: #efef8f; } /* Other */
+code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+code span.sc { color: #dca3a3; } /* SpecialChar */
+code span.ss { color: #cc9393; } /* SpecialString */
+code span.st { color: #cc9393; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #cc9393; } /* VerbatimString */
+code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Game Theory</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Games Theory: Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./GamesPlantsPlay.html">1. The Basic Plant Game</a>
+    </li>
+    <li>
+      <a href="./Evolution1.html">2. Evolution of Plant Height</a>
+    </li>
+    <li>
+      <a href="./Evolution2.html">3. Evolution in the Modified Plant Game</a>
+    </li>
+    <li>
+      <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<!-- # Games Plants Play {.tabset} -->
+<div id="the-evolution-of-altruism" class="section level2">
+<h2>The Evolution of Altruism</h2>
+<p>On this page, we explore a model for the evolution of altruism. Specifically, we investigate the possibility that individuals sacrifice their own life in order to increase the survival of other individuals. As we will, see such a behavior can evolve if the benefit of a self-sacrifice benefits related individuals.</p>
+<p>In this example, <em>pay-off</em> is equal to <em>survival</em>. Individuals are characterized by a strategy <em>p</em>, which is the probility that they sacrifice their life in order to increase the survival of another individual with which they interact. For examples, a focal individual can give its resources to another individual. As a result, the focal individual dies while the survival of the interacting individual increases by <em>B</em>.</p>
+<p>The survival of an invdividual that sacrifices itself is assumed to be zero. If an individual does not sacrifice its life it survives with probability <span class="math inline">\(S_b\)</span>. This surival probability can be increased by an amount <span class="math inline">\(B\)</span> if it the interacting individual sacrifices its life. Then, the expected survival of an individual that interacts with another individual that has strategy <em>p</em> is given by</p>
+<p><span class="math display">\[
+\begin{align}
+W_C(p) &amp; = 0\\
+W_D(p) &amp; = (S_b + B) p + S_b (1-p)
+\end{align}
+\]</span></p>
+<p>We here use the notation <span class="math inline">\(W_C\)</span> for individuals that self-sacrifice (<em>C</em> stands for cooperate) and <span class="math inline">\(W_D\)</span> for individuals that do not self-sacrifice (<em>D</em> stands for defect). <em>Cooperate</em> and <em>defect</em> is a common terminology in game theory in the context of altruism. Thus, the survival of a rare mutant individual with strategy <span class="math inline">\(p&#39;\)</span> in a resident population with strategy <span class="math inline">\(p\)</span> is given by</p>
+<p><span class="math display">\[
+\begin{align}
+W(p&#39;, p) &amp; = (1 - p&#39;) W_D(p) \\
+        &amp; = (1 - p&#39;) (S_b + B) p + (1 - p&#39;) S_b (1 - p)
+\end{align}
+\]</span> Similarly, the expected suvival of a resident individual is given by</p>
+<p><span class="math display">\[
+\begin{align}
+W(p, p) &amp; = (1 - p) W_D(p) \\
+        &amp; = (1 - p) (S_b + B) p + (1 - p) S_b (1 - p)
+\end{align}
+\]</span></p>
+<p>Thus, the fitness benefit (or invasion fitness) of a rare mutant with strategy <span class="math inline">\(p&#39;\)</span> in resident population with strategy <span class="math inline">\(p\)</span> is given by</p>
+<p><span class="math display">\[
+\begin{align}
+s(p&#39;, p) &amp; = W(p&#39;, p) - W(p, p)\\
+        &amp; = (1 - p&#39;) (S_b + B) p + (1 - p&#39;) S_b (1 - p) - (1 - p) (S_b + B) p + (1 - p) S_b (1 - p)\\
+        &amp; = ((1 - p&#39;) - (1 - p)) (S_b + B) p + ((1 - p&#39;) - (1 - p)) S_b (1 - p)\\
+        &amp; = (p - p&#39;) ((S_b + B) p + S_b (1 - p))\\
+        &amp; = (p - p&#39;) (S_b + B p)
+\end{align}
+\]</span></p>
+<p>Since only mutants with <span class="math inline">\(s(p&#39;, p) &gt; 0\)</span> can invade we can see from the above equation that a mutant <span class="math inline">\(p&#39;\)</span> can invade a resident population with strategy <span class="math inline">\(p\)</span> can invade only if <span class="math inline">\(p&#39;&lt;p\)</span>. From this we can conclude that the <span class="math inline">\(p\)</span> will evolve to <span class="math inline">\(0\)</span>, which is the ESS: no inviduals then sacrifices it life to increase the survival of another individual.</p>
+<p>We can confirm this result by plotting a <em>Pairwise Invadability Plot</em>. Remember that a PIP is a contour plot of the function <em>s(p’, p)</em> with a contour line at height <em>s(p’, p)=0</em>. By definition <em>s(p, p) = 0</em> and therefore a PIP always has a contour line along the diagional (the 45-degree line). But as we will see, mutant <em>p’</em> different from <em>p</em> can have zero-invasion fitness and these form a second, contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value <em>p’</em> and resident with trait value <em>p</em> where the mutant has positive invasion fitness and can therefore establish itself in the poplation.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">S.b &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">w &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  (<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.m) <span class="op">*</span><span class="st"> </span>(S.b <span class="op">+</span><span class="st"> </span>B) <span class="op">*</span><span class="st"> </span>p.r <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.m) <span class="op">*</span><span class="st"> </span>S.b <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.r)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">s &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">w</span>(p.m, p.r) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(p.r, p.r)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">PIP &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># the computes s(p&#39;, p) for all combinations of p&#39; and p</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident p&quot;</span>),</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant p&#39;&quot;</span>))</a></code></pre></div>
+<p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>As we can see, only mutant with <span class="math inline">\(p&#39; &lt; p\)</span> can invade, confirming our above analytical result.</p>
+<p>In the above derivation we assumed that individuals interact randomly with each other. This means that a rare mutant will almost always interact with a resident individual. Let us now assume that the mutation occurs in a mother and she gives birth to offspring that share the mutant allele that originated in the mother with probability <em>r</em>. Such siblings share the allele due to <em>identity by decent</em>. If we assume a randomly mating population in which the strategy is coded by a single diploid locus, then two full siblings share the mutant allele <span class="math inline">\(p&#39;\)</span> with probability <em>1/2</em> (one of the siblings could have inherited the resident allele that comes from the father). Crucially, we assume that interactions occur not with random individuals in the population but among siblings. Then</p>
+<p><span class="math display">\[
+\begin{align}
+W(p&#39;, p) &amp; = (1 - p&#39;) r W_D(p&#39;) + (1 - p&#39;) (1 - r) W_D(p) \\
+        &amp; = (1 - p&#39;) r (S_b + B p&#39;) + (1 - p&#39;) (1 - r) (S_b + B p)\\
+        &amp; = (1 - p&#39;) r (S_b + B p) + (1 - p&#39;) r b B (p&#39; - p)\\\\
+W(p, p) &amp; = (1 - p) r W_D(p) + (1 - p) (1 - r) W_D(p) \\
+        &amp; = (1 - p) r (S_b + B p) + (1 - p) (1 - r) (S_b + B p)\\
+        &amp; = (1 - p) r (S_b + B p)\\\\
+s(p&#39;, p) &amp; = W(p&#39;, p) - W(p, p)\\
+         &amp; = (1 - p&#39;) r (S_b + B p) + (1 - p&#39;) r b B (p&#39; - p) - (1 - p) r (S_b + B p)\\
+         &amp; = -(S_b + B p) (p&#39;-p) + r (1 - p&#39;) B\\
+         &amp; = (p&#39; - p) (-(S_b + B p) + r (1 - p&#39;) B)
+\end{align}
+\]</span></p>
+<p>If we define <span class="math inline">\(c := (S_b + B p)\)</span> and <span class="math inline">\(b := (1 - p&#39;) B\)</span>, where <span class="math inline">\(c\)</span> and <span class="math inline">\(b\)</span> stand for <em>cost</em> and <em>benefit</em>, respectively, then the fitness benefit can be rewritten as</p>
+<p><span class="math display">\[
+s(p&#39;, p)  = (p&#39; - p) (-c + r b),
+\]</span> indicating that a mutant <span class="math inline">\(p&#39;\)</span> that increases the probability of self-sacrifice (<span class="math inline">\(p&#39; &gt; p\)</span>) can invade only if</p>
+<p><span class="math display">\[
+r b &gt; c.
+\]</span></p>
+<p>This last inequality is know as <strong>Hamilton’s Rule</strong>. It says that an atruistic act can evolve only if the benefit <span class="math inline">\(b\)</span> of an altruistic act, weighted by the coefficient of realatedness <span class="math inline">\(r\)</span> between the actor and receive, is larger than the costs <span class="math inline">\(c\)</span> to the actor.</p>
+<p>What is the ESS for this model? To answer this question we again plot the PIP.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">w &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  (<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.m) <span class="op">*</span><span class="st"> </span>r <span class="op">*</span><span class="st"> </span>(S.b <span class="op">+</span><span class="st"> </span>B <span class="op">*</span><span class="st"> </span>p.m) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span>p.m) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>r) <span class="op">*</span><span class="st"> </span>(S.b <span class="op">+</span><span class="st"> </span>B <span class="op">*</span><span class="st"> </span>p.r)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">s &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw">w</span>(p.m, p.r) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(p.r, p.r)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">r &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">PIP &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># the computes s(p&#39;, p) for all combinations of p&#39; and p</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident p&quot;</span>),</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant p&#39;&quot;</span>))</a></code></pre></div>
+<p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>From this graph we can read that <span class="math inline">\(p^* = 0.35\)</span> is an ESS. If the residen strategy is equal to this value, then <span class="math inline">\(s(p&#39;, p^*) &lt; 0\)</span> for all <span class="math inline">\(p&#39; \neq p^*\)</span>.</p>
+<p>In order to determine whether a mutant <em>p’</em> will replace the resident <em>p</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">s.flipped.roles &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">w</span>(p.r, p.m) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(p.m, p.m)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">PIP.mirrored &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s.flipped.roles)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP.mirrored), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP.mirrored&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&quot;</span>),</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</a></code></pre></div>
+<p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>In order to determine there are strategies (i.e., probabilities to self-sacrifice) that can coexist with each other we superimpose the PIP with its mirror image.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">TEP &lt;-<span class="st"> </span><span class="kw">ifelse</span>(PIP <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="kw">ifelse</span>(PIP <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">filled.contour</span>(<span class="kw">t</span>(TEP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">-0.5</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>),</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="dt">plot.title=</span>{</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="kw">title</span>(<span class="dt">main =</span> <span class="st">&quot;PIP and PIP.mirrored superimposed&quot;</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="kw">title</span>(<span class="dt">xlab=</span><span class="kw">expression</span>(<span class="st">&quot;height h&quot;</span>))</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="kw">title</span>(<span class="dt">ylab=</span><span class="kw">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">})</a></code></pre></div>
+<p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>The green region in the last plot shows combinations of self-sacrifice strategies <em>p’</em> and <em>p</em> that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -84,7 +84,7 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), las = 2, main = "PIP",
                ylab = expression("height h'"))
 ```
 
-Next, the mirror image of the PIP.
+In order to determine whether a mutant *p'* will replace the resident *p* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 
 ```{r}
 s.flipped.roles <- function(h.m, h.r) {

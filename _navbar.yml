@@ -3,22 +3,22 @@ name: "Behavioral Ecology"
 title: "Game Theory"
 type: inverse
 left:
-  - text: "Games plants play"
+  - text: "Games Theory: Examples"
     menu:
-      - text: "1. The basic plant game"
+      - text: "1. The Basic Plant Game"
         href: ./GamesPlantsPlay.html
 #      - text: "1. Excercise: Solutions"
 #        href: ./PopulationDynamicsSolutions.html        
-      - text: "2. Evolutionary dynamics"
+      - text: "2. Evolution of Plant Height"
         href: ./Evolution1.html
 #      - text: "2. Excercise: Solutions"
 #        href: ./StructuredPopulationsSolutions.html
-      - text: "3. The modified plant game"
+      - text: "3. Evolution in the Modified Plant Game"
         href: ./Evolution2.html
 #      - text: "3. Excercise: Solutions"
 #        href: ./CompetitionSolutions.html
-#      - text: "4. Excercise: Predator-Prey Interactions"
-#       href: ./PredatorPrey.html
+      - text: "4. The Evolution of Altruism"
+        href: ./SelfSacrifice.html
 
 #- text: "Project"
 #    menu:

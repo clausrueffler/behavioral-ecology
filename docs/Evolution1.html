@@ -326,19 +326,22 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Games plants play
+    Games Theory: Examples
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="./GamesPlantsPlay.html">1. The basic plant game</a>
+      <a href="./GamesPlantsPlay.html">1. The Basic Plant Game</a>
     </li>
     <li>
-      <a href="./Evolution1.html">2. Evolutionary dynamics</a>
+      <a href="./Evolution1.html">2. Evolution of Plant Height</a>
     </li>
     <li>
-      <a href="./Evolution2.html">3. The modified plant game</a>
+      <a href="./Evolution2.html">3. Evolution in the Modified Plant Game</a>
+    </li>
+    <li>
+      <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
     </li>
   </ul>
 </li>
@@ -379,7 +382,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb2-2" data-line-number="2">beta &lt;-<span class="st"> </span><span class="dv">5</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">P.L &lt;-<span class="st"> </span><span class="fl">0.2</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">P.H &lt;-<span class="st"> </span><span class="dv">1</span></a></code></pre></div>
-<p>Next the defintion of the payoff function.</p>
+<p>Next, the defintion of the payoff function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">w &lt;-<span class="st"> </span><span class="cf">function</span>(h.m, h.r) {</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">f</span>(h.m) <span class="op">*</span><span class="st"> </span><span class="kw">g</span>(h.m, h.r)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">}</a></code></pre></div>
@@ -387,7 +390,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">s &lt;-<span class="st"> </span><span class="cf">function</span>(h.m, h.r) {</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">w</span>(h.m, h.r) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(h.r, h.r)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">}</a></code></pre></div>
-<p>A PIP is in fact simply a contour plot of the function <em>s(h’, h)</em> with a contour line at height <em>s(h’, h)=0</em>. By definition <em>s(h, h) = 0</em> and therefore a PIP always has a contour line along the diagional (the 45-degree line). but as we will see, mutant <em>h’</em> different from <em>h</em> can have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value <em>h’</em> and resident with trait value <em>h</em> where the mutant has positive invasion fitness and can therefore establish itself in the poplation.</p>
+<p>A PIP is in fact simply a contour plot of the function <em>s(h’, h)</em> with a contour line at height <em>s(h’, h)=0</em>. By definition <em>s(h, h) = 0</em> and therefore a PIP always has a contour line along the diagional (the 45-degree line). but as we will see, mutant <em>h’</em> different from <em>h</em> can have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value <em>h’</em> and resident with trait value <em>h</em> where the mutant has positive invasion fitness and can therefore establish itself in the population.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">PIP &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># the computes s(h&#39;, h) for all combinations of h&#39; and h</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
@@ -396,7 +399,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb5-6" data-line-number="6">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</a></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>In order to determine whether a mutant <em>h’</em> will replace the resident <em>h</em> or coexist with it we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
+<p>In order to determine whether a mutant <em>h’</em> will replace the resident <em>h</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">s.flipped.roles &lt;-<span class="st"> </span><span class="cf">function</span>(h.m, h.r) {</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="kw">w</span>(h.r, h.m) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(h.m, h.m)</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">}</a>
@@ -408,7 +411,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb6-9" data-line-number="9">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&quot;</span>),</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</a></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>In order to determine there are strategies (i.e., heights) that can coexist with each other we superimpose the PIP with its mirror image.</p>
+<p>In order to determine if there are strategies (i.e., heights) that can coexist with each other we superimpose the PIP with its mirror image.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">TEP &lt;-<span class="st"> </span><span class="kw">ifelse</span>(PIP <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="kw">ifelse</span>(PIP <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
