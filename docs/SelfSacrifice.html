@@ -13,7 +13,8 @@
 
 <title>The Evolution of Altruism</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -44,6 +45,7 @@
     </style>
 
 
+
 <style type="text/css">
   code {
     white-space: pre;
@@ -53,26 +55,28 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,7 +86,7 @@ pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   { color: #cccccc; background-color: #303030; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ffcfaf; } /* Alert */
 code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
@@ -122,13 +126,20 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -163,6 +174,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -220,11 +234,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -315,7 +333,7 @@ $(document).ready(function () {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -325,7 +343,7 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Games Theory: Examples
      
     <span class="caret"></span>
@@ -402,25 +420,25 @@ s(p&#39;, p) &amp; = W(p&#39;, p) - W(p, p)\\
 \]</span></p>
 <p>Since only mutants with <span class="math inline">\(s(p&#39;, p) &gt; 0\)</span> can invade we can see from the above equation that a mutant <span class="math inline">\(p&#39;\)</span> can invade a resident population with strategy <span class="math inline">\(p\)</span> can invade only if <span class="math inline">\(p&#39;&lt;p\)</span>. From this we can conclude that the <span class="math inline">\(p\)</span> will evolve to <span class="math inline">\(0\)</span>, which is the ESS: no inviduals then sacrifices it life to increase the survival of another individual.</p>
 <p>We can confirm this result by plotting a <em>Pairwise Invadability Plot</em>. Remember that a PIP is a contour plot of the function <em>s(p’, p)</em> with a contour line at height <em>s(p’, p)=0</em>. By definition <em>s(p, p) = 0</em> and therefore a PIP always has a contour line along the diagional (the 45-degree line). But as we will see, mutant <em>p’</em> different from <em>p</em> can have zero-invasion fitness and these form a second, contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value <em>p’</em> and resident with trait value <em>p</em> where the mutant has positive invasion fitness and can therefore establish itself in the poplation.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">S.b &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">w &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  (<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.m) <span class="op">*</span><span class="st"> </span>(S.b <span class="op">+</span><span class="st"> </span>B) <span class="op">*</span><span class="st"> </span>p.r <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.m) <span class="op">*</span><span class="st"> </span>S.b <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.r)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">s &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">w</span>(p.m, p.r) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(p.r, p.r)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">PIP &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># the computes s(p&#39;, p) for all combinations of p&#39; and p</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident p&quot;</span>),</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant p&#39;&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>S.b <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(p.m, p.r) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">-</span> p.m) <span class="sc">*</span> (S.b <span class="sc">+</span> B) <span class="sc">*</span> p.r <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> p.m) <span class="sc">*</span> S.b <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p.r)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(p.m, p.r) {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(p.m, p.r) <span class="sc">-</span> <span class="fu">w</span>(p.r, p.r)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>PIP <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># the computes s(p&#39;, p) for all combinations of p&#39; and p</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(PIP), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="at">las =</span> <span class="dv">2</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident p&quot;</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant p&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>As we can see, only mutant with <span class="math inline">\(p&#39; &lt; p\)</span> can invade, confirming our above analytical result.</p>
 <p>In the above derivation we assumed that individuals interact randomly with each other. This means that a rare mutant will almost always interact with a resident individual. Let us now assume that the mutation occurs in a mother and she gives birth to offspring that share the mutant allele that originated in the mother with probability <em>r</em>. Such siblings share the allele due to <em>identity by decent</em>. If we assume a randomly mating population in which the strategy is coded by a single diploid locus, then two full siblings share the mutant allele <span class="math inline">\(p&#39;\)</span> with probability <em>1/2</em> (one of the siblings could have inherited the resident allele that comes from the father). Crucially, we assume that interactions occur not with random individuals in the population but among siblings. Then</p>
@@ -447,48 +465,48 @@ r b &gt; c.
 \]</span></p>
 <p>This last inequality is know as <strong>Hamilton’s Rule</strong>. It says that an atruistic act can evolve only if the benefit <span class="math inline">\(b\)</span> of an altruistic act, weighted by the coefficient of realatedness <span class="math inline">\(r\)</span> between the actor and receive, is larger than the costs <span class="math inline">\(c\)</span> to the actor.</p>
 <p>What is the ESS for this model? To answer this question we again plot the PIP.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">w &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  (<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p.m) <span class="op">*</span><span class="st"> </span>r <span class="op">*</span><span class="st"> </span>(S.b <span class="op">+</span><span class="st"> </span>B <span class="op">*</span><span class="st"> </span>p.m) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span>p.m) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>r) <span class="op">*</span><span class="st"> </span>(S.b <span class="op">+</span><span class="st"> </span>B <span class="op">*</span><span class="st"> </span>p.r)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">s &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw">w</span>(p.m, p.r) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(p.r, p.r)</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">r &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">PIP &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># the computes s(p&#39;, p) for all combinations of p&#39; and p</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;resident p&quot;</span>),</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;mutant p&#39;&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(p.m, p.r) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">-</span> p.m) <span class="sc">*</span> r <span class="sc">*</span> (S.b <span class="sc">+</span> B <span class="sc">*</span> p.m) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span>p.m) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> r) <span class="sc">*</span> (S.b <span class="sc">+</span> B <span class="sc">*</span> p.r)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(p.m, p.r) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(p.m, p.r) <span class="sc">-</span> <span class="fu">w</span>(p.r, p.r)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>PIP <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># the computes s(p&#39;, p) for all combinations of p&#39; and p</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(PIP), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="at">las =</span> <span class="dv">2</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident p&quot;</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant p&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>From this graph we can read that <span class="math inline">\(p^* = 0.35\)</span> is an ESS. If the residen strategy is equal to this value, then <span class="math inline">\(s(p&#39;, p^*) &lt; 0\)</span> for all <span class="math inline">\(p&#39; \neq p^*\)</span>.</p>
 <p>In order to determine whether a mutant <em>p’</em> will replace the resident <em>p</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">s.flipped.roles &lt;-<span class="st"> </span><span class="cf">function</span>(p.m, p.r) {</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">w</span>(p.r, p.m) <span class="op">-</span><span class="st"> </span><span class="kw">w</span>(p.m, p.m)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">PIP.mirrored &lt;-<span class="st"> </span><span class="kw">outer</span>(<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s.flipped.roles)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">filled.contour</span>(<span class="kw">t</span>(PIP.mirrored), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;PIP.mirrored&quot;</span>, <span class="dt">las =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">               <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&quot;</span>),</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">               <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(p.m, p.r) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(p.r, p.m) <span class="sc">-</span> <span class="fu">w</span>(p.m, p.m)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>PIP.mirrored <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s.flipped.roles)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(PIP.mirrored), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;PIP.mirrored&quot;</span>, <span class="at">las =</span> <span class="dv">2</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>In order to determine there are strategies (i.e., probabilities to self-sacrifice) that can coexist with each other we superimpose the PIP with its mirror image.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">TEP &lt;-<span class="st"> </span><span class="kw">ifelse</span>(PIP <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">1</span>, <span class="kw">ifelse</span>(PIP <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>PIP.mirrored <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dv">-1</span>, <span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">pty=</span><span class="st">&quot;s&quot;</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">filled.contour</span>(<span class="kw">t</span>(TEP), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">-0.5</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>),</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="dt">plot.title=</span>{</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="kw">title</span>(<span class="dt">main =</span> <span class="st">&quot;PIP and PIP.mirrored superimposed&quot;</span>)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="kw">title</span>(<span class="dt">xlab=</span><span class="kw">expression</span>(<span class="st">&quot;height h&quot;</span>))</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="kw">title</span>(<span class="dt">ylab=</span><span class="kw">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">})</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>TEP <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PIP <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PIP <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(TEP), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">plot.title=</span>{</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="at">main =</span> <span class="st">&quot;PIP and PIP.mirrored superimposed&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="at">xlab=</span><span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="at">ylab=</span><span class="fu">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>The green region in the last plot shows combinations of self-sacrifice strategies <em>p’</em> and <em>p</em> that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.</p>
 </div>
