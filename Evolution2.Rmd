@@ -17,7 +17,7 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in the modified model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosytetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thiner leaves that can photosythesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired porperties is the following one:
+Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is the following one:
 
 ```{r}
 P.L.flex <- function(h.m, h.r) {
@@ -61,7 +61,7 @@ legend("topleft", legend = c(expression(P[L] * " variable "),
                               expression(P[L] * " fixed ")), lty =1, col = c("blue", "orange"))
 ```
 
-We are interested in how our new assumption affect the PIP and whether we find heights *h'* and *h* that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.
+We are interested in how our new assumption affects the PIP and whether we find heights *h'* and *h* that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.
 
 ```{r}
 f <- function(h) { # same function f(h) as before
@@ -99,7 +99,7 @@ filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), las = 2, main = "PIP.mirro
                ylab = expression("height h'"))
 ```
 
-And finally the PIP and it mirror image superimposed.
+And finally the PIP and its mirror image superimposed.
 
 ```{r}
 par(pty="s")
@@ -114,4 +114,4 @@ plot.title={
 })
 ```
 
-Something very interesting has happend! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a stable polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with such branching point play an important role in speciation research. 
+Something very interesting has happened! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a stable polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with such branching point play an important role in speciation research. 
