@@ -395,9 +395,9 @@ $(document).ready(function () {
 <p>And here the parameter values we used on the previous page.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>P.L <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>P.L <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>P.H <span class="ot">&lt;-</span> <span class="dv">1</span></span></code></pre></div>
-<p>Next, the defintion of the payoff function.</p>
+<p>Next, the definition of the payoff function.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g</span>(h.m, h.r)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
@@ -440,6 +440,75 @@ $(document).ready(function () {
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>In this last plot the red area corresponds to combinations of heights <em>h’</em> and <em>h</em> where neither can invade the other. In other words: whoever was first wins. In contrast, the blue areas correspond to combinations of heights where either the mutant or the resident wins. These results show that in the current model it is not possible for two plant species with differet heights to coexist: there always exists a unique heigh that will win against plants with any other height.</p>
 <p>In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as <em>Adaptive Dynamics</em> or <em>Evolutionary Invasion Analysis</em>. If you want to learn more about this, Chapter 7 in the book by Kokko (2007) is a good starting point.</p>
+<!--
+### A model with kin selection
+
+Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plant and offspring will share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
+
+$$
+\begin{align}
+w(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h),
+\end{align}
+$$
+
+while the payoff to a resident plant is simply given by
+
+$$
+\begin{align}
+w(h, h) & = f(h)g(h, h)
+\end{align}
+$$
+
+Invasion fitness, here defined as the difference in payoff between mutant and resident is then given by
+
+$$
+\begin{align}
+s(h', h) & = w(h', h) - w(h, h)\\
+         & = r f(h')g(h', h') + (1 -r) f(h')g(h', h) - f(h)g(h, h)\\
+         & = r f(h') [ g(h', h') - g(h', h)] + f(h')g(h', h) - f(h)g(h, h)
+\end{align}
+$$
+
+The factor in square brackets describes the change in shading due to a mutant individual growing next to another mutant individual due to change in plant height. If $h' < h$ this term is positive and can be interpreted as a benefit to the neighboring plant. It is the indirect effect of changing from $h'$ to $h$. The term $f(h')g(h', h) - f(h)g(h, h)$ describes the change in payoff by changing from $h'$ to $h$. This term describes the direct effect on the focal plant.
+
+
+```r
+s <- function(h.m, h.r) {
+  r * f(h.m) * (g(h.m, h.m) - g(h.m, h.r)) + f(h.m) * g(h.m, h.r) - f(h.r) * g(h.r, h.r)  
+}
+```
+
+
+```r
+r <- 0.5
+alpha <- 3
+beta <- 5
+P.L <- 0.25
+P.H <- 1
+
+
+s(0.4, 0.6)
+```
+
+```
+## [1] 0.01389844
+```
+
+
+```r
+PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
+# the computes s(h', h) for all combinations of h' and h
+
+par(pty="s")
+filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
+               xlab = expression("resident height h"),
+               ylab = expression("mutant height h'"))
+```
+
+<img src="Evolution1_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+As we can see, kin selection reduced the ESS plant height from approximately 0.62 to approximately 0.5.
+-->
 </div>
 
 

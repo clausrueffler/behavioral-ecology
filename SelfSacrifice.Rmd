@@ -122,10 +122,10 @@ $$
 
 This last inequality is known as **Hamilton's Rule**. It says that an altruistic act can evolve only if the benefit $b$ of an altruistic act, weighted by the coefficient of relatedness $r$ between the actor and receiver, is larger than the costs $c$ to the actor.
 
-The partial derivative of $s(p', p)$ with respect to $p'$ evaluated at $p' = p$ equals
+The partial derivative of $s(p', p)$ with respect to $p'$ and evaluated at $p' = p$ equals
 
 $$
-\frac{\partial s(p', p)}{\partial p'}\bigg|_{p' = p} = -(S + B p) + r (1 - p'),
+\frac{\partial s(p', p)}{\partial p'}\bigg|_{p' = p} = -(S + B p) + r (1 - p')B,
 $$
 indicating the selection favors mutants with increased propensity to self-sacrifice if and only if $rb>c$, that is, if Hamilton's rule is fulfilled.
 

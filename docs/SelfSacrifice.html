@@ -465,9 +465,9 @@ s(p&#39;, p)  = (p&#39; - p) (-c + r b),
 r b &gt; c.
 \]</span></p>
 <p>This last inequality is known as <strong>Hamilton’s Rule</strong>. It says that an altruistic act can evolve only if the benefit <span class="math inline">\(b\)</span> of an altruistic act, weighted by the coefficient of relatedness <span class="math inline">\(r\)</span> between the actor and receiver, is larger than the costs <span class="math inline">\(c\)</span> to the actor.</p>
-<p>The partial derivative of <span class="math inline">\(s(p&#39;, p)\)</span> with respect to <span class="math inline">\(p&#39;\)</span> evaluated at <span class="math inline">\(p&#39; = p\)</span> equals</p>
+<p>The partial derivative of <span class="math inline">\(s(p&#39;, p)\)</span> with respect to <span class="math inline">\(p&#39;\)</span> and evaluated at <span class="math inline">\(p&#39; = p\)</span> equals</p>
 <p><span class="math display">\[
-\frac{\partial s(p&#39;, p)}{\partial p&#39;}\bigg|_{p&#39; = p} = -(S + B p) + r (1 - p&#39;),
+\frac{\partial s(p&#39;, p)}{\partial p&#39;}\bigg|_{p&#39; = p} = -(S + B p) + r (1 - p&#39;)B,
 \]</span> indicating the selection favors mutants with increased propensity to self-sacrifice if and only if <span class="math inline">\(rb&gt;c\)</span>, that is, if Hamilton’s rule is fulfilled.</p>
 <p>What is the ESS for this model? To answer this question we again plot the PIP.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(p.m, p.r) {</span>
