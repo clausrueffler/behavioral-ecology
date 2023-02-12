@@ -17,14 +17,18 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in the modified model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is the following one:
+Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
+
+$$
+P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right).
+$$
 
 ```{r}
 P.L.flex <- function(h.m, h.r) {
-  P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 0.5)
+  P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 1/2)
 }
 
-# the parameter P.L.mean gives P.L when h'=h
+# the parameter P.L.mean gives P.L when h'= h
 P.L.mean <- 0.25
 
 # next the parameter determining the maximum difference in P.L between
@@ -38,7 +42,7 @@ gamma <- 10
 curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("height "* h[1]), ylab = expression("minimum photosynthesis, " * P[L](h[1], h[2] * "=0.5")))
 ```
 
-Now we can plot how the fact that $P.L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h', h)$.
+Now we can plot how the fact that $P_L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h', h)$.
 
 ```{r}
 g.2 <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our function for P.L
@@ -52,7 +56,7 @@ g <- function(h.m, h.r) { # the old function g(h', h) for comparison
   P.L + (P.H - P.L)/(1 + exp(-beta*(h.m - h.r)))
 }
 
-P.L <- 0.25 # parameter determing the mimum photosynthesis in model with fixed P.L,
+P.L <- 0.25 # parameter determining the minimum photosynthesis in model with fixed P.L,
 # here chosen to be equal to P.L.mean <- 0.25 for comparison
 
 curve(g.2(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
@@ -112,6 +116,12 @@ plot.title={
   title(ylab=expression("height h'"))
   abline(0, 1, lwd = 1)
 })
+
+# green area: mutual invadability resulting in coexistence
+# blue area: one trait value can invade the other but not vice versa,
+# resulting in fixation of one of the genotypes
 ```
 
-Something very interesting has happened! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a stable polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with such branching point play an important role in speciation research. 
+Something very interesting has happened! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a stable polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with such branching point play an important role in speciation research.
+
+In the present model, find coexistence of one plant species that is less tall and adapted to low-light conditions and a taller plant that shades the less tall plant and is not adapted to low-light conditions.
