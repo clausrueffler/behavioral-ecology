@@ -17,104 +17,121 @@ klippy::klippy(position = c('top', 'right'))
 
 ## The Evolution of Altruism
 
-On this page, we explore a model for the evolution of altruism. Specifically, we investigate the possibility that individuals sacrifice their own life in order to increase the survival of other individuals. As we will see, such a behavior can evolve if a self-sacrifice benefits related individuals.
+On this page, we explore a model for the evolution of altruism. Specifically, we investigate the possibility that individuals sacrifice their own life in order to increase the survival of other individuals. As we will see, such behavior can evolve if a self-sacrifice benefits related individuals.
 
-In this example, *pay-off* is equal to *survival*. Individuals are characterized by a strategy *p*, which is the probability that they sacrifice their life in order to increase the survival of another individual with which they interact. For examples, a focal individual can give its resources to another individual. As a result, the focal individual dies while the survival of the interacting individual increases by *B*.
+In this example, *pay-off* is equal to *survival*. Individuals are characterized by a strategy *x*, which is the probability that they sacrifice their life in order to increase the survival of another individual with which they interact. For examples, a focal individual can give its resources to another individual. As a result, the focal individual dies while the survival of the interacting individual increases by *B*.
 
-The survival of an individual that sacrifices itself is assumed to be zero. If an individual does not sacrifice its life it survives with probability $S$. This survival probability can be increased by an amount $B$ if the interacting individual sacrifices its life. With this, the expected survival of an individual sacrificing its life, $W_C(p)$, and of an individual not sacrificing its life, $W_D(p)$, in a population where individuals in the resident population sacrifice their life with probability $p$ becomes
-
-$$
-\begin{align}
-W_C(p) & = 0\\
-W_D(p) & = (S + B) p + S (1-p).
-\end{align}
-$$
-We here use the notation $W_C$ for individuals that self-sacrifice (*C* stands for cooperate) and $W_D$ for individuals that do not self-sacrifice (*D* stands for defect). *Cooperate* and *defect* is a common terminology in game theory in the context of altruism. Now let us consider a rare mutant that self-sacrifices with probability $p'$. With probability $p'$ this individuals dies and with probability $(1-p')$ it survives with probability $W_D(p)$. Taken together, the survival of a rare mutant individual with strategy $p'$ in a resident population with strategy $p$ is given by
+The survival of an individual that sacrifices itself is assumed to be zero. If an individual does not sacrifice its life it survives with probability $S$. This survival probability can be increased by an amount $B$ if the interacting individual sacrifices its life. With this, the expected survival of an individual with strategy $x'$ that interacts with an individual with strategy $x$ is
 
 $$
 \begin{align}
-W(p', p) & = (1 - p') W_D(p) \\
-        & = (1 - p') (S + B) p + (1 - p') S (1 - p)
+W(x', x) & = (1 - x') (S + B x)
 \end{align}
 $$
-Similarly, the expected suvival of a resident individual is given by
+
+<!--
+sacrificing its life, $W_C(x)$, and of an individual not sacrificing its life, $W_D(x)$, in a population where individuals in the resident population sacrifice their life with probability $x$ becomes
 
 $$
 \begin{align}
-W(p, p) & = (1 - p) W_D(p) \\
-        & = (1 - p) (S + B) p + (1 - p) S (1 - p)
+W_C(x) & = 0\\
+W_D(x) & = S + B x.
 \end{align}
 $$
 
-The invasion fitness (or fitness advantage) of a rare mutant with strategy $p'$ in a resident population with strategy $p$ can then be written as
+We here use the notation $W_C$ for individuals that self-sacrifice (*C* stands for cooperate) and $W_D$ for individuals that do not self-sacrifice (*D* stands for defect). *Cooperate* and *defect* is a common terminology in game theory in the context of altruism. Now let us consider a rare mutant that self-sacrifices with probability $x'$. With probability $x'$ this individuals dies and with probability $(1-x')$ it survives with probability $W_D(x)$. Taken together, the survival of a rare mutant individual with strategy $x'$ in a resident population with strategy $x$ is given by
+-->
+
+Similarly, the expected survival of an individual with strategy $x$ interactiong with another individual with strategy $x$ is given by
 
 $$
 \begin{align}
-s(p', p) & = W(p', p) - W(p, p)\\
-        & = (1 - p') (S + B) p + (1 - p') S (1 - p) - (1 - p) (S + B) p + (1 - p) S (1 - p)\\
-        & = ((1 - p') - (1 - p)) (S + B) p + ((1 - p') - (1 - p)) S (1 - p)\\
-        & = (p - p') ((S + B) p + S (1 - p))\\
-        & = (p - p') (S + B p).
+W(x, x) & = (1 - x) (S + B x)
 \end{align}
 $$
 
-Since only mutants with $s(p', p) > 0$ can invade, we can see from the above equation that a mutant $p'$ can invade a resident population with strategy $p$ only if $p'<p$. From this, we can conclude that $p$ will evolve to $0$: no individual sacrifices its life to increase the survival of another individual. Also, $p^*=0$ is an ESS, since any possible mutant will then have a negative invasion fitness. This result makes intuitive sense: We do not expect that natural selection favors to give away ones life for the benefit of another individual.
+The invasion fitness (or fitness advantage) of a rare mutant with strategy $x'$ in a resident population with strategy $x$ can then be written as
 
-We can confirm this result by plotting a *Pairwise Invadability Plot*. Remember that a PIP is a contour plot of invasion fitness *s(p', p)*. PIP's have a contour-line where *s(p', p)=0*. Since by definition *s(p, p) = 0*, PIP's always have a contour line along the diagonal (the 45-degree line). But as we have seen in plant-height model, mutants *p'* different from *p* can also have zero-invasion fitness and these form a second contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value *p'* and residents with trait value *p* such that the mutant has positive invasion fitness and can therefore establish itself in the population.
+$$
+\begin{align}
+s(x', x) & = W(x', x) - W(x, x)\\
+        & = (1 - x') (S + B x) - (1 - x) (S + B x)\\
+        & = (x - x') (S + B x).
+\end{align}
+$$
+
+Since only mutants with $s(x', x) > 0$ can invade, we can see from the above equation that a mutant $x'$ can invade a resident population with strategy $x$ only if $x' < x$. From this, we can conclude that $x$ will evolve to $0$: no individual sacrifices its life to increase the survival of another individual. Also, $x^*=0$ is an ESS, since any possible mutant will then have a negative invasion fitness. This result makes intuitive sense: We do not expect that natural selection favors to give away ones life for the benefit of another individual.
+
+We can confirm this result by plotting a *Pairwise Invadability Plot*. Remember that a PIP is a contour plot of invasion fitness *s(x', x)*. PIP's have a contour-line where *s(x', x) = 0*. Since by definition *s(x, x) = 0*, PIP's always have a contour line along the diagonal (the 45-degree line). But as we have seen in plant-height model, mutants *x'* different from *x* can also have zero-invasion fitness and these form a second contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value *x'* and residents with trait value *x* such that the mutant has positive invasion fitness and can therefore establish itself in the population.
 
 ```{r}
-S.b <- 0
+S <- 0
 B <- 0.5
 
-w <- function(p.m, p.r) {
-  (1 - p.m) * (S.b + B) * p.r + (1 - p.m) * S.b * (1 - p.r)
+w <- function(x.m, x.r) {
+  (1 - x.m) * (S + B * x.r)
 }
 
-s <- function(p.m, p.r) {
-  w(p.m, p.r) - w(p.r, p.r)
+s <- function(x.m, x.r) {
+  w(x.m, x.r) - w(x.r, x.r)
 }
 
 
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
-# the computes s(p', p) for all combinations of p' and p
+# the computes s(x', x) for all combinations of x' and x
 
 par(pty="s")
 filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
-               xlab = expression("resident p"),
-               ylab = expression("mutant p'"))
+               xlab = expression("resident x"),
+               ylab = expression("mutant x'"))
 # yellow corresponds to combinations of mutants and residents
 # such that the mutant has a negative invasion fitness (it cannot invade)
 # red corresponds to combinations of mutants and residents
 # such that the mutant has a positive invasion fitness (it can invade). 
 ```
 
-As we can see, only mutants with $p' < p$ can invade, confirming our above analytical result.
+As we can see, only mutants with $x' < x$ can invade, confirming our above analytical result.
 
 
 ### Interaction between relatives
 
-In the above derivation, we assumed that individuals interact randomly with each other. This means that a rare mutant with trait value $p'$ will almost always interact with a resident individual with trait value $p$. Let us now assume that the mutation occurs in a mother and that her offspring share the mutant allele with her with probability *r*. Such siblings share the allele due to *identity by decent*. If we assume a randomly mating population in which the strategy is coded by a single diploid locus, then two full siblings share the mutant allele $p'$ with probability *1/2* (one of the siblings could have inherited the resident allele from the father instead of from the mother). Crucially, we now assume that interactions occur not with random individuals in the population but among siblings. Under this assumption, an individual carrying the mutant allele $p'$ does not self sacrifice with probability $1 - p'$ and then interacts with probability $r$ with an individual carrying the same allele and with probability $1-r$ with an individual carrying the resident allele $p$. Taken together, the survival probability of a mutant individual with allele $p'$ that interacts with relatives in a population where the resident allele is $p$ is given by
+In the above derivation, we assumed that individuals interact randomly with each other. This means that a rare mutant with trait value $x'$ will almost always interact with a resident individual with trait value $x$. Let us now assume that the mutation occurs in a mother and that her offspring share the mutant allele with her with probability *r*. Such siblings share the allele due to *identity by decent*. If we assume a randomly mating population in which the strategy is coded by a single diploid locus, then two full siblings share the mutant allele $x'$ with probability *1/2* (one of the siblings could have inherited the resident allele from the father instead of from the mother). Crucially, we now assume that interactions occur not with random individuals in the population but among siblings. Under this assumption, an individual carrying the mutant allele $x'$ does not self sacrifice with probability $1 - x'$ and then interacts with probability $r$ with an individual carrying the same allele and with probability $1-r$ with an individual carrying the resident allele $x$. Taken together, the survival probability of a mutant individual with allele $x'$ that interacts with relatives in a population where the resident allele is $x$ is given by
 
 $$
 \begin{align}
-W(p', p) & = (1 - p') r W_D(p') + (1 - p') (1 - r) W_D(p) \\
-        & = (1 - p') (r (S + B p') + (1 - r) (S + B p))\\
-        & = (1 - p') ((S + B p) + r B (p' - p))\\\\
-W(p, p) & = (1 - p) r W_D(p) + (1 - p) (1 - r) W_D(p) \\
-        & = (1 - p) (r (S + B p) + (1 - r) (S + B p))\\
-        & = (1 - p) (S + B p)\\\\
-s(p', p) & = W(p', p) - W(p, p)\\
-         & = (1 - p') ((S + B p) + r B (p' - p)) - (1 - p) (S + B p)\\
-         & = -(S + B p) (p'-p) + r (1 - p') B\\
-         & = (p' - p) (-(S + B p) + r (1 - p') B)
+w(x', x_{\mathrm r}, x) & = (1 - x')(S + B x_{\mathrm r}).
 \end{align}
 $$
-Let us define $c := (S + B p)$ and $b := (1 - p') B$. Here, $c$ is the survival probability of an individual interacting with an individual with allele $p$ while $b$ is the expected increase in survival when interacting with an individual with allele $p'$.
+
+Here, the first argument $x'$ denotes the strategy of the focal individual, the second argument $x_{\mathrm r}$ denotes the strategy of the interacting individual, given by $x'$ (with probability $r$) or $x$ (the third argument, with probability $1-r$). The allelic fitness for $x'$ and $x$ can then be written as
 
 $$
-s(p', p)  = (p' - p) (-c + r b),
+\begin{align}
+W(x', x) & = (1 - x')(r (S + B x') + (1 - r) (S + B x) \\
+        & = (1 - x') ((S + B x) + r B (x' - x))\\\\
+W(x, x) & = (1 - x)(r (S + B x) + (1 - r) (S + B x)\\
+        & = (1 - x)(S + B x),
+\end{align}
 $$
-indicating that a mutant $p'$ that increases the probability of self-sacrifice ($p' > p$) can invade only if 
+
+respectively. With this, the fitness difference or invasion fitness equals
+
+$$
+\begin{align}
+s(x', x) & = W(x', x) - W(x, x)\\
+         & = (1 - x') ((S + B x) + r B (x' - x)) - (1 - x)(S + B x)\\
+         & = -(S + B x) (x' - x) + r (1 - x') B\\
+         & = (x' - x) (-(S + B x) + r (1 - x') B)
+\end{align}
+$$         
+         
+Let us define $c := (S + B x)$ and $b := (1 - x') B$. Here, $c$ is the survival probability of an individual interacting with an individual with allele $x$ while $b$ is the expected increase in survival when interacting with an individual with allele $x'$.
+
+$$
+s(x', x)  = (x' - x) (-c + r b),
+$$
+
+indicating that a mutant $x'$ that increases the probability of self-sacrifice ($x' > x$) can invade only if 
 
 $$
 r b > c.
@@ -122,51 +139,50 @@ $$
 
 This last inequality is known as **Hamilton's Rule**. It says that an altruistic act can evolve only if the benefit $b$ of an altruistic act, weighted by the coefficient of relatedness $r$ between the actor and receiver, is larger than the costs $c$ to the actor.
 
-The partial derivative of $s(p', p)$ with respect to $p'$ and evaluated at $p' = p$ equals
+We can also derive at this conclusion by looking at the partial derivative of $W(x', x)$ with respect to $x'$ when evaluated at $x' = x$, which equals
 
 $$
-\frac{\partial s(p', p)}{\partial p'}\bigg|_{p' = p} = -(S + B p) + r (1 - p')B,
+\frac{\partial W(x', x)}{\partial x'}\bigg|_{x' = x} = -(S + B x) + r (1 - x)B,
 $$
 indicating the selection favors mutants with increased propensity to self-sacrifice if and only if $rb>c$, that is, if Hamilton's rule is fulfilled.
 
 What is the ESS for this model? To answer this question we again plot the PIP.
 
 ```{r}
-w <- function(p.m, p.r) {
-  (1 - p.m) * r * (S.b + B * p.m) + (1 -p.m) * (1 - r) * (S.b + B * p.r)
+w <- function(x.m, x.r) {
+  (1 - x.m) * (r * (S + B * x.m) + (1 - r) * (S + B * x.r))
 }
 
-s <- function(p.m, p.r) {
-  w(p.m, p.r) - w(p.r, p.r)
+x <- function(x.m, x.r) {
+  w(x.m, x.r) - w(x.r, x.r)
 }
 
 r <- 0.5
 
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
-# the computes s(p', p) for all combinations of p' and p
+# the computes s(x', x) for all combinations of x' and x
 
 par(pty="s")
 filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
-               xlab = expression("resident p"),
-               ylab = expression("mutant p'"))
+               xlab = expression("resident x"),
+               ylab = expression("mutant x'"))
 ```
 
-From this graph we can read that $p^* = 0.35$ is an ESS. If the resident strategy is equal to this value, then  $s(p', p^*) < 0$ for all $p' \neq p^*$.
+From this graph we can read that $p^* = 0.35$ is an ESS. If the resident strategy is equal to this value, then  $s(x', x^*) < 0$ for all $x' \neq x^*$.
 
-
-In order to determine whether a mutant *p'* will replace the resident *p* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
+In order to determine whether a mutant *x'* will replace the resident *x* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 
 ```{r}
-s.flipped.roles <- function(p.m, p.r) {
-  w(p.r, p.m) - w(p.m, p.m)
+s.flipped.roles <- function(x.m, x.r) {
+  w(x.r, x.m) - w(x.m, x.m)
 }
 
 PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s.flipped.roles)
 
 par(pty="s")
 filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), main = "PIP.mirrored", las = 2,
-               xlab = expression("height h"),
-               ylab = expression("height h'"))
+               xlab = expression("x"),
+               ylab = expression("x'"))
 ```
 
 In order to determine there are strategies (i.e., probabilities to self-sacrifice) that can coexist with each other we superimpose the PIP with its mirror image.
@@ -178,11 +194,11 @@ par(pty="s")
 filled.contour(t(TEP), levels = c(-1.5, -0.5, 0.5, 1.5), col = c("red", "blue", "green"),
 plot.title={
   title(main = "PIP and PIP.mirrored superimposed")
-  title(xlab=expression("height h"))
-  title(ylab=expression("height h'"))
+  title(xlab=expression("x"))
+  title(ylab=expression("x'"))
   abline(0, 1, lwd = 1)
 })
 ```
 
-The green region in the last plot shows combinations of self-sacrifice strategies *p'* and *p* that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.
+The green region in the last plot shows combinations of self-sacrifice strategies *x'* and *x* that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.
 
