@@ -20,8 +20,9 @@ klippy::klippy(position = c('top', 'right'))
 Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
 
 $$
-P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right).
+P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right),
 $$
+where $P_{L, {\mathrm mean}}$ denotes the value of $P_L(h', h)$ if $h' =h$, while $P_{L, {\mathrm var}}$ denotes the difference in $P_L(h', h)$ between a situation where the focal plant with trait value $h'$ is shaded maximally and the situation where it is not shaded at all.
 
 ```{r}
 P.L.flex <- function(h.m, h.r) {
