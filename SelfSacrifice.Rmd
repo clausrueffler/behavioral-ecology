@@ -174,7 +174,7 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
                ylab = expression("mutant x'"))
 ```
 
-From this graph we can read that $p^* = 0.35$ is an ESS. If the resident strategy is equal to this value, then  $s(x', x^*) < 0$ for all $x' \neq x^*$.
+From this graph we can read that $p^* = 0.33$ is an ESS. If the resident strategy is equal to this value, then  $s(x', x^*) < 0$ for all $x' \neq x^*$.
 
 In order to determine whether a mutant *x'* will replace the resident *x* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 

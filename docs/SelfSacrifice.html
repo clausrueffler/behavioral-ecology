@@ -509,7 +509,7 @@ r b &gt; c.
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident x&quot;</span>),</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant x&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>From this graph we can read that <span class="math inline">\(p^* = 0.35\)</span> is an ESS. If the resident strategy is equal to this value, then <span class="math inline">\(s(x&#39;, x^*) &lt; 0\)</span> for all <span class="math inline">\(x&#39; \neq x^*\)</span>.</p>
+<p>From this graph we can read that <span class="math inline">\(p^* = 0.33\)</span> is an ESS. If the resident strategy is equal to this value, then <span class="math inline">\(s(x&#39;, x^*) &lt; 0\)</span> for all <span class="math inline">\(x&#39; \neq x^*\)</span>.</p>
 <p>In order to determine whether a mutant <em>x’</em> will replace the resident <em>x</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(x.m, x.r) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(x.r, x.m) <span class="sc">-</span> <span class="fu">w</span>(x.m, x.m)</span>
