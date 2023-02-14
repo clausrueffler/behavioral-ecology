@@ -17,8 +17,8 @@ left:
         href: ./Evolution2.html
 #      - text: "3. Excercise: Solutions"
 #        href: ./CompetitionSolutions.html
-#      - text: "4. The Evolution of Altruism"
-#        href: ./SelfSacrifice.html
+      - text: "4. The Evolution of Altruism"
+        href: ./SelfSacrifice.html
 
 #- text: "Project"
 #    menu:

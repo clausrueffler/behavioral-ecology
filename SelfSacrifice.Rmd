@@ -92,6 +92,12 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
 
 As we can see, only mutants with $x' < x$ can invade, confirming our above analytical result.
 
+We can also derive at this conclusion by looking at the partial derivative of $W(x', x)$ with respect to $x'$ when evaluated at $x' = x$, which equals
+
+$$
+\frac{\partial W(x', x)}{\partial x'}\bigg|_{x' = x} = -(S + B x),
+$$
+which is always negative, indicating for lower values of the helping trait $x$.
 
 ### Interaction between relatives
 

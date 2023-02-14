@@ -358,6 +358,9 @@ $(document).ready(function () {
     <li>
       <a href="./Evolution2.html">3. Evolution in the Modified Plant Game</a>
     </li>
+    <li>
+      <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -444,6 +447,10 @@ s(x&#39;, x) &amp; = W(x&#39;, x) - W(x, x)\\
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># red corresponds to combinations of mutants and residents</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># such that the mutant has a positive invasion fitness (it can invade). </span></span></code></pre></div>
 <p>As we can see, only mutants with <span class="math inline">\(x&#39; &lt; x\)</span> can invade, confirming our above analytical result.</p>
+<p>We can also derive at this conclusion by looking at the partial derivative of <span class="math inline">\(W(x&#39;, x)\)</span> with respect to <span class="math inline">\(x&#39;\)</span> when evaluated at <span class="math inline">\(x&#39; = x\)</span>, which equals</p>
+<p><span class="math display">\[
+\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} = -(S + B x),
+\]</span> which is always negative, indicating for lower values of the helping trait <span class="math inline">\(x\)</span>.</p>
 <div id="interaction-between-relatives" class="section level3">
 <h3>Interaction between relatives</h3>
 <p>In the above derivation, we assumed that individuals interact randomly with each other. This means that a rare mutant with trait value <span class="math inline">\(x&#39;\)</span> will almost always interact with a resident individual with trait value <span class="math inline">\(x\)</span>. Let us now assume that the mutation occurs in a mother and that her offspring share the mutant allele with her with probability <em>r</em>. Such siblings share the allele due to <em>identity by decent</em>. If we assume a randomly mating population in which the strategy is coded by a single diploid locus, then two full siblings share the mutant allele <span class="math inline">\(x&#39;\)</span> with probability <em>1/2</em> (one of the siblings could have inherited the resident allele from the father instead of from the mother). Crucially, we now assume that interactions occur not with random individuals in the population but among siblings. Under this assumption, an individual carrying the mutant allele <span class="math inline">\(x&#39;\)</span> does not self sacrifice with probability <span class="math inline">\(1 - x&#39;\)</span> and then interacts with probability <span class="math inline">\(r\)</span> with an individual carrying the same allele and with probability <span class="math inline">\(1-r\)</span> with an individual carrying the resident allele <span class="math inline">\(x\)</span>. Taken together, the survival probability of a mutant individual with allele <span class="math inline">\(x&#39;\)</span> that interacts with relatives in a population where the resident allele is <span class="math inline">\(x\)</span> is given by</p>
