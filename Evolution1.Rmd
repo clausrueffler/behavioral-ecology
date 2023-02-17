@@ -102,41 +102,34 @@ In this last plot the red area corresponds to combinations of heights *h'* and *
 
 In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as *Adaptive Dynamics* or *Evolutionary Invasion Analysis*. If you want to learn more about this, Chapter 7 in the book by Kokko (2007) is a good starting point.
 
-<!--
+
 ### A model with kin selection
 
 Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plant and offspring will share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
 
 $$
 \begin{align}
-w(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h),
+w(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h).
 \end{align}
 $$
 
-while the payoff to a resident plant is simply given by
+To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, in the hope to find Hamilton's rule. Alternatively, we can plot the PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
 
 $$
 \begin{align}
-w(h, h) & = f(h)g(h, h)
+s(h', h) & = w(h', h) - w(h, h)
 \end{align}
 $$
-
-Invasion fitness, here defined as the difference in payoff between mutant and resident is then given by
-
-$$
-\begin{align}
-s(h', h) & = w(h', h) - w(h, h)\\
-         & = r f(h')g(h', h') + (1 -r) f(h')g(h', h) - f(h)g(h, h)\\
-         & = r f(h') [ g(h', h') - g(h', h)] + f(h')g(h', h) - f(h)g(h, h)
-\end{align}
-$$
-
-The factor in square brackets describes the change in shading due to a mutant individual growing next to another mutant individual due to change in plant height. If $h' < h$ this term is positive and can be interpreted as a benefit to the neighboring plant. It is the indirect effect of changing from $h'$ to $h$. The term $f(h')g(h', h) - f(h)g(h, h)$ describes the change in payoff by changing from $h'$ to $h$. This term describes the direct effect on the focal plant.
 
 ```{r}
-s <- function(h.m, h.r) {
-  r * f(h.m) * (g(h.m, h.m) - g(h.m, h.r)) + f(h.m) * g(h.m, h.r) - f(h.r) * g(h.r, h.r)  
+w <- function(h.m, h.r) {
+  r * f(h.m) * g(h.m, h.m) + (1 - r) * f(h.m) * g(h.m, h.r)
 }
+
+s <- function(h.m, h.r) {
+  w(h.m, h.r) - w(h.r, h.r)  
+}
+# Note that w(h.r, h.r) simplifies to f(h)g(h, h).
 ```
 
 ```{r}
@@ -146,11 +139,6 @@ beta <- 5
 P.L <- 0.25
 P.H <- 1
 
-
-s(0.4, 0.6)
-```
-
-```{r}
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
 # the computes s(h', h) for all combinations of h' and h
 
@@ -161,4 +149,3 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
 ```
 
 As we can see, kin selection reduced the ESS plant height from approximately 0.62 to approximately 0.5.
--->
