@@ -116,7 +116,8 @@ $$
 W(x', x) & = r w(x', x', x) + (1 - r) w(x', x, x) \\
         & = (1 - x')(r (S + B x') + (1 - r) (S + B x) \\
         & = (1 - x') ((S + B x) + r B (x' - x)),\\\\
-W(x, x) & = (1 - x)(r (S + B x) + (1 - r) (S + B x)\\
+W(x, x) & = r w(x, x, x) + (1 - r) w(x, x, x) \\
+        & = (1 - x)(r (S + B x) + (1 - r) (S + B x)\\
         & = (1 - x)(S + B x),
 \end{align}
 $$
