@@ -2,13 +2,18 @@
 title: "Game Theory"
 ---
 
-This website is part of the course *Behavioral Ecology* at Uppsala University. It consists of two parts:
+This website is part of the course *Behavioral Ecology* at Uppsala University.
+The idea with these websites is as follows. Work through them by reading the text and then by coping the R-code into your own script, where you can run it and modify it.
+
+It consists of two parts:
 
 1. We first explore the model presented in Chapter 6 of Kokko (2007) but takes the analysis it bit further. This part consist of three parts:
     + The first tab, *The Basic Plant Game*, repeats the analysis presented by Hanna Kokko.
     + The second tab, *Evolution of Plant Height*, goes a bit further by introducing *Pairwise Invadability Plots* (something that Hanna Kokko does in Chapter 7 of her book in the context of a different model.)
     + Finally, in the third tab, *Evolution in the Modified Plant Game*, introduces a tweak to the basic model. This modification results in a model in which plants with different heights are able to coexist in a stable polymorphism, just as we see in any natural forest.
  
-2. In the second part (in the fourth tab), we explore the evolution of altruism. As a specific example, we investiage a model in which individuals can sacrifice their own life in order to increase the survival of other (related) individuals.
+2. In the second part (in the fourth tab), we explore the evolution of altruism. This part consists of two parts:
+    + The fourth tab, *The Evolution of Altruism* investigates a model in which individuals can sacrifice their own life in order to increase the survival of other (related) individuals.
+    + The fifth tab goes explores the role of kin selection in the plant height model.
 
 Claus Rüffler

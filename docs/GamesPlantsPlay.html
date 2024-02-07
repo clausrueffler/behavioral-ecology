@@ -343,7 +343,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="./GamesPlantsPlay.html">1. The Basic Plant Game</a>
+      <a href="./GamesPlantsPlay.html">1. The Basic Plant Height Game</a>
     </li>
     <li>
       <a href="./Evolution1.html">2. Evolution of Plant Height</a>
@@ -353,6 +353,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
+    </li>
+    <li>
+      <a href="./PlantHeightAltruism.html">5. The Plant Height Model with Kin Selection</a>
     </li>
   </ul>
 </li>
@@ -385,7 +388,7 @@ do plants invest energy into growing a stem instead of investing all
 energy into leaf biomass?</p>
 <p>Kokko assumes that the fitness of a plant is determined by two
 factors: firstly, how much leaf tissue there is in the plant (denoted
-<em>f</em> ), and, secondly, how much each leaf is able to
+<em>f</em>), and, secondly, how much each leaf is able to
 photosynthesize (denoted <em>g</em>). The amount of leaf tissue,
 <em>f</em>, can be expressed as the fraction of the plant’s above-ground
 biomass that is not ‘wasted’ on non-photosynthesizing tissue such as the
@@ -446,15 +449,14 @@ left for leaves to grow when <em>h</em> reaches the maximum value
 <em>h=1</em>.</p>
 <p>The shape of the function <em>g(h)</em> is more complicated because
 photosynthesis depends on the amount of light falling on a leaf, which
-depends on how high the leaf is situated relative to the leaves of other
+depends on how high the leaf is situated relative to the leaves of
 neighboring plants. We here follow the same simplifying assumption made
 by Kokko and assume that the amount of light on the leaves of a focal
 plant with height <span class="math inline">\(h&#39;\)</span> is
 affected by the height <span class="math inline">\(h\)</span> of its
 ‘neighbor’. The amount of sunlight for the focal plant is then assumed
 to depend on the height difference between the two plants, <span
-class="math inline">\(h&#39;-h\)</span>. Kokko suggest the following
-function</p>
+class="math inline">\(h&#39;-h\)</span>. Kokko suggests the function</p>
 <p><span class="math display">\[
 g(h&#39;, h)=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h&#39; - h)\right)}.
 \]</span></p>
@@ -463,7 +465,7 @@ us plot it for different parameter values:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  P.L <span class="sc">+</span> (P.H <span class="sc">-</span> P.L)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note that in the R code we use h.m (m for mutant) for h&#39;and h.r (r for resident) for h</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># note that in the R code we use h.m (m for mutant) for h&#39; and h.r (r for resident) for h</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>P.L <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
@@ -486,6 +488,9 @@ us plot it for different parameter values:</p>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">expression</span>(<span class="fu">paste</span>(beta, <span class="st">&quot; = 5, &quot;</span>, P[L], <span class="st">&quot; = 0.2, &quot;</span>, P[H], <span class="st">&quot; = 1&quot;</span>)),</span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">expression</span>(<span class="fu">paste</span>(beta, <span class="st">&quot; = 10, &quot;</span>, P[L], <span class="st">&quot; = 0.4, &quot;</span>, P[H], <span class="st">&quot; = 0.8&quot;</span>))))</span></code></pre></div>
 <p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>In the above code, the height <span class="math inline">\(h\)</span>
+of the neighboring plant, denoted <span
+class="math inline">\(h.r\)</span> in the code, is set equal to 0.5.</p>
 <p>The shape of the function is S-shaped as a function of the height
 <span class="math inline">\(h&#39;\)</span> of the focal plant. As <span
 class="math inline">\(h&#39;\)</span> approaches 0, the value of <span
@@ -513,8 +518,8 @@ is denoted by reversing the order of the arguments in the payoff
 function <span class="math inline">\(w\)</span>.</p>
 <p><span class="math display">\[
 \begin{align}
-w(h&#39;, h) &amp; = f(h&#39;)g(h&#39;, h)\\
-w(h, h&#39;) &amp; = f(h)g(h, h&#39;)
+W(h&#39;, h) &amp; = f(h&#39;)g(h&#39;, h)\\
+W(h, h&#39;) &amp; = f(h)g(h, h&#39;)
 \end{align}
 \]</span></p>
 <p>Next we reproduce the payoff matrix shown in Table 6.1 in Kokko
@@ -522,7 +527,7 @@ w(h, h&#39;) &amp; = f(h)g(h, h&#39;)
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># payoff for h&#39;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g</span>(h.m, h.r)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>We then compute the entries in the pay-off matrix using exactly the
+<p>We then compute the entries in the payoff matrix using exactly the
 same parameter values as in Kokko (2007).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">5</span></span>
@@ -541,7 +546,7 @@ Kokko).</p>
 <p>To obtain the second entry in each cell in the matrix by Kokko (which
 is the the payoff if the roles of who is mutant and who resident are
 switched) we only have to transpose the previous payoff matrix:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">round</span>(<span class="fu">outer</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), w), <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">round</span>(<span class="fu">outer</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), w), <span class="at">digits =</span> <span class="dv">3</span>)) <span class="co"># t is the command in R that produces the transpose of a matrix</span></span></code></pre></div>
 <pre><code>##       [,1]  [,2]  [,3] [,4]
 ## [1,] 0.625 0.848 0.686    0
 ## [2,] 0.369 0.602 0.620    0
@@ -563,7 +568,10 @@ class="math inline">\(h\)</span>.</p>
 <p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>In the next step, we find the value of <span
 class="math inline">\(h&#39;\)</span> that results in the highest
-possible pay-off <span class="math inline">\(w(h&#39;, h)\)</span>.</p>
+possible payoff <span class="math inline">\(w(h&#39;, h)\)</span>. For
+this we can use the R-function <em>optimize</em> (see <a
+href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/optimize"><strong>here</strong></a>
+for the help page for this function).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>best.response <span class="ot">&lt;-</span> <span class="cf">function</span>(h.r) {</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optimize</span>(w, <span class="at">interval=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>, h.r)<span class="sc">$</span>maximum</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -572,11 +580,12 @@ possible pay-off <span class="math inline">\(w(h&#39;, h)\)</span>.</p>
 <pre><code>## [1] 0.5839456</code></pre>
 <p>In conclusion, if plant 2 plays strategy <span
 class="math inline">\(h = 0.5\)</span>, then plant 1 maximizes its
-pay-off by playing <span class="math inline">\(h&#39; = 0.58\)</span>.
-To obtain the best response curve, perform the computation above for all
-values of <span class="math inline">\(h\)</span> between 0 and 1. After
-that we repeat the same procedure from the perspective plant 2.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>best.response.curve <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), best.response)</span>
+payoff by playing <span class="math inline">\(h&#39; = 0.58\)</span>. To
+obtain the best response curve, we have perform the computation above
+for all (or at least <em>many</em>) values of <span
+class="math inline">\(h\)</span> between 0 and 1. After that we repeat
+the same procedure from the perspective plant 2.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>best.response.curve <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), best.response) <span class="co"># applies the function best.response to all values of h from 0 to 1 in steps of 0.01, thus, to 101 different resident strategy values</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), best.response.curve,</span>
@@ -592,6 +601,23 @@ curve. Thus, if plants have approximately the height 0.62, then all
 plants play the best response with respect to each other. In fact, this
 Nash equilibrium is also an evolutionary stable strategy (ESS, the first
 ESS condition is fulfilled).</p>
+<div id="tasks" class="section level3">
+<h3>TASKS</h3>
+<ol style="list-style-type: decimal">
+<li><p>Evaluate all the above code. Understand what the results mean.
+Try to understand the code as much as possible (but note that code is
+not be relevant for the exam).</p></li>
+<li><p>Produce the graphs <em>photosynthesis/leaf vs. plant height</em>
+and <em>payoff w(h’, h) vs. height h’$ for a different value of the
+resident strategy h</em>. Select an h-value of your own choice. How do
+the graphs differ from those with <em>h=0.5</em>. Give an interpretation
+for the observed difference.</p></li>
+</ol>
+<p>Submit your results as an html file, either by using the <em>compile
+report</em>-button or by producing an Rmarkdown document (if you know
+how to do this, you can find a very short introduction to Rmarkdown <a
+href="https://clausrueffler.github.io/CodingWithR/Markdown.html"><strong>here</strong></a>).</p>
+</div>
 </div>
 
 

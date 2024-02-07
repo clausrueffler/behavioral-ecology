@@ -343,7 +343,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="./GamesPlantsPlay.html">1. The Basic Plant Game</a>
+      <a href="./GamesPlantsPlay.html">1. The Basic Plant Height Game</a>
     </li>
     <li>
       <a href="./Evolution1.html">2. Evolution of Plant Height</a>
@@ -353,6 +353,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
+    </li>
+    <li>
+      <a href="./PlantHeightAltruism.html">5. The Plant Height Model with Kin Selection</a>
     </li>
   </ul>
 </li>
@@ -378,17 +381,17 @@ $(document).ready(function () {
 </script>
 <!-- # Games Plants Play {.tabset} -->
 <div
-id="pairwise-invadability-plots-and-coexistence-of-different-strategies."
+id="evolution-of-plant-height-pairwise-invadability-plots-and-coexistence-of-different-strategies."
 class="section level2">
-<h2>Pairwise Invadability Plots and Coexistence of Different
-Strategies.</h2>
+<h2>Evolution of Plant Height: Pairwise Invadability Plots and
+Coexistence of Different Strategies.</h2>
 <p>On this page, we explore the question whether two plants that differ
 in their height can coexist in the current model. On our way towards
-that goal we get to know <em>Pairwise Invadability Plots (PIP)</em>, an
+this goal, we get to know <em>Pairwise Invadability Plots (PIP)</em>, an
 important tool in modern Evolutionary Game Theory. As you will see, it
 seems that in the current model coexistence is not possible. On the next
-tab we therefore explore a modification of the plant hight game. In that
-modified model coexistence becomes possible.</p>
+tab we therefore explore a modification of the plant height game. In
+that modified model coexistence becomes possible.</p>
 <p>We start by repeating the functions <em>f(h)</em> and
 <em>g(h)</em>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(h) { </span>
@@ -418,13 +421,13 @@ itself:</p>
 <p>A PIP is in fact simply a contour plot of the function <em>s(h’,
 h)</em> with a contour line at height <em>s(h’, h)=0</em>. By definition
 <em>s(h, h) = 0</em> and therefore a PIP always has a contour line along
-the diagional (the 45-degree line). but as we will see, mutant
-<em>h’</em> different from <em>h</em> can have zero-invasion fitness and
-these form a second, curved contour line in the PIP. Positive areas in
-the PIP correspond to combinations of mutants with trait value
-<em>h’</em> and resident with trait value <em>h</em> where the mutant
-has positive invasion fitness and can therefore establish itself in the
-population.</p>
+the diagonal (the 45-degree line). But as we will see, mutants
+<em>h’</em> different from <em>h</em> can also have zero-invasion
+fitness and these form a second, curved contour line in the PIP.
+Positive areas in the PIP correspond to combinations of mutants with
+trait value <em>h’</em> and residents with trait value <em>h</em> where
+the mutant has positive invasion fitness and can therefore establish
+itself in the population.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PIP <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the computes s(h&#39;, h) for all combinations of h&#39; and h</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -448,7 +451,7 @@ PIP (mirrored over the 45-degree line).</p>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>In order to determine if there are strategies (i.e., heights) that
-can coexist with each other we superimpose the PIP with its mirror
+can coexist with each other, we superimpose the PIP with its mirror
 image.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>TEP <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PIP <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PIP <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -462,68 +465,36 @@ image.</p>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>In this last plot the red area corresponds to combinations of heights
-<em>h’</em> and <em>h</em> where neither can invade the other. In other
-words: whoever was first wins. In contrast, the blue areas correspond to
-combinations of heights where either the mutant or the resident wins.
-These results show that in the current model it is not possible for two
-plant species with differet heights to coexist: there always exists a
-unique heigh that will win against plants with any other height.</p>
+<em>h’</em> and <em>h</em> where neither strategy can invade the other.
+In other words: whoever was first wins. In contrast, the blue areas
+correspond to combinations of heights where either the mutant or the
+resident wins. These results show that in the current model it is not
+possible for two plant species with different heights to coexist.
+<!--: there always exists a unique height that will win against plants with any other height.--></p>
 <p>In fact there is quite a bit more one can read from this plot. These
 techniques involving PIPs are often referred to as <em>Adaptive
 Dynamics</em> or <em>Evolutionary Invasion Analysis</em>. If you want to
-learn more about this, Chapter 7 in the book by Kokko (2007) is a good
-starting point.</p>
-<div id="a-model-with-kin-selection" class="section level3">
-<h3>A model with kin selection</h3>
-<p>Let us now assume that seeds do not disperse far so that new plants
-grow next to their mother plant. Mother plant and offspring will share
-the gene for tree height by common decent with probability <span
-class="math inline">\(r\)</span>, the relatedness coefficient. The
-payoff to a rare mutant with allele <span
-class="math inline">\(h&#39;\)</span> is then given by</p>
-<p><span class="math display">\[
-\begin{align}
-w(h&#39;, h) &amp; = r f(h&#39;)g(h&#39;, h&#39;) + (1 -r)
-f(h&#39;)g(h&#39;, h).
-\end{align}
-\]</span></p>
-<p>To determine whether selection favors increased values of <span
-class="math inline">\(h\)</span>, we could take the partial derivative
-of <span class="math inline">\(w(h&#39;, h)\)</span>, evaluated at <span
-class="math inline">\(h&#39; = h\)</span>, in the hope to find
-Hamilton’s rule. Alternatively, we can plot the PIP to investigate the
-effect of kin selection on ESS tree height. For this, we compute
-invasion fitness, here defined as the difference in payoff between
-mutant and resident.</p>
-<p><span class="math display">\[
-\begin{align}
-s(h&#39;, h) &amp; = w(h&#39;, h) - w(h, h)
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  r <span class="sc">*</span> <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g</span>(h.m, h.m) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> r) <span class="sc">*</span> <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g</span>(h.m, h.r)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.m, h.r) <span class="sc">-</span> <span class="fu">w</span>(h.r, h.r)  </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that w(h.r, h.r) simplifies to f(h)g(h, h).</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>P.L <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>P.H <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>PIP <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># the computes s(h&#39;, h) for all combinations of h&#39; and h</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(PIP), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="at">las =</span> <span class="dv">2</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</span></code></pre></div>
-<p><img src="Evolution1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>As we can see, kin selection reduced the ESS plant height from
-approximately 0.62 to approximately 0.5.</p>
+learn more about this, Chapter 7 in the book by Hanna Kokko (2007) is a
+good starting point.</p>
+<div id="tasks" class="section level3">
+<h3>TASKS</h3>
+<ol style="list-style-type: decimal">
+<li><p>Evaluate all the above code. Understand what the results mean.
+Try to understand the code as much as possible (but note that code is
+not be relevant for the exam).</p></li>
+<li><p>Repeat the above analysis for different parameter values.</p>
+<ul>
+<li>Change <span class="math inline">\(\alpha\)</span> from 3 to 1.</li>
+<li>Change <span class="math inline">\(\alpha\)</span> back to 3 but now
+change <span class="math inline">\(\beta\)</span> from 5 to 10.</li>
+<li>Describe for each case how the value of the ESS changes. Explain why
+your findings makes biological sense.</li>
+</ul></li>
+</ol>
+<p>Submit your results as an html file, either by using the <em>compile
+report</em>-button or by producing an Rmarkdown document (if you know
+how to do this, you can find a very short introduction to Rmarkdown <a
+href="https://clausrueffler.github.io/CodingWithR/Markdown.html"><strong>here</strong></a>).</p>
 </div>
 </div>
 

@@ -343,7 +343,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="./GamesPlantsPlay.html">1. The Basic Plant Game</a>
+      <a href="./GamesPlantsPlay.html">1. The Basic Plant Height Game</a>
     </li>
     <li>
       <a href="./Evolution1.html">2. Evolution of Plant Height</a>
@@ -353,6 +353,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
+    </li>
+    <li>
+      <a href="./PlantHeightAltruism.html">5. The Plant Height Model with Kin Selection</a>
     </li>
   </ul>
 </li>
@@ -377,8 +380,9 @@ $(document).ready(function () {
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <!-- # Exercise: Games Plants Play {.tabset} -->
-<div id="evolution-in-the-modified-model" class="section level2">
-<h2>Evolution in the modified model</h2>
+<div id="evolution-in-a-modified-plant-height-model"
+class="section level2">
+<h2>Evolution in a Modified Plant Height Model</h2>
 <p>Let us modify one assumption in our model. Above we assumed that the
 minimum and maximum amount of photosyntesis, <span
 class="math inline">\(P_L\)</span> and <span
@@ -520,89 +524,6 @@ branching point play an important role in speciation research.</p>
 less tall and adapted to low-light conditions and a taller plant that
 shades the less tall plant and is not adapted to low-light
 conditions.</p>
-<div id="adding-kin-selection-to-the-modified-plant-height-game"
-class="section level3">
-<h3>Adding kin selection to the modified plant height game</h3>
-<p>Let us now again assume that seeds do not disperse far so that new
-plants grow next to their mother plant. Mother plant and offspring will
-share the gene for tree height by common decent with probability <span
-class="math inline">\(r\)</span>, the relatedness coefficient. The
-payoff to a rare mutant with allele <span
-class="math inline">\(h&#39;\)</span> is then given by</p>
-<p><span class="math display">\[
-\begin{align}
-w(h&#39;, h) &amp; = r f(h&#39;)g(h&#39;, h&#39;) + (1 -r)
-f(h&#39;)g(h&#39;, h).
-\end{align}
-\]</span></p>
-<p>To determine whether selection favors increased values of <span
-class="math inline">\(h\)</span>, we could take the partial derivative
-of <span class="math inline">\(w(h&#39;, h)\)</span>, evaluated at <span
-class="math inline">\(h&#39; = h\)</span>, in the hope to find
-Hamilton’s rule. Alternatively, we can plot the PIP to investigate the
-effect of kin selection on ESS tree height. For this, we compute
-invasion fitness, here defined as the difference in payoff between
-mutant and resident.</p>
-<p><span class="math display">\[
-\begin{align}
-s(h&#39;, h) &amp; = w(h&#39;, h) - w(h, h)
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  r <span class="sc">*</span> <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g.2</span>(h.m, h.m) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> r) <span class="sc">*</span> <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g.2</span>(h.m, h.r)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.m, h.r) <span class="sc">-</span> <span class="fu">w</span>(h.r, h.r)  </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that w(h.r, h.r) simplifies to f(h)g(h, h).</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>P.L <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>P.H <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>PIP <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># the computes s(h&#39;, h) for all combinations of h&#39; and h</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(PIP), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">main =</span> <span class="st">&quot;PIP&quot;</span>, <span class="at">las =</span> <span class="dv">2</span>,</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</span></code></pre></div>
-<p><img src="Evolution2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>As we can see, kin selection reduced the ESS plant height from
-approximately 0.42 to approximately 0.3.</p>
-<p>In order to determine whether a mutant <em>p’</em> will replace the
-resident <em>p</em> or coexist with it, we plot the mirror image of a
-PIP (mirrored over the 45-degree line).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.r, h.m) <span class="sc">-</span> <span class="fu">w</span>(h.m, h.m)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>PIP.mirrored <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s.flipped.roles)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(PIP.mirrored), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">las =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&quot;PIP.mirrored&quot;</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</span></code></pre></div>
-<p><img src="Evolution2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>TEP <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PIP <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PIP <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">filled.contour</span>(<span class="fu">t</span>(TEP), <span class="at">levels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">plot.title=</span>{</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="at">main =</span> <span class="st">&quot;PIP and PIP.mirrored superimposed&quot;</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="at">xlab=</span><span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>))</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(<span class="at">ylab=</span><span class="fu">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<p><img src="Evolution2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># green area: mutual invadability resulting in coexistence</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># blue area: one trait value can invade the other but not vice versa,</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># resulting in fixation of one of the genotypes</span></span></code></pre></div>
-<p>The possibility for evolutionary brancing does not seem to be
-affected by kin selection.</p>
-</div>
 </div>
 
 

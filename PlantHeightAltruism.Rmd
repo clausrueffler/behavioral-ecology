@@ -1,0 +1,144 @@
+---
+pagetitle: 'Games Plants Play'
+output: 
+  html_document:
+    toc: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+<!-- # Games Plants Play {.tabset} -->
+
+## The Plant Height Model with Kin Selection
+
+Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
+
+$$
+\begin{align}
+W(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h).
+\end{align}
+$$
+
+To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, with the aim to recover Hamilton's rule. Alternatively, we can plot the PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
+
+$$
+\begin{align}
+s(h', h) & = W(h', h) - W(h, h)
+\end{align}
+$$
+
+```{r}
+w <- function(h.m, h.r) {
+  r * f(h.m) * g(h.m, h.m) + (1 - r) * f(h.m) * g(h.m, h.r)
+}
+
+s <- function(h.m, h.r) {
+  w(h.m, h.r) - w(h.r, h.r)  
+}
+# Note that w(h.r, h.r) simplifies to f(h)g(h, h).
+```
+
+```{r}
+r <- 0.5
+alpha <- 3
+beta <- 5
+P.L <- 0.25
+P.H <- 1
+
+PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
+# the computes s(h', h) for all combinations of h' and h
+
+par(pty="s")
+filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
+               xlab = expression("resident height h"),
+               ylab = expression("mutant height h'"))
+```
+
+As we can see, kin selection reduced the ESS plant height from approximately 0.62 to approximately 0.5.
+
+## The Modified Plant Height Model with Kin Selection
+
+Let us now again assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plant and offspring will share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
+
+$$
+\begin{align}
+W(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h).
+\end{align}
+$$
+
+To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, in the hope to find Hamilton's rule. Alternatively, we can plot the PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
+
+$$
+\begin{align}
+s(h', h) & = W(h', h) - W(h, h)
+\end{align}
+$$
+
+```{r}
+w <- function(h.m, h.r) {
+  r * f(h.m) * g.2(h.m, h.m) + (1 - r) * f(h.m) * g.2(h.m, h.r)
+}
+
+s <- function(h.m, h.r) {
+  w(h.m, h.r) - w(h.r, h.r)  
+}
+# Note that w(h.r, h.r) simplifies to f(h)g(h, h).
+```
+
+```{r}
+r <- 0.5
+alpha <- 3
+beta <- 5
+P.L <- 0.25
+P.H <- 1
+
+PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
+# the computes s(h', h) for all combinations of h' and h
+
+par(pty="s")
+filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
+               xlab = expression("resident height h"),
+               ylab = expression("mutant height h'"))
+```
+
+As we can see, kin selection reduced the ESS plant height from approximately 0.42 to approximately 0.3.
+
+In order to determine whether a mutant *p'* will replace the resident *p* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
+
+```{r}
+s.flipped.roles <- function(h.m, h.r) {
+  w(h.r, h.m) - w(h.m, h.m)
+}
+
+PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s.flipped.roles)
+
+par(pty="s")
+filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), las = 2, main = "PIP.mirrored",
+               xlab = expression("height h"),
+               ylab = expression("height h'"))
+```
+
+```{r}
+par(pty="s")
+TEP <- ifelse(PIP > 0 & PIP.mirrored > 0, 1, ifelse(PIP < 0 & PIP.mirrored < 0, -1, 0))
+
+filled.contour(t(TEP), levels = c(-1.5, -0.5, 0.5, 1.5), col = c("red", "blue", "green"),
+plot.title={
+  title(main = "PIP and PIP.mirrored superimposed")
+  title(xlab=expression("height h"))
+  title(ylab=expression("height h'"))
+  abline(0, 1, lwd = 1)
+})
+
+# green area: mutual invadability resulting in coexistence
+# blue area: one trait value can invade the other but not vice versa,
+# resulting in fixation of one of the genotypes
+```
+
+The possibility for evolutionary brancing does not seem to be affected by kin selection.

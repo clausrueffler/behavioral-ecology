@@ -15,9 +15,9 @@ klippy::klippy(position = c('top', 'right'))
 
 <!-- # Games Plants Play {.tabset} -->
 
-## Pairwise Invadability Plots and Coexistence of Different Strategies.
+## Evolution of Plant Height: Pairwise Invadability Plots and Coexistence of Different Strategies.
 
-On this page, we explore the question whether two plants that differ in their height can coexist in the current model. On our way towards that goal we get to know *Pairwise Invadability Plots (PIP)*, an important tool in modern Evolutionary Game Theory. As you will see, it seems that in the current model coexistence is not possible. On the next tab we therefore explore a modification of the plant hight game. In that modified model coexistence becomes possible.
+On this page, we explore the question whether two plants that differ in their height can coexist in the current model. On our way towards this goal, we get to know *Pairwise Invadability Plots (PIP)*, an important tool in modern Evolutionary Game Theory. As you will see, it seems that in the current model coexistence is not possible. On the next tab we therefore explore a modification of the plant height game. In that modified model coexistence becomes possible.
 
 We start by repeating the functions *f(h)* and *g(h)*.
 
@@ -56,7 +56,7 @@ s <- function(h.m, h.r) {
 }
 ```
 
-A PIP is in fact simply a contour plot of the function *s(h', h)* with a contour line at height *s(h', h)=0*. By definition *s(h, h) = 0* and therefore a PIP always has a contour line along the diagional (the 45-degree line). but as we will see, mutant *h'* different from *h* can have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value *h'* and resident with trait value *h* where the mutant has positive invasion fitness and can therefore establish itself in the population.
+A PIP is in fact simply a contour plot of the function *s(h', h)* with a contour line at height *s(h', h)=0*. By definition *s(h, h) = 0* and therefore a PIP always has a contour line along the diagonal (the 45-degree line). But as we will see, mutants *h'* different from *h* can also have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value *h'* and residents with trait value *h* where the mutant has positive invasion fitness and can therefore establish itself in the population.
 
 ```{r}
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
@@ -83,7 +83,7 @@ filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), main = "PIP.mirrored", las
                ylab = expression("height h'"))
 ```
 
-In order to determine if there are strategies (i.e., heights) that can coexist with each other we superimpose the PIP with its mirror image.
+In order to determine if there are strategies (i.e., heights) that can coexist with each other, we superimpose the PIP with its mirror image.
 
 ```{r}
 TEP <- ifelse(PIP > 0 & PIP.mirrored > 0, 1, ifelse(PIP < 0 & PIP.mirrored < 0, -1, 0))
@@ -98,54 +98,19 @@ plot.title={
 })
 ```
 
-In this last plot the red area corresponds to combinations of heights *h'* and *h* where neither can invade the other. In other words: whoever was first wins. In contrast, the blue areas correspond to combinations of heights where either the mutant or the resident wins. These results show that in the current model it is not possible for two plant species with differet heights to coexist: there always exists a unique heigh that will win against plants with any other height.
+In this last plot the red area corresponds to combinations of heights *h'* and *h* where neither strategy can invade the other. In other words: whoever was first wins. In contrast, the blue areas correspond to combinations of heights where either the mutant or the resident wins. These results show that in the current model it is not possible for two plant species with different heights to coexist.
+<!--: there always exists a unique height that will win against plants with any other height.-->
 
-In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as *Adaptive Dynamics* or *Evolutionary Invasion Analysis*. If you want to learn more about this, Chapter 7 in the book by Kokko (2007) is a good starting point.
+In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as *Adaptive Dynamics* or *Evolutionary Invasion Analysis*. If you want to learn more about this, Chapter 7 in the book by Hanna Kokko (2007) is a good starting point.
+
+### TASKS
+
+1. Evaluate all the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not be relevant for the exam).
+
+2. Repeat the above analysis for different parameter values.
+    + Change $\alpha$ from 3 to 1.
+    + Change $\alpha$ back to 3 but now change $\beta$ from 5 to 10.
+    + Describe for each case how the value of the ESS changes. Explain why your findings makes biological sense.    
 
 
-### A model with kin selection
-
-Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plant and offspring will share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
-
-$$
-\begin{align}
-w(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h).
-\end{align}
-$$
-
-To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, in the hope to find Hamilton's rule. Alternatively, we can plot the PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
-
-$$
-\begin{align}
-s(h', h) & = w(h', h) - w(h, h)
-\end{align}
-$$
-
-```{r}
-w <- function(h.m, h.r) {
-  r * f(h.m) * g(h.m, h.m) + (1 - r) * f(h.m) * g(h.m, h.r)
-}
-
-s <- function(h.m, h.r) {
-  w(h.m, h.r) - w(h.r, h.r)  
-}
-# Note that w(h.r, h.r) simplifies to f(h)g(h, h).
-```
-
-```{r}
-r <- 0.5
-alpha <- 3
-beta <- 5
-P.L <- 0.25
-P.H <- 1
-
-PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
-# the computes s(h', h) for all combinations of h' and h
-
-par(pty="s")
-filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
-               xlab = expression("resident height h"),
-               ylab = expression("mutant height h'"))
-```
-
-As we can see, kin selection reduced the ESS plant height from approximately 0.62 to approximately 0.5.
+Submit your results as an html file, either by using the *compile report*-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown [**here**](https://clausrueffler.github.io/CodingWithR/Markdown.html)).
