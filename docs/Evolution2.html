@@ -384,7 +384,7 @@ $(document).ready(function () {
 class="section level2">
 <h2>Evolution in a Modified Plant Height Model</h2>
 <p>Let us modify one assumption in our model. Above we assumed that the
-minimum and maximum amount of photosyntesis, <span
+minimum and maximum amount of photosynthesis, <span
 class="math inline">\(P_L\)</span> and <span
 class="math inline">\(P_H\)</span>, are fixed parameters. Hanna Kokko
 suggests that the values of <span class="math inline">\(P_L\)</span> and
@@ -419,7 +419,7 @@ difference in <span class="math inline">\(P_L(h&#39;, h)\)</span>
 between a situation where the focal plant with trait value <span
 class="math inline">\(h&#39;\)</span> is shaded maximally and the
 situation where it is not shaded at all.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>P.L.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>P.L.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {<span class="co"># P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  P.L.mean <span class="sc">+</span> P.L.var<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(gamma<span class="sc">*</span>(h.m <span class="sc">-</span> h.r))) <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -434,19 +434,19 @@ situation where it is not shaded at all.</p>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># shading from a competitor</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="dv">10</span> </span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">P.L.flex</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height &quot;</span><span class="sc">*</span> h[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;minimum photosynthesis, &quot;</span> <span class="sc">*</span> P[L](h[<span class="dv">1</span>], h[<span class="dv">2</span>] <span class="sc">*</span> <span class="st">&quot;=0.5&quot;</span>)))</span></code></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">P.L.flex</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(height <span class="sc">~</span> <span class="st">&quot;h&#39;&quot;</span>), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;minimum photosynthesis, &quot;</span> <span class="sc">*</span> P[L](<span class="st">&quot;h&#39;&quot;</span>, h <span class="sc">*</span> <span class="st">&quot;=0.5&quot;</span>)))</span></code></pre></div>
 <p><img src="Evolution2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>Now we can plot how the fact that <span
 class="math inline">\(P_L\)</span> depends on the plant heights <span
 class="math inline">\(h&#39;\)</span> and <span
 class="math inline">\(h\)</span> affects the shape of the function <span
 class="math inline">\(g(h&#39;, h)\)</span>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># this a new function for g(h&#39;, h) that incorporates our function for P.L</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># this a new function for g(h&#39;, h) that incorporates our new function for P.L</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">P.L.flex</span>(h.m, h.r) <span class="sc">+</span> (P.H <span class="sc">-</span> <span class="fu">P.L.flex</span>(h.m, h.r))<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># how fast does g change</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>P.H <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># maximum photosythesis (identical in both versions of the model)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>P.H <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># maximum photosynthesis (identical in both versions of the model)</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># the old function g(h&#39;, h) for comparison</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  P.L <span class="sc">+</span> (P.H <span class="sc">-</span> P.L)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
@@ -455,7 +455,7 @@ class="math inline">\(g(h&#39;, h)\)</span>.</p>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>P.L <span class="ot">&lt;-</span> <span class="fl">0.25</span> <span class="co"># parameter determining the minimum photosynthesis in model with fixed P.L,</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># here chosen to be equal to P.L.mean &lt;- 0.25 for comparison</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">g.2</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;plant height, h&#39;&quot;</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;photosythesis/leaf, g(h&#39;, h = 0.5)&quot;</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">g.flex</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;plant height, h&#39;&quot;</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;photosythesis/leaf, g(h&#39;, h = 0.5)&quot;</span>), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">g</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">expression</span>(P[L] <span class="sc">*</span> <span class="st">&quot; variable &quot;</span>),</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">expression</span>(P[L] <span class="sc">*</span> <span class="st">&quot; fixed &quot;</span>)), <span class="at">lty =</span><span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;orange&quot;</span>))</span></code></pre></div>
@@ -470,7 +470,7 @@ previous side. First, we produce the PIP.</p>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># same parameter value as before</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>w<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># payoff function now based on flexible P.L</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g.2</span>(h.m, h.r)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g.flex</span>(h.m, h.r)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># invasion fitness</span></span>

@@ -17,7 +17,7 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in a Modified Plant Height Model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosyntesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
+Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosynthesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
 
 $$
 P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right),
@@ -25,7 +25,7 @@ $$
 where $P_{L, {\mathrm mean}}$ denotes the value of $P_L(h', h)$ if $h' =h$, while $P_{L, {\mathrm var}}$ denotes the difference in $P_L(h', h)$ between a situation where the focal plant with trait value $h'$ is shaded maximally and the situation where it is not shaded at all.
 
 ```{r}
-P.L.flex <- function(h.m, h.r) {
+P.L.flex <- function(h.m, h.r) {# P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant
   P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 1/2)
 }
 
@@ -40,18 +40,18 @@ P.L.var <- 0.5
 # shading from a competitor
 gamma <- 10 
 
-curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("height "* h[1]), ylab = expression("minimum photosynthesis, " * P[L](h[1], h[2] * "=0.5")))
+curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression(height ~ "h'"), ylab = expression("minimum photosynthesis, " * P[L]("h'", h * "=0.5")))
 ```
 
 Now we can plot how the fact that $P_L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h', h)$.
 
 ```{r}
-g.2 <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our function for P.L
+g.flex <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our new function for P.L
   P.L.flex(h.m, h.r) + (P.H - P.L.flex(h.m, h.r))/(1 + exp(-beta*(h.m - h.r)))
 }
 
 beta <- 5 # how fast does g change
-P.H <- 1 # maximum photosythesis (identical in both versions of the model)
+P.H <- 1 # maximum photosynthesis (identical in both versions of the model)
 
 g <- function(h.m, h.r) { # the old function g(h', h) for comparison
   P.L + (P.H - P.L)/(1 + exp(-beta*(h.m - h.r)))
@@ -60,7 +60,7 @@ g <- function(h.m, h.r) { # the old function g(h', h) for comparison
 P.L <- 0.25 # parameter determining the minimum photosynthesis in model with fixed P.L,
 # here chosen to be equal to P.L.mean <- 0.25 for comparison
 
-curve(g.2(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
+curve(g.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
 curve(g(x, h.r = 0.5), from = 0, to = 1, col = "orange", add = TRUE)
 legend("topleft", legend = c(expression(P[L] * " variable "),
                               expression(P[L] * " fixed ")), lty =1, col = c("blue", "orange"))
@@ -75,7 +75,7 @@ f <- function(h) { # same function f(h) as before
 alpha <- 3 # same parameter value as before
 
 w.2 <- function(h.m, h.r) { # payoff function now based on flexible P.L
-  f(h.m) * g.2(h.m, h.r)
+  f(h.m) * g.flex(h.m, h.r)
 }
 
 s <- function(h.m, h.r) { # invasion fitness

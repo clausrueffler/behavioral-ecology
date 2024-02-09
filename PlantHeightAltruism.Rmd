@@ -17,15 +17,39 @@ klippy::klippy(position = c('top', 'right'))
 
 ## The Plant Height Model with Kin Selection
 
-Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
+Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common descent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
 
 $$
 \begin{align}
-W(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h).
+W(h', h)    & = w(h', h', h) + w(h', h, h) \\
+            & = r f(h')g(h', h') + (1 -r) f(h')g(h', h),
 \end{align}
 $$
+where $w(h', h_{\mathrm r}, h)$ is the payoff to a focal plant with height $h'$ growing next to a plant with height $h_{\mathrm r}$ in a population where the height of the resident plants is $h$. With probability $r$ the focal individual and the interacting individual share the gene for plant height by common descent, in which case $h_{\mathrm r}=h'$, and with probability $1-r$ the focal individual and the interacting individual do not share the gene for plant height by common descent, in which case $h_{\mathrm r}=h$.
 
-To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, with the aim to recover Hamilton's rule. Alternatively, we can plot the PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
+For the moment, let us use the same functions $f$ and $g$ as in the unmodified plant height game, namely
+
+$$
+f(h)=1-h^\alpha,
+$$
+
+and
+
+$$
+g(h', h)=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h' - h)\right)}.
+$$
+
+```{r klippy, r}
+f <- function(h) {# amount of leaf biomass as a function of tree height
+  1 - h^alpha
+}
+
+g <- function(h.m, h.r) {# photosynthetic rate as a function of difference in tree height
+  P.L + (P.H - P.L)/(1 + exp(-beta*(h.m - h.r)))
+}
+```
+
+To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, with the aim to recover Hamilton's rule. Next, let us plot a PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
 
 $$
 \begin{align}
@@ -34,14 +58,13 @@ s(h', h) & = W(h', h) - W(h, h)
 $$
 
 ```{r}
-w <- function(h.m, h.r) {
+w <- function(h.m, h.r) {# payoff
   r * f(h.m) * g(h.m, h.m) + (1 - r) * f(h.m) * g(h.m, h.r)
 }
 
-s <- function(h.m, h.r) {
+s <- function(h.m, h.r) {# invasion fitness defined as the difference in payoff
   w(h.m, h.r) - w(h.r, h.r)  
 }
-# Note that w(h.r, h.r) simplifies to f(h)g(h, h).
 ```
 
 ```{r}
@@ -60,38 +83,70 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
                ylab = expression("mutant height h'"))
 ```
 
-As we can see, kin selection reduced the ESS plant height from approximately 0.62 to approximately 0.5.
+As we can see, kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.
 
 ## The Modified Plant Height Model with Kin Selection
 
-Let us now again assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plant and offspring will share the gene for tree height by common decent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
+Let us repeat this analysis but for the modified plant height game where minimum level of photosynthesis, $P_L$, is a function of the degree of shading. Earlier we defined this function as
 
 $$
-\begin{align}
-W(h', h) & = r f(h')g(h', h') + (1 -r) f(h')g(h', h).
-\end{align}
-$$
-
-To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, in the hope to find Hamilton's rule. Alternatively, we can plot the PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
-
-$$
-\begin{align}
-s(h', h) & = W(h', h) - W(h, h)
-\end{align}
+P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right),
 $$
 
 ```{r}
-w <- function(h.m, h.r) {
-  r * f(h.m) * g.2(h.m, h.m) + (1 - r) * f(h.m) * g.2(h.m, h.r)
+P.L.flex <- function(h.m, h.r) {# P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant
+  P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 1/2)
 }
 
-s <- function(h.m, h.r) {
+# the parameter P.L.mean gives P.L when h'= h
+P.L.mean <- 0.25
+
+# next the parameter determining the maximum difference in P.L between
+# completely shaded and maximally sun exposed
+P.L.var <- 0.5
+
+# finally the parameter determining how fast P.L increases with increased
+# shading from a competitor
+gamma <- 10 
+
+curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression(height ~ "h'"), ylab = expression("minimum photosynthesis, " * P[L]("h'", h * "=0.5")))
+```
+
+This gives us a new function of the amount of photosynthesis per leave, as defined earlier.
+
+```{r}
+g.flex <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our new function for P.L
+  P.L.flex(h.m, h.r) + (P.H - P.L.flex(h.m, h.r))/(1 + exp(-beta*(h.m - h.r)))
+}
+
+beta <- 5 # how fast does g change
+P.H <- 1 # maximum photosynthesis (identical in both versions of the model)
+
+g <- function(h.m, h.r) { # the old function g(h', h) for comparison
+  P.L + (P.H - P.L)/(1 + exp(-beta*(h.m - h.r)))
+}
+
+P.L <- 0.25 # parameter determining the minimum photosynthesis in model with fixed P.L,
+# here chosen to be equal to P.L.mean <- 0.25 for comparison
+
+curve(g.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
+curve(g(x, h.r = 0.5), from = 0, to = 1, col = "orange", add = TRUE)
+legend("topleft", legend = c(expression(P[L] * " variable "),
+                              expression(P[L] * " fixed ")), lty =1, col = c("blue", "orange"))
+```
+
+Let us put all this together to produce a PIP
+
+```{r}
+w <- function(h.m, h.r) {# payoff, now using the function g.flex
+  r * f(h.m) * g.flex(h.m, h.m) + (1 - r) * f(h.m) * g.flex(h.m, h.r)
+}
+
+s <- function(h.m, h.r) {# invasion fitness defined as the difference in payoff
   w(h.m, h.r) - w(h.r, h.r)  
 }
 # Note that w(h.r, h.r) simplifies to f(h)g(h, h).
-```
 
-```{r}
 r <- 0.5
 alpha <- 3
 beta <- 5
@@ -107,7 +162,7 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
                ylab = expression("mutant height h'"))
 ```
 
-As we can see, kin selection reduced the ESS plant height from approximately 0.42 to approximately 0.3.
+As we can see, in the modified plant height game, kin selection reduces the ESS plant height from approximately 0.42 to approximately 0.3.
 
 In order to determine whether a mutant *p'* will replace the resident *p* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 
@@ -141,4 +196,4 @@ plot.title={
 # resulting in fixation of one of the genotypes
 ```
 
-The possibility for evolutionary brancing does not seem to be affected by kin selection.
+The possibility for evolutionary branching does not seem to be affected by kin selection.
