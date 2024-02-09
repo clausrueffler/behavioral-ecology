@@ -19,7 +19,7 @@ klippy::klippy(position = c('top', 'right'))
 
 On this page, we explore a model for the evolution of altruism. Specifically, we investigate the possibility that individuals sacrifice their own life in order to increase the survival of other individuals. As we will see, such behavior can evolve if a self-sacrifice benefits related individuals.
 
-In this example, *pay-off* is equal to *survival*. Individuals are characterized by a strategy *x*, which is the probability that they sacrifice their life in order to increase the survival of another individual with which they interact. For examples, a focal individual can give its resources to another individual. As a result, the focal individual dies while the survival of the interacting individual increases by *B*.
+In this example, *payoff* is equal to *survival*. Individuals are characterized by a strategy *x*, which is the probability that they sacrifice their life in order to increase the survival of another individual with which they interact. For examples, a focal individual can give its resources to another individual. As a result, the focal individual dies while the survival of the interacting individual increases by *B*.
 
 The survival of an individual that sacrifices itself is assumed to be zero. If an individual does not sacrifice its life it survives with probability $S$. This survival probability can be increased by an amount $B$ if the interacting individual sacrifices its life. With this, the expected survival of an individual with strategy $x'$ that interacts with an individual with strategy $x$ is
 
@@ -42,7 +42,7 @@ $$
 We here use the notation $W_C$ for individuals that self-sacrifice (*C* stands for cooperate) and $W_D$ for individuals that do not self-sacrifice (*D* stands for defect). *Cooperate* and *defect* is a common terminology in game theory in the context of altruism. Now let us consider a rare mutant that self-sacrifices with probability $x'$. With probability $x'$ this individuals dies and with probability $(1-x')$ it survives with probability $W_D(x)$. Taken together, the survival of a rare mutant individual with strategy $x'$ in a resident population with strategy $x$ is given by
 -->
 
-Similarly, the expected survival of an individual with strategy $x$ interactiong with another individual with strategy $x$ is given by
+Similarly, the expected survival of an individual with strategy $x$ interacting with another individual with strategy $x$ is given by
 
 $$
 \begin{align}
@@ -60,7 +60,7 @@ s(x', x) & = W(x', x) - W(x, x)\\
 \end{align}
 $$
 
-Since only mutants with $s(x', x) > 0$ can invade, we can see from the above equation that a mutant $x'$ can invade a resident population with strategy $x$ only if $x' < x$. From this, we can conclude that $x$ will evolve to $0$: no individual sacrifices its life to increase the survival of another individual. Also, $x^*=0$ is an ESS, since any possible mutant will then have a negative invasion fitness. This result makes intuitive sense: We do not expect that natural selection favors to give away ones life for the benefit of another individual.
+Since only mutants with $s(x', x) > 0$ can invade, we can see from the above equation that a mutant $x'$ can invade a resident population with strategy $x$ only if $x' < x$. From this, we can conclude that $x$ will evolve to $x=0$: no individual sacrifices its life to increase the survival of another individual. Also, $x^*=0$ is an ESS, since any possible mutant will then have a negative invasion fitness. This result makes intuitive sense: We do not expect that natural selection favors to give away ones life for the benefit of another individual.
 
 We can confirm this result by plotting a *Pairwise Invadability Plot*. Remember that a PIP is a contour plot of invasion fitness *s(x', x)*. PIP's have a contour-line where *s(x', x) = 0*. Since by definition *s(x, x) = 0*, PIP's always have a contour line along the diagonal (the 45-degree line). But as we have seen in the plant-height model, mutants *x'* different from *x* can also have zero-invasion fitness and these form a second contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value *x'* and residents with trait value *x* such that the mutant has positive invasion fitness and can therefore establish itself in the population.
 
