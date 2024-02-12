@@ -117,7 +117,7 @@ W(x', x) & = r w(x', x', x) + (1 - r) w(x', x, x) \\
         & = (1 - x')(r (S + B x') + (1 - r) (S + B x) \\
         & = (1 - x') ((S + B x) + r B (x' - x)),\\\\
 W(x, x) & = r w(x, x, x) + (1 - r) w(x, x, x) \\
-        & = (1 - x)(r (S + B x) + (1 - r) (S + B x)\\
+        & = w(x, x, x)\\
         & = (1 - x)(S + B x),
 \end{align}
 $$
@@ -133,7 +133,7 @@ s(x', x) & = W(x', x) - W(x, x)\\
 \end{align}
 $$         
          
-Let us define $c := (S + B x)$ and $b := (1 - x') B$. Here, $c$ is the survival probability of an individual interacting with an individual with allele $x$ while $b$ is the expected increase in survival when interacting with an individual with allele $x'$.
+Let us define $c := (S + B x)$ and $b := (1 - x') B$. Here, $c$ is the survival probability of an individual interacting with an individual with allele $x$. This is the potential survival that is lost if an individual sacrifices itself, and therefore appears as a direct cost. In contrast, $b$ is the expected increase in survival when interacting with an individual with allele $x'$ and is thus an indirect benefit.
 
 $$
 s(x', x)  = (x' - x) (-c + r b),
@@ -150,7 +150,11 @@ This last inequality is known as **Hamilton's Rule**. It says that an altruistic
 We can also derive at this conclusion by looking at the partial derivative of $W(x', x)$ with respect to $x'$ when evaluated at $x' = x$, as we did in the lecture. Then we obtain
 
 $$
-\frac{\partial W(x', x)}{\partial x'}\bigg|_{x' = x} = -\underbrace{(S + B x)}_{\text{costs} \,\, c} + \underbrace{r (1 - x)B}_{\text{benefits} \,\, b},
+\begin{align}
+\frac{\partial W(x', x)}{\partial x'}\bigg|_{x' = x} & = r B -(S + Bx) + rBx - 2rBx
+ \\
+ & = -\underbrace{(S + B x)}_{\text{costs} \,\, c} + r \underbrace{(1 - x)B}_{\text{benefits} \,\, b},
+\end{align}
 $$
 indicating the selection favors mutants with increased propensity to self-sacrifice if and only if $rb>c$, that is, if Hamilton's rule is fulfilled.
 

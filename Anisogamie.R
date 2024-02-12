@@ -4,7 +4,7 @@ sur <- function(m.m, m.r) {
   1/(1 + exp(-alpha*(m.m + m.r - 1)))
 }
 
-alpha <- 10
+alpha <- 15
 curve(sur(x, m.r = 0.5), from = 0, to = 1, ylim = c(0,1), col = "blue",
       xlab = expression("mutant gamete size, m'"),
       ylab = expression("zygote survival, s"))

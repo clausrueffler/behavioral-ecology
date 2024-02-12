@@ -469,7 +469,7 @@ W(x&#39;, x) &amp; = r w(x&#39;, x&#39;, x) + (1 - r) w(x&#39;, x, x) \\
         &amp; = (1 - x&#39;)(r (S + B x&#39;) + (1 - r) (S + B x) \\
         &amp; = (1 - x&#39;) ((S + B x) + r B (x&#39; - x)),\\\\
 W(x, x) &amp; = r w(x, x, x) + (1 - r) w(x, x, x) \\
-        &amp; = (1 - x)(r (S + B x) + (1 - r) (S + B x)\\
+        &amp; = w(x, x, x)\\
         &amp; = (1 - x)(S + B x),
 \end{align}
 \]</span></p>
@@ -482,7 +482,7 @@ s(x&#39;, x) &amp; = W(x&#39;, x) - W(x, x)\\
          &amp; = (x&#39; - x) (-(S + B x) + r (1 - x&#39;) B)
 \end{align}
 \]</span></p>
-<p>Let us define <span class="math inline">\(c := (S + B x)\)</span> and <span class="math inline">\(b := (1 - x&#39;) B\)</span>. Here, <span class="math inline">\(c\)</span> is the survival probability of an individual interacting with an individual with allele <span class="math inline">\(x\)</span> while <span class="math inline">\(b\)</span> is the expected increase in survival when interacting with an individual with allele <span class="math inline">\(x&#39;\)</span>.</p>
+<p>Let us define <span class="math inline">\(c := (S + B x)\)</span> and <span class="math inline">\(b := (1 - x&#39;) B\)</span>. Here, <span class="math inline">\(c\)</span> is the survival probability of an individual interacting with an individual with allele <span class="math inline">\(x\)</span>. This is the potential survival that is lost if an individual sacrifices itself, and therefore appears as a direct cost. In contrast, <span class="math inline">\(b\)</span> is the expected increase in survival when interacting with an individual with allele <span class="math inline">\(x&#39;\)</span> and is thus an indirect benefit.</p>
 <p><span class="math display">\[
 s(x&#39;, x)  = (x&#39; - x) (-c + r b),
 \]</span></p>
@@ -493,7 +493,11 @@ r b &gt; c.
 <p>This last inequality is known as <strong>Hamilton’s Rule</strong>. It says that an altruistic act can evolve only if the benefit <span class="math inline">\(b\)</span> of an altruistic act, weighted by the coefficient of relatedness <span class="math inline">\(r\)</span> between the actor and receiver, is larger than the costs <span class="math inline">\(c\)</span> to the actor.</p>
 <p>We can also derive at this conclusion by looking at the partial derivative of <span class="math inline">\(W(x&#39;, x)\)</span> with respect to <span class="math inline">\(x&#39;\)</span> when evaluated at <span class="math inline">\(x&#39; = x\)</span>, as we did in the lecture. Then we obtain</p>
 <p><span class="math display">\[
-\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} = -\underbrace{(S + B x)}_{\text{costs} \,\, c} + \underbrace{r (1 - x)B}_{\text{benefits} \,\, b},
+\begin{align}
+\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} &amp; = r B -(S + Bx) + rBx - 2rBx
+ \\
+ &amp; = -\underbrace{(S + B x)}_{\text{costs} \,\, c} + r \underbrace{(1 - x)B}_{\text{benefits} \,\, b},
+\end{align}
 \]</span> indicating the selection favors mutants with increased propensity to self-sacrifice if and only if <span class="math inline">\(rb&gt;c\)</span>, that is, if Hamilton’s rule is fulfilled.</p>
 <p>What is the ESS for this model? To answer this question we again plot the PIP.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(x.m, x.r) {</span>
