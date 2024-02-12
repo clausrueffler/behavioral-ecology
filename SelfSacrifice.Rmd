@@ -182,7 +182,7 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
 
 From this graph we can read that $p^* = 0.33$ is an ESS. If the resident strategy is equal to this value, then  $s(x', x^*) < 0$ for all $x' \neq x^*$.
 
-In order to determine whether a mutant *x'* will replace the resident *x* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
+In order to determine whether a mutant $x'$ will replace the resident $x$ or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 
 ```{r}
 s.flipped.roles <- function(x.m, x.r) {
@@ -212,9 +212,9 @@ plot.title={
 })
 ```
 
-The green region in the last plot shows combinations of self-sacrifice strategies *x'* and *x* that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.
+The green region in the last plot shows combinations of self-sacrifice strategies $x'$ and $x$ that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.
 
-Importantly, there is no *evolutionary branching point*. Thus, such a polymorphism cannot emerge by gradual evolution of the trait value *x*. It can only emerge through a mutation with a relatively large mutational effect on *x*.
+Importantly, there is no *evolutionary branching point*. Thus, such a polymorphism cannot emerge by gradual evolution of the trait value $x$. It can only emerge through a mutation with a relatively large mutational effect on $x$.
 
-However, one can show that for areas of coexistence that are not connected to an evolutionary branching point, further evolution of the two coexisting strategies results in the convergencee of the two strategy values and ultimately in the loss of one of them. Evolution will then result in the ESS $x^*$.
+However, one can show that for areas of coexistence that are not connected to an evolutionary branching point, further evolution of the two coexisting strategies results in the convergence of the two strategy values and ultimately in the loss of one of them. Evolution will then result in the ESS $x^*$.
 

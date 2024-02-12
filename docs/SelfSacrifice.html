@@ -519,7 +519,7 @@ r b &gt; c.
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant x&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>From this graph we can read that <span class="math inline">\(p^* = 0.33\)</span> is an ESS. If the resident strategy is equal to this value, then <span class="math inline">\(s(x&#39;, x^*) &lt; 0\)</span> for all <span class="math inline">\(x&#39; \neq x^*\)</span>.</p>
-<p>In order to determine whether a mutant <em>x’</em> will replace the resident <em>x</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
+<p>In order to determine whether a mutant <span class="math inline">\(x&#39;\)</span> will replace the resident <span class="math inline">\(x\)</span> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(x.m, x.r) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(x.r, x.m) <span class="sc">-</span> <span class="fu">w</span>(x.m, x.m)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -543,9 +543,9 @@ r b &gt; c.
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>The green region in the last plot shows combinations of self-sacrifice strategies <em>x’</em> and <em>x</em> that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.</p>
-<p>Importantly, there is no <em>evolutionary branching point</em>. Thus, such a polymorphism cannot emerge by gradual evolution of the trait value <em>x</em>. It can only emerge through a mutation with a relatively large mutational effect on <em>x</em>.</p>
-<p>However, one can show that for areas of coexistence that are not connected to an evolutionary branching point, further evolution of the two coexisting strategies results in the convergencee of the two strategy values and ultimately in the loss of one of them. Evolution will then result in the ESS <span class="math inline">\(x^*\)</span>.</p>
+<p>The green region in the last plot shows combinations of self-sacrifice strategies <span class="math inline">\(x&#39;\)</span> and <span class="math inline">\(x\)</span> that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.</p>
+<p>Importantly, there is no <em>evolutionary branching point</em>. Thus, such a polymorphism cannot emerge by gradual evolution of the trait value <span class="math inline">\(x\)</span>. It can only emerge through a mutation with a relatively large mutational effect on <span class="math inline">\(x\)</span>.</p>
+<p>However, one can show that for areas of coexistence that are not connected to an evolutionary branching point, further evolution of the two coexisting strategies results in the convergence of the two strategy values and ultimately in the loss of one of them. Evolution will then result in the ESS <span class="math inline">\(x^*\)</span>.</p>
 </div>
 </div>
 
