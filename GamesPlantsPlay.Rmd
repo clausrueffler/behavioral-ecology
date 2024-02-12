@@ -168,7 +168,7 @@ What this shows, is that this game between two plants has exactly one Nash equil
 ### TASKS
 
   (1)
-Evaluate all the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not be relevant for the exam).
+Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).
 
   (2)
 Produce the graphs *photosynthesis/leaf vs. plant height* and *payoff w(h', h) vs. height h'$ for a different value of the resident strategy h*. Select an h-value of your own choice. How do the graphs differ from those with *h=0.5*. Give an interpretation for the observed difference.

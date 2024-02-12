@@ -13,7 +13,7 @@
 
 <title>Games Plants Play</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,9 +280,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -380,39 +387,16 @@ $(document).ready(function () {
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <!-- # Games Plants Play {.tabset} -->
-<div id="the-plant-height-model-with-kin-selection"
-class="section level2">
+<div id="the-plant-height-model-with-kin-selection" class="section level2">
 <h2>The Plant Height Model with Kin Selection</h2>
-<p>Let us now assume that seeds do not disperse far so that new plants
-grow next to their mother plant. Mother plants and their offspring share
-the gene for tree height by common descent with probability <span
-class="math inline">\(r\)</span>, the relatedness coefficient. The
-payoff to a rare mutant with allele <span
-class="math inline">\(h&#39;\)</span> is then given by</p>
+<p>Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common descent with probability <span class="math inline">\(r\)</span>, the relatedness coefficient. The payoff to a rare mutant with allele <span class="math inline">\(h&#39;\)</span> is then given by</p>
 <p><span class="math display">\[
 \begin{align}
 W(h&#39;, h)    &amp; = w(h&#39;, h&#39;, h) + w(h&#39;, h, h) \\
-            &amp; = r f(h&#39;)g(h&#39;, h&#39;) + (1 -r)
-f(h&#39;)g(h&#39;, h),
+            &amp; = r f(h&#39;)g(h&#39;, h&#39;) + (1 -r) f(h&#39;)g(h&#39;, h),
 \end{align}
-\]</span> where <span class="math inline">\(w(h&#39;, h_{\mathrm r},
-h)\)</span> is the payoff to a focal plant with height <span
-class="math inline">\(h&#39;\)</span> growing next to a plant with
-height <span class="math inline">\(h_{\mathrm r}\)</span> in a
-population where the height of the resident plants is <span
-class="math inline">\(h\)</span>. With probability <span
-class="math inline">\(r\)</span> the focal individual and the
-interacting individual share the gene for plant height by common
-descent, in which case <span class="math inline">\(h_{\mathrm
-r}=h&#39;\)</span>, and with probability <span
-class="math inline">\(1-r\)</span> the focal individual and the
-interacting individual do not share the gene for plant height by common
-descent, in which case <span class="math inline">\(h_{\mathrm
-r}=h\)</span>.</p>
-<p>For the moment, let us use the same functions <span
-class="math inline">\(f\)</span> and <span
-class="math inline">\(g\)</span> as in the unmodified plant height game,
-namely</p>
+\]</span> where <span class="math inline">\(w(h&#39;, h_{\mathrm r}, h)\)</span> is the payoff to a focal plant with height <span class="math inline">\(h&#39;\)</span> growing next to a plant with height <span class="math inline">\(h_{\mathrm r}\)</span> in a population where the height of the resident plants is <span class="math inline">\(h\)</span>. With probability <span class="math inline">\(r\)</span> the focal individual and the interacting individual share the gene for plant height by common descent, in which case <span class="math inline">\(h_{\mathrm r}=h&#39;\)</span>, and with probability <span class="math inline">\(1-r\)</span> the focal individual and the interacting individual do not share the gene for plant height by common descent, in which case <span class="math inline">\(h_{\mathrm r}=h\)</span>.</p>
+<p>For the moment, let us use the same functions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> as in the unmodified plant height game, namely</p>
 <p><span class="math display">\[
 f(h)=1-h^\alpha,
 \]</span></p>
@@ -427,14 +411,7 @@ g(h&#39;, h)=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h&#39; - h)\right)}.
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {<span class="co"># photosynthetic rate as a function of difference in tree height</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  P.L <span class="sc">+</span> (P.H <span class="sc">-</span> P.L)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>To determine whether selection favors increased values of <span
-class="math inline">\(h\)</span>, we could take the partial derivative
-of <span class="math inline">\(w(h&#39;, h)\)</span>, evaluated at <span
-class="math inline">\(h&#39; = h\)</span>, with the aim to recover
-Hamilton’s rule. Next, let us plot a PIP to investigate the effect of
-kin selection on ESS tree height. For this, we compute invasion fitness,
-here defined as the difference in payoff between mutant and
-resident.</p>
+<p>To determine whether selection favors increased values of <span class="math inline">\(h\)</span>, we could take the partial derivative of <span class="math inline">\(w(h&#39;, h)\)</span>, evaluated at <span class="math inline">\(h&#39; = h\)</span>, with the aim to recover Hamilton’s rule. Next, let us plot a PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.</p>
 <p><span class="math display">\[
 \begin{align}
 s(h&#39;, h) &amp; = W(h&#39;, h) - W(h, h)
@@ -461,20 +438,13 @@ s(h&#39;, h) &amp; = W(h&#39;, h) - W(h, h)
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="PlantHeightAltruism_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>As we can see, kin selection reduces the ESS plant height from
-approximately 0.62 to approximately 0.5.</p>
+<p>As we can see, kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.</p>
 </div>
-<div id="the-modified-plant-height-model-with-kin-selection"
-class="section level2">
+<div id="the-modified-plant-height-model-with-kin-selection" class="section level2">
 <h2>The Modified Plant Height Model with Kin Selection</h2>
-<p>Let us repeat this analysis but for the modified plant height game
-where minimum level of photosynthesis, <span
-class="math inline">\(P_L\)</span>, is a function of the degree of
-shading. Earlier we defined this function as</p>
+<p>Let us repeat this analysis but for the modified plant height game where minimum level of photosynthesis, <span class="math inline">\(P_L\)</span>, is a function of the degree of shading. Earlier we defined this function as</p>
 <p><span class="math display">\[
-P_L(h&#39;, h) = P_{L, \mathrm{mean}} + P_{L,
-\mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h&#39; - h)\right)}-
-\frac{1}{2}\right),
+P_L(h&#39;, h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h&#39; - h)\right)}- \frac{1}{2}\right),
 \]</span></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>P.L.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {<span class="co"># P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  P.L.mean <span class="sc">+</span> P.L.var<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(gamma<span class="sc">*</span>(h.m <span class="sc">-</span> h.r))) <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
@@ -493,8 +463,7 @@ P_L(h&#39;, h) = P_{L, \mathrm{mean}} + P_{L,
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">P.L.flex</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(height <span class="sc">~</span> <span class="st">&quot;h&#39;&quot;</span>), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;minimum photosynthesis, &quot;</span> <span class="sc">*</span> P[L](<span class="st">&quot;h&#39;&quot;</span>, h <span class="sc">*</span> <span class="st">&quot;=0.5&quot;</span>)))</span></code></pre></div>
 <p><img src="PlantHeightAltruism_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>This gives us a new function of the amount of photosynthesis per
-leave, as defined earlier.</p>
+<p>This gives us a new function of the amount of photosynthesis per leave, as defined earlier.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>g.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># this a new function for g(h&#39;, h) that incorporates our new function for P.L</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">P.L.flex</span>(h.m, h.r) <span class="sc">+</span> (P.H <span class="sc">-</span> <span class="fu">P.L.flex</span>(h.m, h.r))<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -538,12 +507,8 @@ leave, as defined earlier.</p>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="PlantHeightAltruism_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>As we can see, in the modified plant height game, kin selection
-reduces the ESS plant height from approximately 0.42 to approximately
-0.3.</p>
-<p>In order to determine whether a mutant <em>p’</em> will replace the
-resident <em>p</em> or coexist with it, we plot the mirror image of a
-PIP (mirrored over the 45-degree line).</p>
+<p>As we can see, in the modified plant height game, kin selection reduces the ESS plant height from approximately 0.42 to approximately 0.3.</p>
+<p>In order to determine whether a mutant <em>p’</em> will replace the resident <em>p</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.r, h.m) <span class="sc">-</span> <span class="fu">w</span>(h.m, h.m)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -569,8 +534,7 @@ PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># green area: mutual invadability resulting in coexistence</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># blue area: one trait value can invade the other but not vice versa,</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># resulting in fixation of one of the genotypes</span></span></code></pre></div>
-<p>The possibility for evolutionary branching does not seem to be
-affected by kin selection.</p>
+<p>The possibility for evolutionary branching does not seem to be affected by kin selection.</p>
 </div>
 
 

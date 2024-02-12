@@ -13,7 +13,7 @@
 
 <title>Games Plants Play</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,9 +280,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -380,45 +387,12 @@ $(document).ready(function () {
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <!-- # Exercise: Games Plants Play {.tabset} -->
-<div id="evolution-in-a-modified-plant-height-model"
-class="section level2">
+<div id="evolution-in-a-modified-plant-height-model" class="section level2">
 <h2>Evolution in a Modified Plant Height Model</h2>
-<p>Let us modify one assumption in our model. Above we assumed that the
-minimum and maximum amount of photosynthesis, <span
-class="math inline">\(P_L\)</span> and <span
-class="math inline">\(P_H\)</span>, are fixed parameters. Hanna Kokko
-suggests that the values of <span class="math inline">\(P_L\)</span> and
-<span class="math inline">\(P_H\)</span> are determined by leaf
-structure. Indeed, some plant species have rather thick, leathery leaves
-that are protected by a very thick cuticula while other plants have
-rather thin leaves that are hardly protected by a cuticula. This plant
-trait is generally related to the amount of sun light a plant is exposed
-to. Leave thickness is an adaptation against water loss and plants
-exposed to more intense sun light have thicker leaves, which decreases
-their photosynthetic efficiency. It therefore seems reasonable to assume
-that plants that are shaded by other plants have thinner leaves that can
-photosynthesize more efficiently and therefore have a higher value for
-<span class="math inline">\(P_L\)</span>. Let us implement this idea by
-making <span class="math inline">\(P_L\)</span> a function of the degree
-of shading from a competing plant. More specifically, we will assume
-that <span class="math inline">\(P_L\)</span> of a plant with strategy
-<span class="math inline">\(h&#39;\)</span> increases with increasing
-height difference <span class="math inline">\(h-h&#39;\)</span>. A
-function for <span class="math inline">\(P_L(h&#39;, h)\)</span> that
-depends on <em>h’-h</em> and has the desired properties is</p>
+<p>Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosynthesis, <span class="math inline">\(P_L\)</span> and <span class="math inline">\(P_H\)</span>, are fixed parameters. Hanna Kokko suggests that the values of <span class="math inline">\(P_L\)</span> and <span class="math inline">\(P_H\)</span> are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for <span class="math inline">\(P_L\)</span>. Let us implement this idea by making <span class="math inline">\(P_L\)</span> a function of the degree of shading from the neighboring plant. More specifically, we will assume that <span class="math inline">\(P_L\)</span> of a plant with strategy <span class="math inline">\(h&#39;\)</span> increases with increasing height difference <span class="math inline">\(h-h&#39;\)</span>. A function for <span class="math inline">\(P_L(h&#39;, h)\)</span> that depends on <em>h’-h</em> and has the desired properties is</p>
 <p><span class="math display">\[
-P_L(h&#39;, h) = P_{L, \mathrm{mean}} + P_{L,
-\mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h&#39; - h)\right)}-
-\frac{1}{2}\right),
-\]</span> where <span class="math inline">\(P_{L, {\mathrm
-mean}}\)</span> denotes the value of <span
-class="math inline">\(P_L(h&#39;, h)\)</span> if <span
-class="math inline">\(h&#39; =h\)</span>, while <span
-class="math inline">\(P_{L, {\mathrm var}}\)</span> denotes the
-difference in <span class="math inline">\(P_L(h&#39;, h)\)</span>
-between a situation where the focal plant with trait value <span
-class="math inline">\(h&#39;\)</span> is shaded maximally and the
-situation where it is not shaded at all.</p>
+P_L(h&#39;, h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h&#39; - h)\right)}- \frac{1}{2}\right),
+\]</span> where <span class="math inline">\(P_{L, {\mathrm mean}}\)</span> denotes the value of <span class="math inline">\(P_L(h&#39;, h)\)</span> if <span class="math inline">\(h&#39; =h\)</span>, while <span class="math inline">\(P_{L, {\mathrm var}}\)</span> denotes the difference in <span class="math inline">\(P_L(h&#39;, h)\)</span> between a situation where the focal plant with trait value <span class="math inline">\(h&#39;\)</span> is shaded maximally and the situation where it is not shaded at all.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>P.L.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {<span class="co"># P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  P.L.mean <span class="sc">+</span> P.L.var<span class="sc">*</span>(<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(gamma<span class="sc">*</span>(h.m <span class="sc">-</span> h.r))) <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -436,11 +410,7 @@ situation where it is not shaded at all.</p>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">P.L.flex</span>(x, <span class="at">h.r =</span> <span class="fl">0.5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(height <span class="sc">~</span> <span class="st">&quot;h&#39;&quot;</span>), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;minimum photosynthesis, &quot;</span> <span class="sc">*</span> P[L](<span class="st">&quot;h&#39;&quot;</span>, h <span class="sc">*</span> <span class="st">&quot;=0.5&quot;</span>)))</span></code></pre></div>
 <p><img src="Evolution2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>Now we can plot how the fact that <span
-class="math inline">\(P_L\)</span> depends on the plant heights <span
-class="math inline">\(h&#39;\)</span> and <span
-class="math inline">\(h\)</span> affects the shape of the function <span
-class="math inline">\(g(h&#39;, h)\)</span>.</p>
+<p>Now we can plot how the fact that <span class="math inline">\(P_L\)</span> depends on the plant heights <span class="math inline">\(h&#39;\)</span> and <span class="math inline">\(h\)</span> affects the shape of the function <span class="math inline">\(g(h&#39;, h)\)</span>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g.flex <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) { <span class="co"># this a new function for g(h&#39;, h) that incorporates our new function for P.L</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">P.L.flex</span>(h.m, h.r) <span class="sc">+</span> (P.H <span class="sc">-</span> <span class="fu">P.L.flex</span>(h.m, h.r))<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -460,10 +430,7 @@ class="math inline">\(g(h&#39;, h)\)</span>.</p>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">expression</span>(P[L] <span class="sc">*</span> <span class="st">&quot; variable &quot;</span>),</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">expression</span>(P[L] <span class="sc">*</span> <span class="st">&quot; fixed &quot;</span>)), <span class="at">lty =</span><span class="dv">1</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;orange&quot;</span>))</span></code></pre></div>
 <p><img src="Evolution2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>We are interested in how our new assumption affects the PIP and
-whether we find heights <em>h’</em> and <em>h</em> that are able to
-coexist with each other. To this end, we repeat the same steps as on the
-previous side. First, we produce the PIP.</p>
+<p>We are interested in how our new assumption affects the PIP and whether we find heights <em>h’</em> and <em>h</em> that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(h) { <span class="co"># same function f(h) as before</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="sc">-</span> h<span class="sc">^</span>alpha</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -483,9 +450,7 @@ previous side. First, we produce the PIP.</p>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>),</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="Evolution2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>In order to determine whether a mutant <em>p’</em> will replace the
-resident <em>p</em> or coexist with it, we plot the mirror image of a
-PIP (mirrored over the 45-degree line).</p>
+<p>In order to determine whether a mutant <em>p’</em> will replace the resident <em>p</em> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w.2</span>(h.r, h.m) <span class="sc">-</span> <span class="fu">w.2</span>(h.m, h.m)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -512,18 +477,20 @@ PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># green area: mutual invadability resulting in coexistence</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># blue area: one trait value can invade the other but not vice versa,</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># resulting in fixation of one of the genotypes</span></span></code></pre></div>
-<p>Something very interesting has happened! The green region in the last
-plot shows combinations of plant heights <em>h’</em> and <em>h</em> that
-each have a positive invasion fitness when rare. Thus, these different
-plants (plant species) are able to coexist with each other in a stable
-polymorphism. In fact, the PIP above is very special as it shows a
-so-called <em>evolutionary branching point</em> where one population can
-split into two in a process of gradual evolution. Models with such
-branching point play an important role in speciation research.</p>
-<p>In the present model, find coexistence of one plant species that is
-less tall and adapted to low-light conditions and a taller plant that
-shades the less tall plant and is not adapted to low-light
-conditions.</p>
+<p>Something very interesting has happened! The green region in the last plot shows combinations of plant heights <em>h’</em> and <em>h</em> that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a protected polymorphism. In fact, the PIP above is very special as it shows a so-called <em>evolutionary branching point</em> where one population can split into two during a process of gradual evolution. Models with branching points play an important role in speciation research.</p>
+<p>In the present model, we find coexistence of one plant species that invests less energy in growing a stem and that is adapted to low-light conditions and another plant species that invests more in growing a stem which thick leaves that are not adapted to low-light conditions.</p>
+<div id="tasks" class="section level3">
+<h3>TASKS</h3>
+<ol style="list-style-type: decimal">
+<li><p>Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).</p></li>
+<li><p>Repeat the above analysis for different parameter values.</p>
+<ul>
+<li>Change <code>P.L.var</code> from <span class="math inline">\(0.5\)</span> first to <span class="math inline">\(0.4\)</span> and then to <span class="math inline">\(0.3\)</span>.</li>
+<li>Describe how the area of coexistence changes. In which cases can a protected polymorphism evolve through gradual evolution? Explain why your findings makes biological sense.</li>
+</ul></li>
+</ol>
+<p>Submit your results as an html file, either by using the <em>compile report</em>-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown <a href="https://clausrueffler.github.io/CodingWithR/Markdown.html"><strong>here</strong></a>).</p>
+</div>
 </div>
 
 

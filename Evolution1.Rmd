@@ -98,14 +98,14 @@ plot.title={
 })
 ```
 
-In this last plot the red area corresponds to combinations of heights *h'* and *h* where neither strategy can invade the other. In other words: whoever was first wins. In contrast, the blue areas correspond to combinations of heights where either the mutant or the resident wins. These results show that in the current model it is not possible for two plant species with different heights to coexist.
+In this last plot the red area corresponds to combinations of heights *h'* and *h* where neither strategy can invade the other. In other words: whoever was first, wins. The blue areas correspond to combinations of heights where either the mutant or the resident wins. These results show that in the current model coexistence of plant species with different heights is not possible.
 <!--: there always exists a unique height that will win against plants with any other height.-->
 
 In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as *Adaptive Dynamics* or *Evolutionary Invasion Analysis*. If you want to learn more about this, Chapter 7 in the book by Hanna Kokko (2007) is a good starting point.
 
 ### TASKS
 
-1. Evaluate all the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not be relevant for the exam).
+1. Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).
 
 2. Repeat the above analysis for different parameter values.
     + Change $\alpha$ from 3 to 1.

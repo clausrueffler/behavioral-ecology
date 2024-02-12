@@ -17,7 +17,7 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in a Modified Plant Height Model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosynthesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from a competing plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
+Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosynthesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from the neighboring plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
 
 $$
 P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right),
@@ -123,6 +123,17 @@ plot.title={
 # resulting in fixation of one of the genotypes
 ```
 
-Something very interesting has happened! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a stable polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with such branching point play an important role in speciation research.
+Something very interesting has happened! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a protected polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two during a process of gradual evolution. Models with branching points play an important role in speciation research.
 
-In the present model, find coexistence of one plant species that is less tall and adapted to low-light conditions and a taller plant that shades the less tall plant and is not adapted to low-light conditions.
+In the present model, we find coexistence of one plant species that invests less energy in growing a stem and that is adapted to low-light conditions and another plant species that invests more in growing a stem which thick leaves that are not adapted to low-light conditions.
+
+### TASKS
+
+1. Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).
+
+2. Repeat the above analysis for different parameter values.
+    + Change ```P.L.var``` from $0.5$ first to $0.4$ and then to $0.3$.
+    + Describe how the area of coexistence changes. In which cases can a protected polymorphism evolve through gradual evolution? Explain why your findings makes biological sense.
+
+
+Submit your results as an html file, either by using the *compile report*-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown [**here**](https://clausrueffler.github.io/CodingWithR/Markdown.html)).
