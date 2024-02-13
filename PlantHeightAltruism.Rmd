@@ -21,7 +21,7 @@ Let us now assume that seeds do not disperse far so that new plants grow next to
 
 $$
 \begin{align}
-W(h', h)    & = w(h', h', h) + w(h', h, h) \\
+W(h', h)    & = r w(h', h', h) + (1 - r)w(h', h, h) \\
             & = r f(h')g(h', h') + (1 -r) f(h')g(h', h),
 \end{align}
 $$
@@ -85,6 +85,7 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
 
 As we can see, kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.
 
+<!--
 ## The Modified Plant Height Model with Kin Selection
 
 Let us repeat this analysis but for the modified plant height game where minimum level of photosynthesis, $P_L$, is a function of the degree of shading. Earlier we defined this function as
@@ -197,3 +198,4 @@ plot.title={
 ```
 
 The possibility for evolutionary branching does not seem to be affected by kin selection.
+-->
