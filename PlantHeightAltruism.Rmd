@@ -85,6 +85,27 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
 
 As we can see, kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.
 
+We can understand this result by looking at the derivative
+
+$$
+\begin{align}
+\frac{\partial W(h', h)}{\partial h'}\bigg|_{h' = h} 
+  & =\frac{\partial}{\partial h'} (W(h', h)w(h', h', h) + w(h', h, h))\big|_{h' = h} \\
+  & = \frac{\partial}{\partial h'} (r f(h')g(h', h') + (1 -r) f(h')g(h', h))\big|_{h' = h}, \\
+\end{align}
+$$
+
+which becomes
+
+$$
+\begin{align}
+\frac{\partial W(h', h)}{\partial h'}\bigg|_{h' = h} 
+  & = \underbrace{\frac{\partial}{\partial h'}(f(h')g(h', h))}_{costs} + r \underbrace{\frac{\partial}{\partial h}(g(h', h))}_{-benefits}.
+\end{align}
+$$
+
+First, let us note that in the plant height game, growing *less tall* can be considered an act of altruism (if the costs of doing so are positive) or an act of cooperation (if the costs of doing so are negative). This is the reason why in the above equation, the first term is defined as $c$ and the second term as $-b$ (compare with the corresponding equation in the self-sacrificing game). The cost-term describes the effect of changing the strategy value $h'$ of the actor on the payoff of the actor itself. This term is negative when the $h'>h^*$, where $h^*$ is the evolutionary stable strategy value in the absence of kin competition, and positive in the reverse case. The benefit-term describes the effect of a trait change of the interacting individual (the recipient) on the payoff of the actor. This term is always negative (if the neighboring plant grows higher, the focal individual is more shaded). This analysis shows that competition with kin always selects for a lower ESS-value compared to the model without kin selelction.
+
 <!--
 ## The Modified Plant Height Model with Kin Selection
 
