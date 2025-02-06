@@ -382,7 +382,7 @@ $(document).ready(function () {
 <!-- # Exercise: Games Plants Play {.tabset} -->
 <div id="a-simple-model-for-plant-growth" class="section level2">
 <h2>A simple model for plant growth</h2>
-<p>Here, we re-analyse the model Hanna Kokko desribes in Chapter 6 of
+<p>Here, we re-analyse the model Hanna Kokko describes in Chapter 6 of
 her book <em>Modelling for Field Biologists</em>. This model asks: Why
 do plants invest energy into growing a stem instead of investing all
 energy into leaf biomass?</p>
@@ -511,7 +511,7 @@ class="math inline">\(P_H\)</span>.</p>
 <p>Now we have everything in place to look at the payoff of a plant with
 height <span class="math inline">\(h&#39;\)</span> when competing
 against plants with height <span class="math inline">\(h\)</span>,
-denoted <span class="math inline">\(w(h&#39;, h)\)</span>. The payoff
+denoted <span class="math inline">\(W(h&#39;, h)\)</span>. The payoff
 for a plant with height <span class="math inline">\(h\)</span> competing
 against plants with height <span class="math inline">\(h&#39;\)</span>
 is denoted by reversing the order of the arguments in the payoff
@@ -583,7 +583,7 @@ class="math inline">\(h = 0.5\)</span>, then plant 1 maximizes its
 payoff by playing <span class="math inline">\(h&#39; = 0.58\)</span>. To
 obtain the best response curve, we have perform the computation above
 for all (or at least <em>many</em>) values of <span
-class="math inline">\(h\)</span> between 0 and 1. After that we repeat
+class="math inline">\(h\)</span> between 0 and 1. After that, we repeat
 the same procedure from the perspective plant 2.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>best.response.curve <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), best.response) <span class="co"># applies the function best.response to all values of h from 0 to 1 in steps of 0.01, thus, to 101 different resident strategy values</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -609,9 +609,9 @@ understand the code as much as possible (but note that code is not
 relevant for the exam).</p></li>
 <li><p>Produce the graphs <em>photosynthesis/leaf vs. plant height</em>
 and <em>payoff w(h’, h) vs. height h’$ for a different value of the
-resident strategy h</em>. Select an h-value of your own choice. How do
-the graphs differ from those with <em>h=0.5</em>. Give an interpretation
-for the observed difference.</p></li>
+resident strategy h</em>. Select an <em>h</em>-value of your own choice.
+How do the graphs differ from those with <em>h=0.5</em>? If yes, give an
+explanation for the observed difference.</p></li>
 </ol>
 <p>Submit your results as an html file, either by using the <em>compile
 report</em>-button or by producing an Rmarkdown document (if you know

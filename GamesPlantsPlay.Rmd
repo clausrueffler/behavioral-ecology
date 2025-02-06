@@ -17,7 +17,7 @@ klippy::klippy(position = c('top', 'right'))
 
 ## A simple model for plant growth
 
-Here, we re-analyse the model Hanna Kokko desribes in Chapter 6 of her book *Modelling for Field Biologists*. This model asks: Why do plants invest energy into growing a stem instead of investing all energy into leaf biomass?
+Here, we re-analyse the model Hanna Kokko describes in Chapter 6 of her book *Modelling for Field Biologists*. This model asks: Why do plants invest energy into growing a stem instead of investing all energy into leaf biomass?
 
 Kokko assumes that the fitness of a plant is determined by two factors: firstly, how much leaf tissue there is in the plant (denoted *f*), and, secondly, how much each leaf is able to photosynthesize (denoted *g*). The amount of leaf tissue, *f*, can be expressed as the fraction of the plant’s above-ground biomass that is not ‘wasted’ on non-photosynthesizing tissue such as the stem. Leaf tissue is important because a plant’s photosynthesis depends completely on this tissue, and everything else such as building roots for survival, or forming seeds or fruits for reproduction, is ultimately limited by the amount of photosynthesis performed by the leaves. We make the simple assumption that the more photosynthesis, the more seeds or pollen a plant is able to produce. Therefore we can consider a plant’s fitness to be proportional to the product *fg*.
 
@@ -92,7 +92,7 @@ In the above code, the height $h$ of the neighboring plant, denoted $h.r$ in the
 
 The shape of the function is S-shaped as a function of the height $h'$ of the focal plant. As $h'$ approaches 0, the value of $g(h',h)$ approaches the value of $P_L$. Thus, $P_L$ can be interpreted as the amount of photosynthesis of a plant without stem that is maximally shaded. On the other end, as $h'$ approaches 1, the value of $g(h',h)$ approaches the value of $P_H$. Thus, $P_H$ can be interpreted as the amount of photosynthesis of a plant with a stem of maximum length that experience no shading from the other plant. If both plants are equally high, $h' = 0.5 = h$, then $g(h',h)$ is exactly halfway between $P_L$ and $P_H$.
 
-Now we have everything in place to look at the payoff of a plant with height $h'$ when competing against plants with height $h$, denoted $w(h', h)$. The payoff for a plant with height $h$ competing against plants with height $h'$ is denoted by reversing the order of the arguments in the payoff function $w$.
+Now we have everything in place to look at the payoff of a plant with height $h'$ when competing against plants with height $h$, denoted $W(h', h)$. The payoff for a plant with height $h$ competing against plants with height $h'$ is denoted by reversing the order of the arguments in the payoff function $w$.
 
 $$
 \begin{align}
@@ -149,7 +149,7 @@ best.response <- function(h.r) {
 best.response(h.r = 0.5)
 ```
 
-In conclusion, if plant 2 plays strategy $h = 0.5$, then plant 1 maximizes its payoff by playing $h' = 0.58$. To obtain the best response curve, we have perform the computation above for all (or at least *many*) values of $h$ between 0 and 1. After that we repeat the same procedure from the perspective plant 2.
+In conclusion, if plant 2 plays strategy $h = 0.5$, then plant 1 maximizes its payoff by playing $h' = 0.58$. To obtain the best response curve, we have perform the computation above for all (or at least *many*) values of $h$ between 0 and 1. After that, we repeat the same procedure from the perspective plant 2.
 
 ```{r}
 best.response.curve <- sapply(seq(0, 1, 0.01), best.response) # applies the function best.response to all values of h from 0 to 1 in steps of 0.01, thus, to 101 different resident strategy values
@@ -171,7 +171,7 @@ What this shows, is that this game between two plants has exactly one Nash equil
 Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).
 
   (2)
-Produce the graphs *photosynthesis/leaf vs. plant height* and *payoff w(h', h) vs. height h'$ for a different value of the resident strategy h*. Select an h-value of your own choice. How do the graphs differ from those with *h=0.5*. Give an interpretation for the observed difference.
+Produce the graphs *photosynthesis/leaf vs. plant height* and *payoff w(h', h) vs. height h'$ for a different value of the resident strategy h*. Select an *h*-value of your own choice. How do the graphs differ from those with *h=0.5*? If yes, give an explanation for the observed difference.
 
 Submit your results as an html file, either by using the *compile report*-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown [**here**](https://clausrueffler.github.io/CodingWithR/Markdown.html)).
 

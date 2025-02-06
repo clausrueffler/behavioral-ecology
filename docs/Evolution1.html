@@ -413,7 +413,7 @@ that modified model coexistence becomes possible.</p>
 <p>We define the selective advantage <em>s(h’, h)</em> (or invasion
 fitness) of a mutant with height <em>h’</em> in a population of plants
 with height <em>h</em> as the difference in payoff between a mutant when
-playing against a resident and a resident when playing againt
+playing against a resident and a resident when playing against
 itself:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.m, h.r) <span class="sc">-</span> <span class="fu">w</span>(h.r, h.r)</span>
@@ -464,12 +464,12 @@ image.</p>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>In this last plot the red area corresponds to combinations of heights
-<em>h’</em> and <em>h</em> where neither strategy can invade the other.
-In other words: whoever was first, wins. The blue areas correspond to
-combinations of heights where either the mutant or the resident wins.
-These results show that in the current model coexistence of plant
-species with different heights is not possible.
+<p>In this last plot, the red area corresponds to combinations of
+heights <em>h’</em> and <em>h</em> where neither strategy can invade the
+other. In other words: whoever was first, wins. The blue areas
+correspond to combinations of heights where either the mutant or the
+resident wins. These results show that in the current model coexistence
+of plant species with different heights is not possible.
 <!--: there always exists a unique height that will win against plants with any other height.--></p>
 <p>In fact there is quite a bit more one can read from this plot. These
 techniques involving PIPs are often referred to as <em>Adaptive

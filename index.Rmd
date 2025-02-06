@@ -16,4 +16,4 @@ It consists of two parts:
     + The fourth tab, *The Evolution of Altruism* investigates a model in which individuals can sacrifice their own life in order to increase the survival of other (related) individuals.
     + The fifth tab goes explores the role of kin selection in the plant height model.
 
-Claus Rüffler
+Claus
