@@ -428,14 +428,9 @@ g(h&#39;, h)=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h&#39; - h)\right)}.
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {<span class="co"># photosynthetic rate as a function of difference in tree height</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  P.L <span class="sc">+</span> (P.H <span class="sc">-</span> P.L)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>To determine whether selection favors increased values of <span
-class="math inline">\(h\)</span>, we could take the partial derivative
-of <span class="math inline">\(w(h&#39;, h)\)</span>, evaluated at <span
-class="math inline">\(h&#39; = h\)</span>, with the aim to recover
-Hamilton’s rule. Next, let us plot a PIP to investigate the effect of
-kin selection on ESS tree height. For this, we compute invasion fitness,
-here defined as the difference in payoff between mutant and
-resident.</p>
+<p>Next, let us plot a PIP to investigate the effect of kin selection on
+ESS tree height. For this, we compute invasion fitness, here defined as
+the difference in payoff between mutant and resident.</p>
 <p><span class="math display">\[
 \begin{align}
 s(h&#39;, h) &amp; = W(h&#39;, h) - W(h, h)
@@ -462,9 +457,14 @@ s(h&#39;, h) &amp; = W(h&#39;, h) - W(h, h)
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="PlantHeightAltruism_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>As we can see, kin selection reduces the ESS plant height from
-approximately 0.62 to approximately 0.5.</p>
-<p>We can understand this result by looking at the derivative</p>
+<p>When comparing with the results from the first tab, we can see that
+kin selection reduces the ESS plant height from approximately 0.62 to
+approximately 0.5.</p>
+<p>We can understand this result by determining the partial derivative
+of <span class="math inline">\(W(h&#39;, h)\)</span> with respect to
+<span class="math inline">\(h&#39;\)</span>, evaluated at <span
+class="math inline">\(h&#39; = h\)</span>, with the aim to recover
+Hamilton’s rule:</p>
 <p><span class="math display">\[
 \begin{align}
 \frac{\partial W(h&#39;, h)}{\partial h&#39;}\bigg|_{h&#39; = h}
@@ -479,8 +479,9 @@ h) + w(h&#39;, h, h))\big|_{h&#39; = h} \\
 \begin{align}
 \frac{\partial W(h&#39;, h)}{\partial h&#39;}\bigg|_{h&#39; = h}
   &amp; = \underbrace{\frac{\partial}{\partial
-h&#39;}(f(h&#39;)g(h&#39;, h))}_{costs} + r
-\underbrace{\frac{\partial}{\partial h}(g(h&#39;, h))}_{-benefits}.
+h&#39;}(f(h&#39;)g(h&#39;, h))}_{\text{costs}} + r
+\underbrace{\frac{\partial}{\partial h}(g(h&#39;,
+h))}_{-\text{benefits}}.
 \end{align}
 \]</span></p>
 <p>First, let us note that in the plant height game, growing <em>less

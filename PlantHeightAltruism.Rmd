@@ -49,7 +49,7 @@ g <- function(h.m, h.r) {# photosynthetic rate as a function of difference in tr
 }
 ```
 
-To determine whether selection favors increased values of $h$, we could take the partial derivative of $w(h', h)$, evaluated at $h' = h$, with the aim to recover Hamilton's rule. Next, let us plot a PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
+Next, let us plot a PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.
 
 $$
 \begin{align}
@@ -83,9 +83,9 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
                ylab = expression("mutant height h'"))
 ```
 
-As we can see, kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.
+When comparing with the results from the first tab, we can see that kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.
 
-We can understand this result by looking at the derivative
+We can understand this result by determining the partial derivative of $W(h', h)$ with respect to $h'$, evaluated at $h' = h$, with the aim to recover Hamilton's rule:
 
 $$
 \begin{align}
@@ -100,7 +100,7 @@ which becomes
 $$
 \begin{align}
 \frac{\partial W(h', h)}{\partial h'}\bigg|_{h' = h} 
-  & = \underbrace{\frac{\partial}{\partial h'}(f(h')g(h', h))}_{costs} + r \underbrace{\frac{\partial}{\partial h}(g(h', h))}_{-benefits}.
+  & = \underbrace{\frac{\partial}{\partial h'}(f(h')g(h', h))}_{\text{costs}} + r \underbrace{\frac{\partial}{\partial h}(g(h', h))}_{-\text{benefits}}.
 \end{align}
 $$
 
