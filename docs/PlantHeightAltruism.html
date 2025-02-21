@@ -478,31 +478,31 @@ h) + w(h&#39;, h, h))\big|_{h&#39; = h} \\
 <p><span class="math display">\[
 \begin{align}
 \frac{\partial W(h&#39;, h)}{\partial h&#39;}\bigg|_{h&#39; = h}
-  &amp; = \underbrace{\frac{\partial}{\partial
-h&#39;}(f(h&#39;)g(h&#39;, h))}_{\text{costs}} + r
-\underbrace{\frac{\partial}{\partial h}(g(h&#39;,
-h))}_{-\text{benefits}}.
+  &amp; = \frac{\partial}{\partial h&#39;}(f(h&#39;)g(h&#39;, h)) + r
+\frac{\partial}{\partial h}(g(h&#39;, h)).
 \end{align}
 \]</span></p>
-<p>First, let us note that in the plant height game, growing <em>less
-tall</em> can be considered an act of altruism (if the costs of doing so
-are positive) or an act of cooperation (if the costs of doing so are
-negative). This is the reason why in the above equation, the first term
-is defined as <span class="math inline">\(c\)</span> and the second term
-as <span class="math inline">\(-b\)</span> (compare with the
-corresponding equation in the self-sacrificing game). The cost-term
-describes the effect of changing the strategy value <span
-class="math inline">\(h&#39;\)</span> of the actor on the payoff of the
-actor itself. This term is negative when the <span
-class="math inline">\(h&#39;&gt;h^*\)</span>, where <span
+<!--
+First, let us note that in the plant height game, growing *less tall* can be considered an act of altruism (if the costs of doing so are positive) or an act of cooperation (if the costs of doing so are negative). This is the reason why in the above equation, the first term is defined as $c$ and the second term as $-b$ (compare with the corresponding equation in the self-sacrificing game).
+-->
+<p>The first term describes the effect of increasing the strategy value
+<span class="math inline">\(h&#39;\)</span> of the actor on the payoff
+of the actor itself. This term is zero when <span
+class="math inline">\(h&#39;=h^*\)</span>, where <span
 class="math inline">\(h^*\)</span> is the evolutionary stable strategy
-value in the absence of kin competition, and positive in the reverse
-case. The benefit-term describes the effect of a trait change of the
-interacting individual (the recipient) on the payoff of the actor. This
-term is always negative (if the neighboring plant grows higher, the
-focal individual is more shaded). This analysis shows that competition
-with kin always selects for a lower ESS-value compared to the model
-without kin selelction.</p>
+value in the absence of kin competition, negative when <span
+class="math inline">\(h&#39;&gt;h^*\)</span>, and positive when <span
+class="math inline">\(h^*&lt;h&#39;\)</span>. Thus, for a plant to
+decrease its height to a value lower than <span
+class="math inline">\(h^*\)</span> can be considered an act of altruism.
+The derivative in the second term describes the effect of a trait change
+of the interacting individual (the recipient) on the payoff of the
+actor. This term is always negative (if the neighboring plant grows
+higher, the focal individual is more shaded). Thus, given that the first
+term is zero for <span class="math inline">\(h=h^*\)</span> and the
+second negative, we can conclude that competition with kin always
+selects for a lower ESS-value compared to the model without kin
+selection.</p>
 <!--
 ## The Modified Plant Height Model with Kin Selection
 

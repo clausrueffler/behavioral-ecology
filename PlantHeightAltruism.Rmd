@@ -100,11 +100,16 @@ which becomes
 $$
 \begin{align}
 \frac{\partial W(h', h)}{\partial h'}\bigg|_{h' = h} 
-  & = \underbrace{\frac{\partial}{\partial h'}(f(h')g(h', h))}_{\text{costs}} + r \underbrace{\frac{\partial}{\partial h}(g(h', h))}_{-\text{benefits}}.
+  & = \frac{\partial}{\partial h'}(f(h')g(h', h)) + r \frac{\partial}{\partial h}(g(h', h)).
 \end{align}
 $$
 
-First, let us note that in the plant height game, growing *less tall* can be considered an act of altruism (if the costs of doing so are positive) or an act of cooperation (if the costs of doing so are negative). This is the reason why in the above equation, the first term is defined as $c$ and the second term as $-b$ (compare with the corresponding equation in the self-sacrificing game). The cost-term describes the effect of changing the strategy value $h'$ of the actor on the payoff of the actor itself. This term is negative when the $h'>h^*$, where $h^*$ is the evolutionary stable strategy value in the absence of kin competition, and positive in the reverse case. The benefit-term describes the effect of a trait change of the interacting individual (the recipient) on the payoff of the actor. This term is always negative (if the neighboring plant grows higher, the focal individual is more shaded). This analysis shows that competition with kin always selects for a lower ESS-value compared to the model without kin selelction.
+<!--
+First, let us note that in the plant height game, growing *less tall* can be considered an act of altruism (if the costs of doing so are positive) or an act of cooperation (if the costs of doing so are negative). This is the reason why in the above equation, the first term is defined as $c$ and the second term as $-b$ (compare with the corresponding equation in the self-sacrificing game).
+-->
+The first term describes the effect of increasing the strategy value $h'$ of the actor on the payoff of the actor itself. This term is zero when $h'=h^*$, where $h^*$ is the evolutionary stable strategy value in the absence of kin competition, negative when $h'>h^*$, and positive when $h^*<h'$. Thus, for a plant to decrease its height to a value lower than $h^*$ can be considered an act of altruism.
+The derivative in the second term describes the effect of a trait change of the interacting individual (the recipient) on the payoff of the actor. This term is always negative (if the neighboring plant grows higher, the focal individual is more shaded).
+Thus, given that the first term is zero for $h=h^*$ and the second negative, we can conclude that competition with kin always selects for a lower ESS-value compared to the model without kin selection.
 
 <!--
 ## The Modified Plant Height Model with Kin Selection
