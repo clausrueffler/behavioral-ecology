@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Paper and Pencil exercises</title>
+
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/clipboard-1.7.1/clipboard.min.js"></script>
+<link href="site_libs/primer-tooltips-1.4.0/build.css" rel="stylesheet" />
+<link href="site_libs/klippy-0.0.0.9500/css/klippy.min.css" rel="stylesheet" />
+<script src="site_libs/klippy-0.0.0.9500/js/klippy.min.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Game Theory</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Games Theory: Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./GamesPlantsPlay.html">1. The Basic Plant Height Game</a>
+    </li>
+    <li>
+      <a href="./Evolution1.html">2. Evolution of Plant Height</a>
+    </li>
+    <li>
+      <a href="./Evolution2.html">3. Evolution in the Modified Plant Game</a>
+    </li>
+    <li>
+      <a href="./SelfSacrifice.html">4. The Evolution of Altruism</a>
+    </li>
+    <li>
+      <a href="./PlantHeightAltruism.html">5. The Plant Height Model with Kin Selection</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
+</script>
+<!-- # Games Plants Play {.tabset} -->
+<div id="evolutionary-game-theory-paper-and-pencil-exercises"
+class="section level2">
+<h2>Evolutionary Game Theory: Paper and Pencil Exercises</h2>
+<div id="fishers-sex-ratio-theory" class="section level3">
+<h3>1) Fisher’s Sex Ratio Theory</h3>
+<p>Consider a population consisting of <span
+class="math inline">\(N\)</span> adult individuals. At the end of each
+season, all adult individuals die and the next generation, again <span
+class="math inline">\(N\)</span> individuals are recruited from the
+offspring of the previous season. Let us assume that the sex ratio is
+maternally determined and encoded in a strategy <span
+class="math inline">\(x\)</span>, such that a female’s offspring is a
+son with probability <span class="math inline">\(x\)</span> and a
+daughter with probability <span class="math inline">\(1-x\)</span>. Due
+to the fact that all individuals have a mother and a father, a son can
+expect to give rise to <span class="math display">\[
+\frac{N}{xN} = \frac{1}{x}
+\]</span> offspring and a daughter can expect to give rise to <span
+class="math display">\[
+\frac{N}{(1-x)N} = \frac{1}{1-x}
+\]</span> offspring. Now consider a mutant female with sex ratio
+strategy <span class="math inline">\(x&#39;\)</span>. With probability
+<span class="math inline">\(x&#39;\)</span> she produces a son that can
+expect to gives rise to <span class="math inline">\(1/x\)</span>
+offspring and with probability <span
+class="math inline">\((1-x&#39;)\)</span> she produces a daughter that
+can expect to give rise to <span class="math inline">\(1/(1-x)\)</span>
+offspring. Thus, a mutant female can expect that each of her offspring
+gives rise to <span class="math display">\[
+w(x&#39;, x) = \frac{x&#39;}{x} + \frac{1-x&#39;}{1-x}
+\]</span> offspring. Note that <span class="math inline">\(w(x, x) =
+2\)</span>, indicating that in a sexual population that does not change
+in size each individual gives on average rise to two offspring. We use
+<span class="math inline">\(w(x&#39; x)\)</span> as a fitness
+measure.</p>
+<div id="questions" class="section level4">
+<h4>Questions</h4>
+<ol style="list-style-type: lower-alpha">
+<li><p>Give John Maynard Smith’s definition of an evolutionary stable
+strategy (ESS). Note that this definition consists of two
+parts!</p></li>
+<li><p>Show that <span class="math inline">\(x = 0.5\)</span> is the
+evolutionary stable sex ratio. Thus, here you have to apply the two ESS
+conditions.</p></li>
+</ol>
+</div>
+</div>
+<div id="competition-for-light-and-plant-height" class="section level3">
+<h3>2) Competition for Light and Plant Height</h3>
+<p>For the modified plant height game, we produced the following
+pairwise invisibility plot (PIP) using <span
+class="math inline">\(R\)</span>. In this plot, red corresponds to
+combinations of mutant and resident plant heights for which the mutant
+has a positive invasion fitness while yellow corresponds to combinations
+of mutant and resident plant heights for which mutants have a negative
+invasion fitness.</p>
+<div id="questions-1" class="section level4">
+<h4>Questions</h4>
+<ol style="list-style-type: lower-alpha">
+<li><p>Does this model have an evolutionary stable strategy (ESS)? Give
+the reason behind your answer.</p></li>
+<li><p>Based on this PIP, describe the predicted course of the
+evolutionary dynamics for plant height. What do you predict is the
+endpoint of this evolutionary dynamics?</p></li>
+</ol>
+</div>
+</div>
+<div id="competition-for-ligth-and-kin-competition"
+class="section level3">
+<h3>3) Competition for Ligth and Kin Competition</h3>
+<p>Plants face a trade-off between allocating energy into growing a stem
+or into leaves. Leaves are needed to produce energy (and ultimately
+seeds) through photosynthesis. Importantly, plants that are shorter than
+neighboring plants are shaded and therefore receive less light, which
+reduces their rate of photosynthesis.</p>
+<p>Let us investigate competition between two genotypes of plants that
+differ in height with a game theoretic model. Plants carrying allele
+<span class="math inline">\(A\)</span> are relatively tall while plants
+carrying allele <span class="math inline">\(B\)</span> are shorter. We
+denote the frequency of allele <span class="math inline">\(A\)</span>
+with <span class="math inline">\(p\)</span>. Thus, the frequency of
+allele <span class="math inline">\(B\)</span> is <span
+class="math inline">\((1-p)\)</span>. We now have to consider four
+pairwise interactions.</p>
+<ol style="list-style-type: decimal">
+<li>A tall plant growing next to another tall plant has fitness <span
+class="math inline">\(w(A, A) = 1\)</span>.</li>
+<li>A tall plant growing next to a short plant has fitness <span
+class="math inline">\(w(A, B) = 4\)</span>.</li>
+<li>A short plant growing next to a tall plant has fitness <span
+class="math inline">\(w(B, A) = 0.5\)</span>.</li>
+<li>A short plant growing next to another short plant has fitness <span
+class="math inline">\(w(B, B) = 3\)</span>.</li>
+</ol>
+<p>The expected fitness of a tall plant in a population where tall
+plants occur with frequency p is then given by: <span
+class="math display">\[
+W_A(p) = p w(A, A) + (1-p) w(A, B)
+\]</span> Similarly, the expected fitness of a short plant in a
+population where tall plants occur with frequency p is then given by:
+<span class="math display">\[
+W_B(p) = p w(B, A) + (1-p) w(B, B)
+\]</span></p>
+<div id="question-a." class="section level4">
+<h4>Question a.</h4>
+<p>Our model is an example of two competing pure strategies. Evolution
+by natural selection can produce the following three outcomes. First,
+the genotype A coding for tall plants reaches fixation (<span
+class="math inline">\(p = 1\)</span>). Second, the genotype B coding for
+short plants reaches fixation (<span class="math inline">\(p =
+0\)</span>). Third, the two genotypes can coexist at an intermediate
+frequency (a protected polymorphism).</p>
+<p>For the above fitness values, determine which of these outcomes is to
+be expected. To answer this question, you have to understand how the
+fitness of each allele changes with allele frequency p, and which allele
+has higher fitness when p changes as a result of natural selection. You
+can answer this question in a purely mathematically or by combining this
+with graphs.</p>
+<p>Based on your analysis, does selection increase population mean
+fitness? How can your finding be understood in terms of biology?</p>
+<p>In the scenario described above, it is implicitly assumed that the
+two genotypes occur randomly in space as would be the case if seeds are
+dispersed over large distances. Let us now consider an alternative
+scenario in which seed dispersal is limited. A consequence of limited
+seed dispersal is that related plants grow next to each other and we
+have to investigate a kin selection model.</p>
+<p>It can be shown that the expected fitness of a tall plant in a
+population where tall plants occur with frequency p under kin selection
+is given by: <span class="math display">\[
+W_{A.\text{kin}}(p) = w(A, B) + (r + (1 - r) p)(w(A, A) - w(A, B))
+\]</span> Similarly, the expected fitness of a short plant in a
+population where tall plants occur with frequency p under kin selection
+is given by: <span class="math display">\[
+W_{B.\text{kin}} = w(B, B) + (1 - r) p (w(B, A) - w(B, B))
+\]</span> In these equations, <span class="math inline">\(r\)</span>
+denotes the coefficient of relatedness between plants growing next to
+each other. In our model, <span class="math inline">\(r\)</span> is
+equal to the probability that two plants share the same genotype through
+common decent. As you can see, for <span class="math inline">\(r =
+0\)</span> we recover the above case with no relatedness.</p>
+</div>
+<div id="question-b." class="section level4">
+<h4>Question b.</h4>
+<p>Under the assumption that <span class="math inline">\(r =
+0.5\)</span> (as is the case between parent and offspring or between
+full siblings), determine for the model with kin selection which of the
+three evolutionary predictions applies (fixation of tall plants,
+fixation of short plants, coexistence). This analysis can be done in
+exactly the same manner as for Question 1. Explain why your result makes
+biological sense (1-2 sentences)?</p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

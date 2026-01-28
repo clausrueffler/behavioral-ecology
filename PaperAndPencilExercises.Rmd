@@ -1,0 +1,102 @@
+---
+pagetitle: 'Paper and Pencil exercises'
+output: 
+  html_document:
+    toc: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'))
+```
+
+<!-- # Games Plants Play {.tabset} -->
+
+## Evolutionary Game Theory: Paper and Pencil Exercises
+
+### 1) Fisher's Sex Ratio Theory
+
+Consider a population consisting of $N$ adult individuals. At the end of each season, all adult individuals die and the next generation, again $N$ individuals are recruited from the offspring of the previous season.
+Let us assume that the sex ratio is maternally determined and encoded in a strategy $x$, such that a female’s offspring is a son with probability $x$ and a daughter with probability $1-x$.
+Due to the fact that all individuals have a mother and a father, a son can expect to give rise to
+$$
+\frac{N}{xN} = \frac{1}{x}
+$$
+offspring and a daughter can expect to give rise to 
+$$
+\frac{N}{(1-x)N} = \frac{1}{1-x}
+$$
+offspring.
+Now consider a mutant female with sex ratio strategy $x'$. With probability $x'$ she produces a son that can expect to gives rise to $1/x$ offspring and with probability $(1-x')$ she produces a daughter that can expect to give rise to $1/(1-x)$ offspring. Thus, a mutant female can expect that each of her offspring gives rise to 
+$$
+w(x', x) = \frac{x'}{x} + \frac{1-x'}{1-x} 
+$$
+offspring. Note that $w(x, x) = 2$, indicating that in a sexual population that does not change in size each individual gives on average rise to two offspring. We use $w(x' x)$ as a fitness measure.
+
+#### Questions
+
+a)
+Give John Maynard Smith’s definition of an evolutionary stable strategy (ESS). Note that this definition consists of two parts!
+
+b)
+Show that $x = 0.5$ is the evolutionary stable sex ratio. Thus, here you have to apply the two ESS conditions.
+
+### 2) Competition for Light and Plant Height
+
+For the modified plant height game, we produced the following pairwise invisibility plot (PIP) using $R$. In this plot, red corresponds to combinations of mutant and resident plant heights for which the mutant has a positive invasion fitness while yellow corresponds to combinations of mutant and resident plant heights for which mutants have a negative invasion fitness.
+
+#### Questions
+
+a)
+Does this model have an evolutionary stable strategy (ESS)? Give the reason behind your answer.
+
+b)
+Based on this PIP, describe the predicted course of the evolutionary dynamics for plant height. What do you predict is the endpoint of this evolutionary dynamics?
+
+### 3) Competition for Ligth and Kin Competition
+
+Plants face a trade-off between allocating energy into growing a stem or into leaves. Leaves are needed to produce energy (and ultimately seeds) through photosynthesis. Importantly, plants that are shorter than neighboring plants are shaded and therefore receive less light, which reduces their rate of photosynthesis.
+
+Let us investigate competition between two genotypes of plants that differ in height with a game theoretic model. Plants carrying allele $A$ are relatively tall while plants carrying allele $B$ are shorter. We denote the frequency of allele $A$ with $p$. Thus, the frequency of allele $B$ is $(1-p)$. We now have to consider four pairwise interactions. 
+
+1) A tall plant growing next to another tall plant has fitness $w(A, A) = 1$.
+2) A tall plant growing next to a short plant has fitness $w(A, B) = 4$.
+3) A short plant growing next to a tall plant has fitness $w(B, A) = 0.5$.
+4) A short plant growing next to another short plant has fitness $w(B, B) = 3$.
+
+The expected fitness of a tall plant in a population where tall plants occur with frequency p is then given by:
+$$
+W_A(p) = p w(A, A) + (1-p) w(A, B)
+$$
+Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency p is then given by:
+$$
+W_B(p) = p w(B, A) + (1-p) w(B, B)
+$$
+
+#### Question a.
+Our model is an example of two competing pure strategies. Evolution by natural selection can produce the following three outcomes. First, the genotype A coding for tall plants reaches fixation ($p = 1$). Second, the genotype B coding for short plants reaches fixation ($p = 0$). Third, the two genotypes can coexist at an intermediate frequency (a protected polymorphism).
+
+For the above fitness values, determine which of these outcomes is to be expected.
+To answer this question, you have to understand how the fitness of each allele changes with allele frequency p, and which allele has higher fitness when p changes as a result of natural selection. You can answer this question in a purely mathematically or by combining this with graphs.
+
+Based on your analysis, does selection increase population mean fitness? How can your finding be understood in terms of biology?
+
+
+In the scenario described above, it is implicitly assumed that the two genotypes occur randomly in space as would be the case if seeds are dispersed over large distances. Let us now consider an alternative scenario in which seed dispersal is limited. A consequence of limited seed dispersal is that related plants grow next to each other and we have to investigate a kin selection model.
+
+It can be shown that the expected fitness of a tall plant in a population where tall plants occur with frequency p under kin selection is given by:
+$$
+W_{A.\text{kin}}(p) = w(A, B) + (r + (1 - r) p)(w(A, A) - w(A, B))
+$$
+Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency p under kin selection is given by:
+$$
+W_{B.\text{kin}} = w(B, B) + (1 - r) p (w(B, A) - w(B, B))
+$$
+In these equations, $r$ denotes the coefficient of relatedness between plants growing next to each other.  In our model, $r$ is equal to the probability that two plants share the same genotype through common decent. As you can see, for $r = 0$ we recover the above case with no relatedness.
+
+#### Question b.
+Under the assumption that $r = 0.5$ (as is the case between parent and offspring or between full siblings), determine for the model with kin selection which of the three evolutionary predictions applies (fixation of tall plants, fixation of short plants, coexistence). This analysis can be done in exactly the same manner as for Question 1.
+Explain why your result makes biological sense (1-2 sentences)?
