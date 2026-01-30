@@ -3,7 +3,7 @@ name: "Behavioral Ecology"
 title: "Game Theory"
 type: inverse
 left:
-  - text: "Games Theory: Examples"
+  - text: "Game Theory"
     menu:
       - text: "1. The Basic Plant Height Game"
         href: ./GamesPlantsPlay.html
@@ -21,6 +21,8 @@ left:
         href: ./SelfSacrifice.html
       - text: "5. The Plant Height Model with Kin Selection"
         href: ./PlantHeightAltruism.html
+      - text: "6. Paper & Pencil Exercises"
+        href: ./PaperPencilExercises.html
 
 #- text: "Project"
 #    menu:

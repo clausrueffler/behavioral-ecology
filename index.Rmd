@@ -5,15 +5,17 @@ title: "Game Theory"
 This website is part of the course *Behavioral Ecology* at Uppsala University.
 The idea with these websites is as follows. Work through them by reading the text and then by coping the R-code into your own script, where you can run it and modify it.
 
-It consists of two parts:
+It consists of three parts:
 
-1. We first explore the model presented in Chapter 6 of Kokko (2007) but takes the analysis it bit further. This part consist of three parts:
+1. We first explore the model presented in Chapter 6 of Kokko (2007) but take the analysis it bit further. This part consist of three parts:
     + The first tab, *The Basic Plant Game*, repeats the analysis presented by Hanna Kokko.
     + The second tab, *Evolution of Plant Height*, goes a bit further by introducing *Pairwise Invadability Plots* (something that Hanna Kokko does in Chapter 7 of her book in the context of a different model.)
-    + Finally, in the third tab, *Evolution in the Modified Plant Game*, introduces a tweak to the basic model. This modification results in a model in which plants with different heights are able to coexist in a stable polymorphism, just as we see in any natural forest.
+    + Finally, the third tab, *Evolution in the Modified Plant Game*, introduces a tweak to the basic model. This modification results in a model in which plants with different heights are able to coexist in a stable polymorphism, just as we see in any natural forest.
  
 2. In the second part (in the fourth tab), we explore the evolution of altruism. This part consists of two parts:
-    + The fourth tab, *The Evolution of Altruism* investigates a model in which individuals can sacrifice their own life in order to increase the survival of other (related) individuals.
-    + The fifth tab goes explores the role of kin selection in the plant height model.
+    + The fourth tab, *The Evolution of Altruism*, investigates a model in which individuals can sacrifice their own life in order to increase the survival of other (related) individuals.
+    + The fifth tab goes explores the role of altruism when plants compete for light with related individuals.
+    
+3. This part (the sixth tab) consists of a series of exercises that can be done with paper and pencil. It revisits material from the lecture and from part 1 and 2, and is a good preparation for the exam.
 
 Claus
