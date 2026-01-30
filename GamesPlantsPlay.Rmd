@@ -54,7 +54,7 @@ legend("bottomleft", legend = c(expression(paste(alpha, " = ", 2)),
 
 We see that larger $\alpha$-values result in a slower decrease of plant biomass *f* with increasing plant height *h*. Said differently, small values of $\alpha$ mean that growing taller has immediate large costs for leaf biomass, while large values allow the plant to grow quite tall before the full costs kick in. For example, a plant species whose structural tissue is mechanically very stable will need less of it, and it will have a high value for $\alpha$ as a consequence. One might therefore interpret $\alpha$ as a kind of ‘efficiency’ or ‘stability’ of the structural tissue. However, regardless of the value of $\alpha$ there are no resources left for leaves to grow when *h* reaches the maximum value *h=1*.
 
-The shape of the function *g(h)* is more complicated because photosynthesis depends on the amount of light falling on a leaf, which depends on how high the leaf is situated relative to the leaves of neighboring plants. We here follow the same simplifying assumption made by Kokko and assume that the amount of light on the leaves of a focal plant with height $h_{\text m}$ is affected by the height $h_{\text r}$ of its ‘neighbor’. Here, the subscripts m and r stand for *mutant* and *resident*. It will become clear in the next tab why this is useful. The amount of sunlight for the focal plant is then assumed to depend on the height difference between the two plants, $h_{\text m}-h_{\text r}$. Kokko uses the function
+The shape of the function *g* is more complicated because photosynthesis depends on the amount of light falling on a leaf, which depends on how high the leaf is situated relative to the leaves of neighboring plants. We here follow the same simplifying assumption made by Kokko and assume that the amount of light on the leaves of a focal plant with height $h_{\text m}$ is affected by the height $h_{\text r}$ of its ‘neighbor’. Here, the subscripts m and r stand for *mutant* and *resident*. It will become clear in the next tab why this is useful. The amount of sunlight for the focal plant is then assumed to depend on the height difference between the two plants, $h_{\text m}-h_{\text r}$. Kokko uses the function
 
 $$
 g(h_{\text m}, h_{\text r})=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h_{\text m} - h_{\text r})\right)}.
@@ -102,7 +102,7 @@ W(h_{\text r}, h_{\text m}) & = f(h_{\text r})g(h_{\text r}, h_{\text m})
 \end{align}
 $$
 
-Next we reproduce the payoff matrix shown in Table 6.1 in Kokko (2007). First, we define the payoff function.
+Next, we reproduce the payoff matrix shown in Table 6.1 in Kokko (2007). First, we code the payoff function.
 
 ```{r}
 W <- function(h.m, h.r) { # payoff for h'
@@ -120,13 +120,14 @@ P.L <- 0.25
 P.H <- 1
 ```
 
-Payoff to a plant with height $h_{\text m}$ (first number in the matrix in Kokko).
+Here comes the payoff $W(h_{\text m}, h_{\text r})$ to a plant with height $h_{\text m}$ (first number in the cells in the matrix in Kokko) for four different height options for the mutant and resident.
 
 ```{r}
 round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), W), digits = 3)
+# this is a very compact way of computing the W for all 16 different combinations of h.m and h.r
 ```
 
-To obtain the second entry in each cell in the matrix by Kokko (which is the the payoff if the roles of who is mutant and who resident are switched) we only have to transpose the previous payoff matrix:
+To obtain $W(h_{\text r}, h_{\text m})$ (payoff when the roles of who is mutant and who resident are switched), the second number in each cell in the matrix by Kokko, we only have to transpose the previous payoff matrix:
 
 ```{r}
 t(round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), W), digits = 3)) # t is the command in R that produces the transpose of a matrix
@@ -134,13 +135,13 @@ t(round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), W), digits = 3)) # t is the comman
 
 The next step by Hanna Kokko is to ask about the *best response* of one plant to a given strategy by the other plant, that is, the height that maximizes the payoff given a certain height of the competing plant. Let us do this by allowing any height, not just a height from a set of four. Thus, we are going to reproduce figure 6.4(b) in Kokko (2007).
 
-First, let us plot the payoff for all possible choices of $h_{\text m}$ given $h_{\text r} = 0.5$. The strategy that corresponds to the maximum of this curve is the optimal response $h_{\text m}$ given $h_{\text r}$. 
+First, let us plot the payoff for all possible choices of $h_{\text m}$ given $h_{\text r} = 0.5$. The height $h_{\text m}$ that corresponds to the maximum of this curve is the optimal response $\hat h_{\text m}$ given $h_{\text r}=0.5$. 
 
 ```{r}
 curve(W(x, h.r), from = 0, to = 1, xlab = expression("height h"[m]), ylab = expression("payoff, W(h"[m]*", h"[r]*" = 0.5)"))
 ```
 
-In the next step, we find the value of $h_{\text m}$ that results in the highest possible payoff $_{\text m}(h_{\text m}, h_{\text r})$. For this we can use the R-function *optimize* (see [**here**](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/optimize) for the help page for this function).
+Instead of trying to read the $h$-value of the best response, we can use the R-function *optimize* (see [**here**](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/optimize) for the help page for this function) to get the exact numerical value for $\hat h$.
 
 ```{r}
 best.response <- function(h.r) {
@@ -150,17 +151,20 @@ best.response <- function(h.r) {
 best.response(h.r = 0.5)
 ```
 
-In conclusion, if plant 2 plays strategy $h_{\text r} = 0.5$, then plant 1 maximizes its payoff by playing $h_{\text m} = 0.58$. To obtain the best response curve, we have perform the computation above for all (or at least *many*) values of $h_{\text r}$ between 0 and 1. After that, we repeat the same procedure from the perspective plant 2.
+In conclusion, if plant 2 plays strategy $h_{\text r} = 0.5$, then plant 1 maximizes its payoff by playing $\hat h_{\text m} = 0.58$. To obtain the best response curve, we have perform this computation for all (or at least *many*) values of $h_{\text r}$ between 0 and 1. After that, we repeat the same procedure from the perspective plant 2.
 
 ```{r}
-best.response.curve <- sapply(seq(0, 1, 0.01), best.response) # applies the function best.response to all values of h from 0 to 1 in steps of 0.01, thus, to 101 different resident strategy values
+best.response.curve <- sapply(seq(0, 1, 0.01), best.response)
+# applies the function best.response to all values of h from 0 to 1
+# in steps of 0.01, thus, to 101 different resident strategy values
 
 par(pty="s")
-plot(seq(0, 1, 0.01), best.response.curve,
+plot(seq(0, 1, 0.01),
+     best.response.curve,
      type = "l", xlim = c(0,1), ylim = c(0,1), asp = 1,
      xlab = expression("height h"[r]*" of resident plant"),
      ylab = expression("height h"[m]*" of mutant plant"))
-lines(best.response.curve, seq(0, 1, 0.01), type = "l", lty = 2)
+lines(best.response.curve, seq(0, 1, 0.01), type = "l", lty = 2) # adds the best response curve if h.m is the resident strategy
 legend("bottomright", legend = c(expression("best resp. to h"[r]), expression("best resp. to h"[m])), lty = c(1, 2)) 
 ```
 
