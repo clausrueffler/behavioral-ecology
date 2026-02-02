@@ -17,33 +17,36 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution in a Modified Plant Height Model
 
-Let us modify one assumption in our model. Above we assumed that the minimum and maximum amount of photosynthesis, $P_L$ and $P_H$, are fixed parameters. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula while other plants have rather thin leaves that are hardly protected by a cuticula. This plant trait is generally related to the amount of sun light a plant is exposed to. Leave thickness is an adaptation against water loss and plants exposed to more intense sun light have thicker leaves, which decreases their photosynthetic efficiency. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from the neighboring plant. More specifically, we will assume that $P_L$ of a plant with strategy $h'$ increases with increasing height difference $h-h'$. A function for $P_L(h', h)$ that depends on *h'-h* and has the desired properties is
+Let us modify one assumption in our model. Above we assumed that the parameters in the function $g(h_{\rm m}, h_{\rm r})$ for the minimum and maximum amount of photosynthesis, $P_L$ and $P_H$, are fixed. Hanna Kokko suggests that the values of $P_L$ and $P_H$ are determined by leaf structure. Indeed, some plant species have rather thick, leathery leaves that are protected by a very thick cuticula, while other plants have rather thin leaves that are hardly protected by a cuticula. The thickness of the cuticula is an adaptation to the amount of sun light a plant is exposed to. Plants exposed to intense sun light produce a thicker cuticula to reduce water loss, but this decreases their photosynthetic efficiency as it reduces the amount of light reaching the chloroplasts, the organelles inside a leaf cell responsible for photosynthesis. It therefore seems reasonable to assume that plants that are shaded by other plants have thinner leaves that can photosynthesize more efficiently and therefore have a higher value for $P_L$. Let us implement this idea by making $P_L$ a function of the degree of shading from the neighboring plant. More specifically, we will assume that the value $P_L$ of a plant with strategy $h_{\rm m}$ increases with increasing height difference $h_{\rm m} - h_{\rm r}$. A function for $P_L(h_{\rm m}, h_{\rm r})$ that depends on $h_{\rm m} - h_{\rm r}$ and has the desired properties is
 
 $$
 P_L(h', h) = P_{L, \mathrm{mean}} + P_{L, \mathrm{var}}\left(\frac{1}{1+\exp\left(\gamma(h' - h)\right)}- \frac{1}{2}\right),
 $$
-where $P_{L, {\mathrm mean}}$ denotes the value of $P_L(h', h)$ if $h' =h$, while $P_{L, {\mathrm var}}$ denotes the difference in $P_L(h', h)$ between a situation where the focal plant with trait value $h'$ is shaded maximally and the situation where it is not shaded at all.
+where $P_{L, {\mathrm mean}}$ denotes the value of $P_L(h_{\rm m}, h_{\rm r})$ if $h_{\rm m} = h_{\rm r}$, while $P_{L, {\mathrm var}}$ denotes the difference in $P_L(h_{\rm m}, h_{\rm r})$ between a situation where the focal plant with trait value $h_{\rm m}$ is shaded maximally and the situation where it is not shaded at all. Admittedly, this function looks quite complicated. Let us plot it in order to get a feel for it. First, let's code the function and choose values for all its parameters.
 
 ```{r}
 P.L.flex <- function(h.m, h.r) {# P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant
   P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 1/2)
 }
 
-# the parameter P.L.mean gives P.L when h'= h
+# the parameter P.L.mean gives P.L when h.m= h.r
 P.L.mean <- 0.25
 
 # next the parameter determining the maximum difference in P.L between
 # completely shaded and maximally sun exposed
 P.L.var <- 0.5
 
-# finally the parameter determining how fast P.L increases with increased
+# finally a parameter determining how fast P.L increases with increased
 # shading from a competitor
 gamma <- 10 
 
-curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression(height ~ "h'"), ylab = expression("minimum photosynthesis, " * P[L]("h'", h * "=0.5")))
+curve(P.L.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h"[m]), ylab = expression("minimum photosynthesis, " * P[L]("h"[m]*", h"[r]*"=0.5")))
+# plot of this function when we vary h.m
 ```
 
-Now we can plot how the fact that $P_L$ depends on the plant heights $h'$ and $h$ affects the shape of the function $g(h', h)$.
+What you should see from this graph is the following. First, note that we vary the height of the mutant plant, $h_{\rm m}$ while keeping $h_{\rm r}$ fixed at 0.5. Second, when $h_{\rm m} = 0.5$, so that $h_{\rm m} = h_{\rm r}$, then the function takes the value *P.L.mean = 0.25*. Third, for $h_{\rm m} < h_{\rm r}$, the value of $P_L$ increases. This means that mutant plants that are shorter than resident plants have an improved ability for photosynthesis under shading do to a decrease in the thickness of their cuticula. Fourth, for $h_{\rm m} > h_{\rm r}$, the value of $P_L$ decreases. This means that mutant plants that are taller than resident plants have an worse ability for photosynthesis under shading do to a increase in the thickness of their cuticula.
+
+Next, we plot how the fact that $P_L$ depends on the plant heights, $h_{\rm m}$ and $h_{\rm r}$, affects the shape of the function $g(h_{\rm m}, h_{\rm r})$.
 
 ```{r}
 g.flex <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our new function for P.L
@@ -60,13 +63,15 @@ g <- function(h.m, h.r) { # the old function g(h', h) for comparison
 P.L <- 0.25 # parameter determining the minimum photosynthesis in model with fixed P.L,
 # here chosen to be equal to P.L.mean <- 0.25 for comparison
 
-curve(g.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h'"), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h', h = 0.5)"), col = "blue")
+curve(g.flex(x, h.r = 0.5), from = 0, to = 1, xlab = expression("plant height, h"[m]), ylim = c(0,1), ylab = expression("photosythesis/leaf, g(h"[m]*", h"[r]*"=0.5)"), col = "blue")
 curve(g(x, h.r = 0.5), from = 0, to = 1, col = "orange", add = TRUE)
 legend("topleft", legend = c(expression(P[L] * " variable "),
                               expression(P[L] * " fixed ")), lty =1, col = c("blue", "orange"))
 ```
 
-We are interested in how our new assumption affects the PIP and whether we find heights *h'* and *h* that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.
+What you should see from this graph is the following. First, note that we vary the height of the mutant plant, $h_{\rm m}$ while keeping $h_{\rm r}$ fixed at 0.5. Second, when $h_{\rm m} = 0.5$, so that $h_{\rm m} = h_{\rm r}$, then the value of $g$ is identical under a fixed $P_l$ and variable $P_L$ (the orange and blue curve intersect with each other). Third, for $h_{\rm m} < h_{\rm r}$, the value of $g$ is higher when $P_L$ is variable compared to when $P_L$ is fixed (the blue curve is above the orange curve). This is because shorter mutant plants have an improved ability for photosynthesis under shading. Fourth, the value of $g$ is lower when $P_L$ is variable compared to when $P_L$ is fixed (the blue curve is below the orange curve). This is because taller mutant plants have a decreased ability for photosynthesis under full exposure to the sun.
+
+We are interested in how our new assumption affects the PIP and whether we find heights $h_{\rm m}$ and $h_{\rm r}$ that are able to coexist with each other. To this end, we repeat the same steps as on the previous side. First, we produce the PIP.
 
 ```{r}
 f <- function(h) { # same function f(h) as before
@@ -85,11 +90,11 @@ s <- function(h.m, h.r) { # invasion fitness
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
 par(pty="s")
 filled.contour(t(PIP), levels = c(-1, 0, 1), las = 2, main = "PIP",
-               xlab = expression("height h"),
-               ylab = expression("height h'"))
+               xlab = expression("resident height h"[r]),
+               ylab = expression("mutant height h"[m]))
 ```
 
-In order to determine whether a mutant *p'* will replace the resident *p* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
+In order to determine whether a mutant $h_{\rm m}$ will replace the resident $h_{\rm r}$ or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 
 ```{r}
 s.flipped.roles <- function(h.m, h.r) {
@@ -100,11 +105,11 @@ PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s.flipped.roles)
 
 par(pty="s")
 filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), las = 2, main = "PIP.mirrored",
-               xlab = expression("height h"),
-               ylab = expression("height h'"))
+               xlab = expression("mutant height h"[r]),
+               ylab = expression("resident height h"[m]))
 ```
 
-And finally the PIP and its mirror image superimposed.
+And as a last step, we superimpose the PIP and its mirror image.
 
 ```{r}
 par(pty="s")
@@ -113,27 +118,23 @@ TEP <- ifelse(PIP > 0 & PIP.mirrored > 0, 1, ifelse(PIP < 0 & PIP.mirrored < 0, 
 filled.contour(t(TEP), levels = c(-1.5, -0.5, 0.5, 1.5), col = c("red", "blue", "green"),
 plot.title={
   title(main = "PIP and PIP.mirrored superimposed")
-  title(xlab=expression("height h"))
-  title(ylab=expression("height h'"))
+  title(xlab=expression("height h"[r]))
+  title(ylab=expression("height h"[m]))
   abline(0, 1, lwd = 1)
 })
-
-# green area: mutual invadability resulting in coexistence
-# blue area: one trait value can invade the other but not vice versa,
-# resulting in fixation of one of the genotypes
 ```
 
-Something very interesting has happened! The green region in the last plot shows combinations of plant heights *h'* and *h* that each have a positive invasion fitness when rare. Thus, these different plants (plant species) are able to coexist with each other in a protected polymorphism. In fact, the PIP above is very special as it shows a so-called *evolutionary branching point* where one population can split into two during a process of gradual evolution. Models with branching points play an important role in speciation research.
+The color coding in this plot is as follows. *Blue* indicates combinations of $h_{\rm m}$ and $h_{\rm r}$ such that one strategy can invade the other, but that the reverse is not true. This means that the strategy that can invade goes to fixation. *Green* indicates combinations of $h_{\rm m}$ and $h_{\rm r}$ such that each strategy can invade the other. This mutual invadability indicates that plants with these height can coexist in a *protected polymorphism*! In fact, the PIP above is special as it shows a so-called *evolutionary branching point* where one population can split into two in a process of gradual evolution. Models with branching points play an important role in speciation research.
 
-In the present model, we find coexistence of one plant species that invests less energy in growing a stem and that is adapted to low-light conditions and another plant species that invests more in growing a stem which thick leaves that are not adapted to low-light conditions.
+In the present model, we find coexistence of a less competitive plant species that invests less energy in growing a stem but that is adapted to low-light conditions under shading and a more competitive plant species that invests more in growing a stem with thick leaves adapted to full sun exposure. This finding agrees well with natural systems
 
 ### TASKS
 
-1. Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).
+1. Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam), and that this course is not primarily about learning R. But feel free to ask about code!
 
 2. Repeat the above analysis for different parameter values.
-    + Change ```P.L.var``` from $0.5$ first to $0.4$ and then to $0.3$.
-    + Describe how the area of coexistence changes. In which cases can a protected polymorphism evolve through gradual evolution? Explain why your findings makes biological sense.
+    - Change ```P.L.var``` from $0.5$ first to $0.4$ and then to $0.3$.
+    - Describe how the area of coexistence changes. In which cases can a protected polymorphism evolve through gradual evolution? Explain why your findings make biological sense.
 
 
 Submit your results as an html file, either by using the *compile report*-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown [**here**](https://clausrueffler.github.io/CodingWithR/Markdown.html)).

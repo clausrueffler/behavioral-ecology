@@ -17,7 +17,9 @@ klippy::klippy(position = c('top', 'right'))
 
 ## The Plant Height Model with Kin Selection
 
-Let us now assume that seeds do not disperse far so that new plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common descent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
+NOTATION ALERT: In this exercise, I use the same notation as in the previous tab on the evolution of altruism, but with $x$ replaced by $h$. Thus, in short, $h' = h.m$ and $h = h.r$.
+
+Let us go back to our first model for the evolution of plant height, but assume that seeds do not disperse far so that young plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common descent with probability $r$, the relatedness coefficient. The payoff to a rare mutant with allele $h'$ is then given by
 
 $$
 \begin{align}
@@ -27,7 +29,7 @@ W(h', h)    & = r w(h', h', h) + (1 - r)w(h', h, h) \\
 $$
 where $w(h', h_{\mathrm r}, h)$ is the payoff to a focal plant with height $h'$ growing next to a plant with height $h_{\mathrm r}$ in a population where the height of the resident plants is $h$. With probability $r$ the focal individual and the interacting individual share the gene for plant height by common descent, in which case $h_{\mathrm r}=h'$, and with probability $1-r$ the focal individual and the interacting individual do not share the gene for plant height by common descent, in which case $h_{\mathrm r}=h$.
 
-For the moment, let us use the same functions $f$ and $g$ as in the unmodified plant height game, namely
+We use the same functions $f$ and $g$ as in the unmodified plant height game, namely
 
 $$
 f(h)=1-h^\alpha,
@@ -83,31 +85,28 @@ filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
                ylab = expression("mutant height h'"))
 ```
 
-When comparing with the results from the first tab, we can see that kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5.
+When comparing with the results from the second tab (Evolution of Plant Height), we see that kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5. Does this result makes sense to you? Try to explain in your own words.
+
+### Advanced (optional)
 
 We can understand this result by determining the partial derivative of $W(h', h)$ with respect to $h'$, evaluated at $h' = h$, with the aim to recover Hamilton's rule:
 
 $$
 \begin{align}
 \frac{\partial W(h', h)}{\partial h'}\bigg|_{h' = h} 
-  & =\frac{\partial}{\partial h'} (W(h', h)w(h', h', h) + w(h', h, h))\big|_{h' = h} \\
-  & = \frac{\partial}{\partial h'} (r f(h')g(h', h') + (1 -r) f(h')g(h', h))\big|_{h' = h}, \\
+  & =\frac{\partial}{\partial h'} \left(w(h', h', h) + w(h', h, h)\right)\big|_{h' = h} \\
+  & = r \frac{\partial}{\partial h'} f(h')g(h', h')\big|_{h' = h} + (1 -r) \frac{\partial}{\partial h'} f(h')g(h', h)\big|_{h' = h}, \\
+  & = r \frac{\partial}{\partial h'} f(h')g(h', h_r)\big|_{h' = h} + r \frac{\partial}{\partial h_r} f(h')g(h', h_r)\big|_{h' = h} + (1 -r) \frac{\partial}{\partial h'} f(h')g(h', h)\big|_{h' = h} \\
+& = \frac{\partial}{\partial h'} f(h')g(h', h)\big|_{h' = h} + r \frac{\partial}{\partial h} f(h')g(h', h)\big|_{h' = h}.
 \end{align}
 $$
 
-which becomes
-
-$$
-\begin{align}
-\frac{\partial W(h', h)}{\partial h'}\bigg|_{h' = h} 
-  & = \frac{\partial}{\partial h'}(f(h')g(h', h)) + r \frac{\partial}{\partial h}(g(h', h)).
-\end{align}
-$$
+To understand the last two rows in this derivation, you have to revisit the slide "Selection gradient and Hamilton’s rule" from the lecture.
 
 <!--
 First, let us note that in the plant height game, growing *less tall* can be considered an act of altruism (if the costs of doing so are positive) or an act of cooperation (if the costs of doing so are negative). This is the reason why in the above equation, the first term is defined as $c$ and the second term as $-b$ (compare with the corresponding equation in the self-sacrificing game).
 -->
-The first term describes the effect of increasing the strategy value $h'$ of the actor on the payoff of the actor itself. This term is zero when $h'=h^*$, where $h^*$ is the evolutionary stable strategy value in the absence of kin competition, negative when $h'>h^*$, and positive when $h^*<h'$. Thus, for a plant to decrease its height to a value lower than $h^*$ can be considered an act of altruism.
+The first term describes the effect of increasing the strategy value $h'$ of the actor on the payoff of the actor itself. This term is zero when $h'=h^*$, where $h^*$ is the evolutionary stable strategy value in the absence of kin competition, it is negative when $h'>h^*$, and positive when $h^*<h'$. Thus, for a plant to decrease its height to a value lower than $h^*$ can be considered an act of altruism.
 The derivative in the second term describes the effect of a trait change of the interacting individual (the recipient) on the payoff of the actor. This term is always negative (if the neighboring plant grows higher, the focal individual is more shaded).
 Thus, given that the first term is zero for $h=h^*$ and the second negative, we can conclude that competition with kin always selects for a lower ESS-value compared to the model without kin selection.
 

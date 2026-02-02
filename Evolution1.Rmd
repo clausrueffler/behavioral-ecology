@@ -17,17 +17,17 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolution of Plant Height: Pairwise Invadability Plots and Coexistence of Different Strategies.
 
-On this page, we explore the question whether two plants that differ in their height can coexist in the current model. On our way towards this goal, we get to know *Pairwise Invadability Plots (PIP)*, an important tool in modern Evolutionary Game Theory. As you will see, it seems that in the current model coexistence is not possible. On the next tab we therefore explore a modification of the plant height game. In that modified model coexistence becomes possible.
+On this page, we explore the question whether two plants that differ in their height can coexist in the current model. On our way towards this goal, we get to know *Pairwise Invadability Plots (PIP)*, an important tool in modern Evolutionary Game Theory. As you will see, it seems that in the current model, coexistence is not possible. On the next tab, we explore a modification of the plant height game, in which coexistence becomes possible.
 
-We start by repeating the functions *f(h)* and *g(h)*.
+We start by repeating the functions $f(h)$ and $g(h_{\rm m}, h_{\rm r})$.
 
 ```{r}
 f <- function(h) { 
   1 - h^alpha
 }
 
-g <- function(h.1, h.2) {
-  P.L + (P.H - P.L)/(1 + exp(-beta*(h.1 - h.2)))
+g <- function(h.m, h.r) {
+  P.L + (P.H - P.L)/(1 + exp(-beta*(h.m - h.r)))
 }
 ```
 
@@ -48,7 +48,7 @@ w <- function(h.m, h.r) {
 }
 ```
 
-We define the selective advantage *s(h', h)* (or invasion fitness) of a mutant with height *h'* in a population of plants with height *h* as the difference in payoff between a mutant when playing against a resident and a resident when playing against itself:
+We define the selective advantage $s(h_{\rm m}, h_{\rm r})$ (or invasion fitness) of a mutant with height $h_{\rm m}$ in a population of resident plants with height $h_{\rm r}$ as the difference in payoff between a mutant when playing against a resident and a resident when playing against itself:
 
 ```{r}
 s <- function(h.m, h.r) {
@@ -56,7 +56,7 @@ s <- function(h.m, h.r) {
 }
 ```
 
-A PIP is in fact simply a contour plot of the function *s(h', h)* with a contour line at height *s(h', h)=0*. By definition *s(h, h) = 0* and therefore a PIP always has a contour line along the diagonal (the 45-degree line). But as we will see, mutants *h'* different from *h* can also have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value *h'* and residents with trait value *h* where the mutant has positive invasion fitness and can therefore establish itself in the population.
+A PIP is in fact simply a *contour plot* of the function $s(h_{\rm m}, h_{\rm r})$ with a contour line at height $s(h_{\rm m}, h_{\rm r}) = 0$. A contour plot shows the *sign* of a function with two arguments, here $h_{\rm m}$ and $h_{\rm r}$. By definition $s(h_{\rm r}, h_{\rm r}) = 0$ and therefore a PIP always has a contour line along the diagonal (the 45-degree line). But as we will see, mutants $h_{\rm m}$ different from $h_{\rm r}$ can also have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value $h_{\rm m}$ and residents with trait value $h_{\rm r}$ for which the mutant has positive invasion fitness and can therefore establish itself in the population.
 
 ```{r}
 PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
@@ -64,11 +64,12 @@ PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
 
 par(pty="s")
 filled.contour(t(PIP), levels = c(-1, 0, 1), main = "PIP", las = 2,
-               xlab = expression("resident height h"),
-               ylab = expression("mutant height h'"))
+               xlab = expression("resident height h"[r]),
+               ylab = expression("mutant height h"[m])
+               )
 ```
 
-In order to determine whether a mutant *h'* will replace the resident *h* or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
+In order to determine whether a mutant $h_{\rm m}$ will replace a resident $h_{\rm r}$ or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).
 
 ```{r}
 s.flipped.roles <- function(h.m, h.r) {
@@ -79,8 +80,8 @@ PIP.mirrored <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s.flipped.roles)
 
 par(pty="s")
 filled.contour(t(PIP.mirrored), levels = c(-1, 0, 1), main = "PIP.mirrored", las = 2,
-               xlab = expression("height h"),
-               ylab = expression("height h'"))
+               xlab = expression("mutant height h"[r]),
+               ylab = expression("resident height h"[m]))
 ```
 
 In order to determine if there are strategies (i.e., heights) that can coexist with each other, we superimpose the PIP with its mirror image.
@@ -92,25 +93,23 @@ par(pty="s")
 filled.contour(t(TEP), levels = c(-1.5, -0.5, 0.5, 1.5), col = c("red", "blue", "green"),
 plot.title={
   title(main = "PIP and PIP.mirrored superimposed")
-  title(xlab=expression("height h"))
-  title(ylab=expression("height h'"))
+  title(xlab=expression("height h"[r]))
+  title(ylab=expression("height h"[m]))
   abline(0, 1, lwd = 1)
 })
 ```
 
-In this last plot, the red area corresponds to combinations of heights *h'* and *h* where neither strategy can invade the other. In other words: whoever was first, wins. The blue areas correspond to combinations of heights where either the mutant or the resident wins. These results show that in the current model coexistence of plant species with different heights is not possible.
+In this last plot, the red area corresponds to combinations of heights $h_{\rm m}$ and $h_{\rm r}$ where neither strategy can invade the other. In other words: whoever was first, wins! The blue areas correspond to combinations of heights where either the mutant or the resident wins. Importantly, there is NO area where the two strategy values can invade each other! Taken together, these results show that in the current model coexistence of plant species with different heights is not possible.
 <!--: there always exists a unique height that will win against plants with any other height.-->
 
 In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as *Adaptive Dynamics* or *Evolutionary Invasion Analysis*. If you want to learn more about this, Chapter 7 in the book by Hanna Kokko (2007) is a good starting point.
 
 ### TASKS
 
-1. Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam).
+1. Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam), and that this course is not primarily about learning R. But feel free to ask about code!
 
-2. Repeat the above analysis for different parameter values.
-    + Change $\alpha$ from 3 to 1.
-    + Change $\alpha$ back to 3 but now change $\beta$ from 5 to 10.
-    + Describe for each case how the value of the ESS changes. Explain why your findings makes biological sense.    
-
+2. Repeat the above analysis for different parameter values. Describe for each case, how the value of the ESS changes. Explain why your findings makes biological sense.
+    - Change $\alpha$ from 3 to 1. This is the parameter in the function $f(h)$ that regulates how fast the amount of leaf biomass decreases with increasing plant height.
+    - Change $\alpha$ back to 3 but now change $\beta$ from 5 to 10. This is the parameter in the function $g(h_{\rm m}, h_{\rm r})$ that describes how fast photosynthesis changes with increasing height difference between the mutant and resident plant.
 
 Submit your results as an html file, either by using the *compile report*-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown [**here**](https://clausrueffler.github.io/CodingWithR/Markdown.html)).

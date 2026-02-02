@@ -559,29 +559,57 @@ h_{\text r})\)</span> to a plant with height <span
 class="math inline">\(h_{\text m}\)</span> (first number in the cells in
 the matrix in Kokko) for four different height options for the mutant
 and resident.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">outer</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), W), <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>##       [,1]  [,2]  [,3]  [,4]
+<!--
+
+```r
+round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), W), digits = 3)
+```
+
+```
+##       [,1]  [,2]  [,3]  [,4]
 ## [1,] 0.625 0.369 0.276 0.255
 ## [2,] 0.848 0.602 0.355 0.266
 ## [3,] 0.686 0.620 0.440 0.260
-## [4,] 0.000 0.000 0.000 0.000</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is a very compact way of computing the W for all 16 different combinations of h.m and h.r</span></span></code></pre></div>
-<p>To obtain <span class="math inline">\(W(h_{\text r}, h_{\text
-m})\)</span> (payoff when the roles of who is mutant and who resident
-are switched), the second number in each cell in the matrix by Kokko, we
-only have to transpose the previous payoff matrix:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">round</span>(<span class="fu">outer</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), W), <span class="at">digits =</span> <span class="dv">3</span>)) <span class="co"># t is the command in R that produces the transpose of a matrix</span></span></code></pre></div>
-<pre><code>##       [,1]  [,2]  [,3] [,4]
+## [4,] 0.000 0.000 0.000 0.000
+```
+
+```r
+# this is a very compact code to compute fitness W for all 16 different combinations of h.m and h.r
+```
+-->
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">outer</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>,<span class="dv">1</span>), W), <span class="at">digits =</span> <span class="dv">3</span>), <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">&quot;h.m=0&quot;</span>, <span class="st">&quot;h.m=1/3&quot;</span>, <span class="st">&quot;h.m=2/3&quot;</span>,<span class="st">&quot;h.m=1&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>) <span class="co"># this is a very compact code to compute fitness W for all 16 different combinations of h.m and h.r</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;h.r=0&quot;</span>, <span class="st">&quot;h.r=1/3&quot;</span>, <span class="st">&quot;h.r=2/3&quot;</span>,<span class="st">&quot;h.r=1&quot;</span>) <span class="co"># changing the names of the columns of the data frame</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df <span class="co"># displaying the data frame</span></span></code></pre></div>
+<pre><code>##         h.r=0 h.r=1/3 h.r=2/3 h.r=1
+## h.m=0   0.625   0.369   0.276 0.255
+## h.m=1/3 0.848   0.602   0.355 0.266
+## h.m=2/3 0.686   0.620   0.440 0.260
+## h.m=1   0.000   0.000   0.000 0.000</code></pre>
+<!--To obtain $W(h_{\text r}, h_{\text m})$ (payoff when the roles of who is mutant and who resident are switched), the second number in each cell in the matrix by Kokko, we only have to transpose the previous payoff matrix:
+
+
+```r
+t(round(outer(c(0,1/3,2/3,1), c(0,1/3,2/3,1), W), digits = 3)) # t is the command in R that produces the transpose of a matrix
+```
+
+```
+##       [,1]  [,2]  [,3] [,4]
 ## [1,] 0.625 0.848 0.686    0
 ## [2,] 0.369 0.602 0.620    0
 ## [3,] 0.276 0.355 0.440    0
-## [4,] 0.255 0.266 0.260    0</code></pre>
+## [4,] 0.255 0.266 0.260    0
+```
+-->
 <p>The next step by Hanna Kokko is to ask about the <em>best
 response</em> of one plant to a given strategy by the other plant, that
 is, the height that maximizes the payoff given a certain height of the
 competing plant. Let us do this by allowing any height, not just a
-height from a set of four. Thus, we are going to reproduce figure 6.4(b)
-in Kokko (2007).</p>
+height from a set of four. Thus, we are going to produce a figure
+similar to 6.4(b) in Kokko (2007).</p>
 <p>First, let us plot the payoff for all possible choices of <span
 class="math inline">\(h_{\text m}\)</span> given <span
 class="math inline">\(h_{\text r} = 0.5\)</span>. The height <span
@@ -589,58 +617,83 @@ class="math inline">\(h_{\text m}\)</span> that corresponds to the
 maximum of this curve is the optimal response <span
 class="math inline">\(\hat h_{\text m}\)</span> given <span
 class="math inline">\(h_{\text r}=0.5\)</span>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">W</span>(x, h.r), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>[m]), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;payoff, W(h&quot;</span>[m]<span class="sc">*</span><span class="st">&quot;, h&quot;</span>[r]<span class="sc">*</span><span class="st">&quot; = 0.5)&quot;</span>))</span></code></pre></div>
-<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">W</span>(x, h.r), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>[m]), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;payoff, W(h&quot;</span>[m]<span class="sc">*</span><span class="st">&quot;, h&quot;</span>[r]<span class="sc">*</span><span class="st">&quot; = 0.5)&quot;</span>))</span></code></pre></div>
+<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Instead of trying to read the <span
 class="math inline">\(h\)</span>-value of the best response, we can use
 the R-function <em>optimize</em> (see <a
 href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/optimize"><strong>here</strong></a>
 for the help page for this function) to get the exact numerical value
 for <span class="math inline">\(\hat h\)</span>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>best.response <span class="ot">&lt;-</span> <span class="cf">function</span>(h.r) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optimize</span>(W, <span class="at">interval=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>, h.r)<span class="sc">$</span>maximum</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">best.response</span>(<span class="at">h.r =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>best.response <span class="ot">&lt;-</span> <span class="cf">function</span>(h.r) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">optimize</span>(W, <span class="at">interval=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">maximum =</span> <span class="cn">TRUE</span>, h.r)<span class="sc">$</span>maximum</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">best.response</span>(<span class="at">h.r =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <pre><code>## [1] 0.5839456</code></pre>
-<p>In conclusion, if plant 2 plays strategy <span
-class="math inline">\(h_{\text r} = 0.5\)</span>, then plant 1 maximizes
-its payoff by playing <span class="math inline">\(\hat h_{\text m} =
-0.58\)</span>. To obtain the best response curve, we have perform this
-computation for all (or at least <em>many</em>) values of <span
-class="math inline">\(h_{\text r}\)</span> between 0 and 1. After that,
-we repeat the same procedure from the perspective plant 2.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>best.response.curve <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), best.response)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># applies the function best.response to all values of h from 0 to 1</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># in steps of 0.01, thus, to 101 different resident strategy values</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>     best.response.curve,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">asp =</span> <span class="dv">1</span>,</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>[r]<span class="sc">*</span><span class="st">&quot; of resident plant&quot;</span>),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>[m]<span class="sc">*</span><span class="st">&quot; of mutant plant&quot;</span>))</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(best.response.curve, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># adds the best response curve if h.m is the resident strategy</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">expression</span>(<span class="st">&quot;best resp. to h&quot;</span>[r]), <span class="fu">expression</span>(<span class="st">&quot;best resp. to h&quot;</span>[m])), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) </span></code></pre></div>
-<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>In conclusion, if the resident strategy equals <span
+class="math inline">\(h_{\text r} = 0.5\)</span>, then mutant plants
+maximize their payoff by playing <span class="math inline">\(\hat
+h_{\text m} = 0.58\)</span>. To obtain the best response curve, we have
+perform this computation for all (or at least <em>many</em>) values of
+<span class="math inline">\(h_{\text r}\)</span> between 0 and 1.
+<!-- After that, we repeat the same procedure from the perspective plant 2. --></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>best.response.curve <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>), best.response)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># applies the function best.response to all values of h from 0 to 1</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># in steps of 0.01, thus, to 101 different resident strategy values</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>     best.response.curve,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">asp =</span> <span class="dv">1</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>[r]<span class="sc">*</span><span class="st">&quot; of resident plant&quot;</span>),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;height h&quot;</span>[m]<span class="sc">*</span><span class="st">&quot; of mutant plant&quot;</span>))</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">segments</span>(<span class="at">x0 =</span> <span class="dv">0</span>, <span class="at">y0 =</span> <span class="dv">0</span>, <span class="at">x1 =</span> <span class="dv">1</span>, <span class="at">y1 =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># adds the identity line</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">expression</span>(<span class="st">&quot;best resp. to h&quot;</span>[r]), <span class="fu">expression</span>(<span class="st">&quot;identity line&quot;</span>)), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) </span></code></pre></div>
+<p><img src="GamesPlantsPlay_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<!--
+```{r} CODE THAT PRODUCES FIG. 6.4B OF KOKKO
+best.response.curve <- sapply(seq(0, 1, 0.01), best.response)
+# applies the function best.response to all values of h from 0 to 1
+# in steps of 0.01, thus, to 101 different resident strategy values
+
+par(pty="s")
+plot(seq(0, 1, 0.01),
+     best.response.curve,
+     type = "l", xlim = c(0,1), ylim = c(0,1), asp = 1,
+     xlab = expression("height h"[r]*" of resident plant"),
+     ylab = expression("height h"[m]*" of mutant plant"))
+lines(best.response.curve, seq(0, 1, 0.01), type = "l", lty = 2) # adds the best response curve if h.m is the resident strategy
+legend("bottomright", legend = c(expression("best resp. to h"[r]), expression("best resp. to h"[m])), lty = c(1, 2)) 
+```
+-->
 <p>This shows that this game between two plants has exactly one Nash
-equilibrium, given by the intersection of the two best response curves.
-Thus, if plants have approximately the height 0.62, then all plants play
-the best response with respect to each other. In fact, this Nash
-equilibrium is also an evolutionary stable strategy (ESS, the first ESS
-condition is fulfilled).</p>
+equilibrium, given by the intersection of the best response curve with
+the identity line. Thus, if plants have approximately the height 0.62,
+then all plants play the best response with respect to each other: <span
+class="math display">\[
+W(h_{\text m}, h_{\text r}) &lt; W(h_{\text r}, h_{\text r}) \text{ for
+all } h_{\text m} \in (0, 1)
+\]</span> In fact, this Nash equilibrium is also an evolutionary stable
+strategy (ESS). This is because we here have a strict inequality,
+meaning that the first ESS condition is fulfilled.</p>
 <div id="tasks" class="section level3">
 <h3>TASKS</h3>
 <ol style="list-style-type: decimal">
 <li><p>Evaluate the above code. Understand what the results mean. Try to
 understand the code as much as possible (but note that code is not
-relevant for the exam).</p></li>
+relevant for the exam), and that this course is not primarily about
+learning R. But feel free to ask about code!</p></li>
 <li><p>Produce the graphs <em>photosynthesis/leaf vs. plant height</em>
-and <em>payoff W(h_{m}, h_{r}) vs. height h_{m}$ for a different value
-of the resident strategy h_{r}</em>. Select an <em>h_{r}</em>-value of
-your own choice. Do the graphs differ from those with <em>h_{r} =
-0.5</em>? If yes, give an explanation for the observed
-difference.</p></li>
+and <em>payoff</em> <span class="math inline">\(W(h_{\text m}, h_{\text
+r})\)</span> vs. height <span class="math inline">\(h_{\text m}\)</span>
+for a different value of the resident strategy <span
+class="math inline">\(h_{\text r}\)</span>. Select an <span
+class="math inline">\(h_{\text r}\)</span>-value of your own choice. To
+do this, you have to change <code>h.r &lt;- 0.5</code> and then rerun
+the code producing the figures. How do your graphs differ from those
+produced based on <span class="math inline">\(h_{\text r} =
+0.5\)</span>? Give an explanation for the observed difference.</p></li>
 </ol>
 <p>Submit your results as an html file, either by using the <em>compile
 report</em>-button or by producing an Rmarkdown document (if you know

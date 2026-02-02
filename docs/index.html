@@ -13,7 +13,7 @@
 
 <title>Game Theory</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -166,8 +166,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -175,16 +175,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -239,7 +232,7 @@ $(document).ready(function () {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Games Theory: Examples
+    Game Theory
      
     <span class="caret"></span>
   </a>
@@ -258,6 +251,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="./PlantHeightAltruism.html">5. The Plant Height Model with Kin Selection</a>
+    </li>
+    <li>
+      <a href="./PaperPencilExercises.html">6. Paper &amp; Pencil Exercises</a>
     </li>
   </ul>
 </li>
@@ -278,21 +274,39 @@ $(document).ready(function () {
 </div>
 
 
-<p>This website is part of the course <em>Behavioral Ecology</em> at Uppsala University. The idea with these websites is as follows. Work through them by reading the text and then by coping the R-code into your own script, where you can run it and modify it.</p>
+<p>This website is part of the course <em>Behavioral Ecology</em> at
+Uppsala University. The idea with these websites is as follows. Work
+through them by reading the text and then by coping the R-code into your
+own script, where you can run it and modify it.</p>
 <p>It consists of three parts:</p>
 <ol style="list-style-type: decimal">
-<li>We first explore the model presented in Chapter 6 of Kokko (2007) but take the analysis it bit further. This part consist of three parts:
+<li>We first explore the model presented in Chapter 6 of Kokko (2007)
+but take the analysis it bit further. This part consist of three parts:
 <ul>
-<li>The first tab, <em>The Basic Plant Game</em>, repeats the analysis presented by Hanna Kokko.</li>
-<li>The second tab, <em>Evolution of Plant Height</em>, goes a bit further by introducing <em>Pairwise Invadability Plots</em> (something that Hanna Kokko does in Chapter 7 of her book in the context of a different model.)</li>
-<li>Finally, the third tab, <em>Evolution in the Modified Plant Game</em>, introduces a tweak to the basic model. This modification results in a model in which plants with different heights are able to coexist in a stable polymorphism, just as we see in any natural forest.</li>
+<li>The first tab, <em>The Basic Plant Game</em>, repeats the analysis
+presented by Hanna Kokko.</li>
+<li>The second tab, <em>Evolution of Plant Height</em>, goes a bit
+further by introducing <em>Pairwise Invadability Plots</em> (something
+that Hanna Kokko does in Chapter 7 of her book in the context of a
+different model.)</li>
+<li>Finally, the third tab, <em>Evolution in the Modified Plant
+Game</em>, introduces a tweak to the basic model. This modification
+results in a model in which plants with different heights are able to
+coexist in a stable polymorphism, just as we see in any natural
+forest.</li>
 </ul></li>
-<li>In the second part (in the fourth tab), we explore the evolution of altruism. This part consists of two parts:
+<li>In the second part (in the fourth tab), we explore the evolution of
+altruism. This part consists of two parts:
 <ul>
-<li>The fourth tab, <em>The Evolution of Altruism</em>, investigates a model in which individuals can sacrifice their own life in order to increase the survival of other (related) individuals.</li>
-<li>The fifth tab goes explores the role of altruism when plants compete for light with related individuals.</li>
+<li>The fourth tab, <em>The Evolution of Altruism</em>, investigates a
+model in which individuals can sacrifice their own life in order to
+increase the survival of other (related) individuals.</li>
+<li>The fifth tab goes explores the role of altruism when plants compete
+for light with related individuals.</li>
 </ul></li>
-<li>This part (the sixth tab) consists of a series of exercises that can be done with paper and pencil. It revisits material from the lecture and from part 1 and 2, and is a good preparation for the exam.</li>
+<li>This part (the sixth tab) consists of a series of exercises that can
+be done with paper and pencil. It revisits material from the lecture and
+from part 1 and 2, and is a good preparation for the exam.</li>
 </ol>
 <p>Claus</p>
 
