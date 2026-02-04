@@ -17,24 +17,48 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Evolutionary Game Theory: Paper and Pencil Exercises
 
-### 1) Fisher's Sex Ratio Theory
+### 1) Competition for Light and Plant Height
 
-Consider a population consisting of $N$ adult individuals. At the end of each season, all adult individuals die and the next generation, again $N$ individuals are recruited from the offspring of the previous season.
-Let us assume that the sex ratio is maternally determined and encoded in a strategy $x$, such that a female’s offspring is a son with probability $x$ and a daughter with probability $1-x$.
-Due to the fact that all individuals have a mother and a father, a son can expect to give rise to
-$$
-\frac{N}{xN} = \frac{1}{x}
-$$
-offspring and a daughter can expect to give rise to 
-$$
-\frac{N}{(1-x)N} = \frac{1}{1-x}
-$$
-offspring.
-Now consider a mutant female with sex ratio strategy $x'$. With probability $x'$ she produces a son that can expect to gives rise to $1/x$ offspring and with probability $(1-x')$ she produces a daughter that can expect to give rise to $1/(1-x)$ offspring. Thus, a mutant female can expect that each of her offspring gives rise to 
-$$
-w(x', x) = \frac{x'}{x} + \frac{1-x'}{1-x} 
-$$
-offspring. Note that $w(x, x) = 2$, indicating that in a sexual population that does not change in size each individual gives on average rise to two offspring. We use $w(x' x)$ as a fitness measure.
+For the modified plant height game, we produced the following pairwise invisibility plot (PIP).
+
+```{r echo = FALSE}
+P.L.flex <- function(h.m, h.r) {# P.L.flex is the name of the function that makes the minimum photosynthetic activity a function of the degree of shading of the leaves by the neighboring plant
+  P.L.mean + P.L.var*(1 / (1 + exp(gamma*(h.m - h.r))) - 1/2)
+}
+
+P.L.mean <- 0.25
+P.L.var <- 0.5
+gamma <- 10
+
+g.flex <- function(h.m, h.r) { # this a new function for g(h', h) that incorporates our new function for P.L
+  P.L.flex(h.m, h.r) + (P.H - P.L.flex(h.m, h.r))/(1 + exp(-beta*(h.m - h.r)))
+}
+
+beta <- 5 # how fast does g change
+P.H <- 1 # maximum photosynthesis (identical in both versions of the model)
+
+f <- function(h) { 
+  1 - h^alpha
+}
+alpha <- 3 # same parameter value as before
+
+
+w.2 <- function(h.m, h.r) { # payoff function now based on flexible P.L
+  f(h.m) * g.flex(h.m, h.r)
+}
+
+s <- function(h.m, h.r) { # invasion fitness
+  w.2(h.m, h.r) - w.2(h.r, h.r)
+}
+
+PIP <- outer(seq(0, 1, 0.005), seq(0, 1, 0.005), s)
+par(pty="s")
+filled.contour(t(PIP), levels = c(-1, 0, 1), las = 2, main = "PIP",
+               xlab = expression("resident height h"[r]),
+               ylab = expression("mutant height h"[m]))
+```
+
+In this plot, red corresponds to combinations of mutant and resident plant heights for which the mutant has a positive invasion fitness while yellow corresponds to combinations of mutant and resident plant heights for which mutants have a negative invasion fitness.
 
 #### Questions
 
@@ -42,61 +66,71 @@ a)
 Give John Maynard Smith’s definition of an evolutionary stable strategy (ESS). Note that this definition consists of two parts!
 
 b)
-Show that $x = 0.5$ is the evolutionary stable sex ratio. Thus, here you have to apply the two ESS conditions.
-
-### 2) Competition for Light and Plant Height
-
-For the modified plant height game, we produced the following pairwise invisibility plot (PIP) using $R$. In this plot, red corresponds to combinations of mutant and resident plant heights for which the mutant has a positive invasion fitness while yellow corresponds to combinations of mutant and resident plant heights for which mutants have a negative invasion fitness.
-
-#### Questions
-
-a)
 Does this model have an evolutionary stable strategy (ESS)? Give the reason behind your answer.
 
+c)
+Based on this PIP, describe the predicted course of the evolutionary dynamics for plant height under the assumption that mutants occur rarely and differ only by a small amount from the resident strategy from which they originated. What do you predict is the endpoint of this evolutionary dynamics?
+
+### 2) Fisher's Sex Ratio Theory
+
+Consider a population consisting of $N$ adult individuals. At the end of each season, all adult individuals die, and the next generation, again $N$ individuals, is recruited from the offspring of the previous season.
+Let us assume that the sex ratio is maternally determined and encoded in a strategy $x$, such that a female’s offspring is a son with probability $x$ and a daughter with probability $1-x$.
+Due to the fact that all individuals have a mother and a father, a son can expect to contribute to $N/xN$ offspring in the next generation (which of course simplifies to $1/x$). This can be understood as follows: the next generation consists of $N$ individuals, and there are $xN$ fathers this generation that all have an equal chance to contribute to the next generation. Similarly, a daughter can expect to contribute to $N/(1-x)N$ (which of simplifies to $1/(1-x)$). The reason is that the $N$ offspring in the next generation are shared among the $(1-x)N$ mothers this generation.
+
+Now consider a mutant female with sex ratio strategy $x'$. With probability $x'$, she produces a son that can expect to gives rise to $1/x$ offspring and with probability $(1-x')$ she produces a daughter that can expect to give rise to $1/(1-x)$ offspring. Thus, a mutant female can expect that each of her offspring gives rise to 
+$$
+w(x', x) = \frac{x'}{x} + \frac{1-x'}{1-x} 
+$$
+offspring. In other words, a mutant female can expect to have $w(x', x)$ grandchildren. Note that $w(x, x) = 2$, indicating that in a sexual population that does not change in size each individual gives on average rise to two offspring. We use $w(x' x)$ as a fitness measure.
+
+#### Questions
+a)
+Show that $x = 0.5$ is the evolutionary stable sex ratio. To answer this question, you have to apply the two ESS conditions formulated by John Maynard Smith.
+
 b)
-Based on this PIP, describe the predicted course of the evolutionary dynamics for plant height. What do you predict is the endpoint of this evolutionary dynamics?
+Sketch the best response curve for this game (as we did for the Hawk-Dove game).
+
+c)
+Draw the PIP corresponding to this model. What conclusion can you derive from it?
 
 ### 3) Competition for Ligth and Kin Competition
 
-Plants face a trade-off between allocating energy into growing a stem or into leaves. Leaves are needed to produce energy (and ultimately seeds) through photosynthesis. Importantly, plants that are shorter than neighboring plants are shaded and therefore receive less light, which reduces their rate of photosynthesis.
+Let us revisit the plant height game. But this time, consider only two different plant heights. Specifically, plants carrying allele $A$ are relatively tall while plants carrying allele $B$ are shorter. We denote the frequency of allele $A$ with $p$. Thus, the frequency of allele $B$ is $(1-p)$. In this model, we are interested in the change in frequency of the alleles $A$ and $B$. It is thus an example of a game of two competing pure strategies (as our very first example of the Hawk-Dove game). Evolution by natural selection can produce the following three outcomes. First, the allele A, coding for tall plants, reaches fixation ($p = 1$). Second, the allele B, coding for short plants, reaches fixation ($p = 0$). Third, the two alleles coexist at an intermediate frequency (a protected polymorphism).
 
-Let us investigate competition between two genotypes of plants that differ in height with a game theoretic model. Plants carrying allele $A$ are relatively tall while plants carrying allele $B$ are shorter. We denote the frequency of allele $A$ with $p$. Thus, the frequency of allele $B$ is $(1-p)$. We now have to consider four pairwise interactions. 
+Before we can analyse which of these outcomes will occur, we have to specify the payoffs of the four possible interactions between two neighboring plants. 
 
-1) A tall plant growing next to another tall plant has fitness $w(A, A) = 1$.
-2) A tall plant growing next to a short plant has fitness $w(A, B) = 4$.
-3) A short plant growing next to a tall plant has fitness $w(B, A) = 0.5$.
-4) A short plant growing next to another short plant has fitness $w(B, B) = 3$.
+1) A tall plant growing next to another tall plant has payoff $w(A, A) = 1$.
+2) A tall plant growing next to a short plant has payoff $w(A, B) = 4$.
+3) A short plant growing next to a tall plant has payoff $w(B, A) = 0.5$.
+4) A short plant growing next to another short plant has payoff $w(B, B) = 3$.
 
-The expected fitness of a tall plant in a population where tall plants occur with frequency p is then given by:
+The expected fitness of a tall plant in a population where tall plants occur with frequency $p$ is then
 $$
-W_A(p) = p w(A, A) + (1-p) w(A, B)
+W_A(p) = p w(A, A) + (1-p) w(A, B).
 $$
-Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency p is then given by:
+Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency $p$ is then
 $$
-W_B(p) = p w(B, A) + (1-p) w(B, B)
+W_B(p) = p w(B, A) + (1-p) w(B, B).
 $$
 
-#### Question a.
-Our model is an example of two competing pure strategies. Evolution by natural selection can produce the following three outcomes. First, the genotype A coding for tall plants reaches fixation ($p = 1$). Second, the genotype B coding for short plants reaches fixation ($p = 0$). Third, the two genotypes can coexist at an intermediate frequency (a protected polymorphism).
+#### Questions
+a)
+For the above fitness values, determine which is the endpoint of the dynamics for the allele frequency $p$.
+To answer this question, you have to understand how the fitness of each allele changes with allele frequency $p$, and which allele has higher fitness when $p$ changes as a result of natural selection. You can answer this question in purely mathematically or by combining this with graphical methods. Based on your analysis, does selection increase population mean fitness? How can your finding be understood in terms of biology?
 
-For the above fitness values, determine which of these outcomes is to be expected.
-To answer this question, you have to understand how the fitness of each allele changes with allele frequency p, and which allele has higher fitness when p changes as a result of natural selection. You can answer this question in a purely mathematically or by combining this with graphs.
+In the scenario described above, it is implicitly assumed that the two genotypes occur randomly in space as would be the case if seeds are dispersed over large distances. Let us now consider an alternative scenario in which seed dispersal is limited. A consequence of limited seed dispersal is that related plants grow next to each other, and we have to investigate a kin selection model.
 
-Based on your analysis, does selection increase population mean fitness? How can your finding be understood in terms of biology?
-
-
-In the scenario described above, it is implicitly assumed that the two genotypes occur randomly in space as would be the case if seeds are dispersed over large distances. Let us now consider an alternative scenario in which seed dispersal is limited. A consequence of limited seed dispersal is that related plants grow next to each other and we have to investigate a kin selection model.
-
-It can be shown that the expected fitness of a tall plant in a population where tall plants occur with frequency p under kin selection is given by:
+It can be shown that the expected fitness of a tall plant in a population where tall plants occur with frequency $p$ under kin selection is given by
 $$
-W_{A.\text{kin}}(p) = w(A, B) + (r + (1 - r) p)(w(A, A) - w(A, B))
+W_{A.\text{kin}}(p) = w(A, B) + (r + (1 - r) p)(w(A, A) - w(A, B)).
 $$
-Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency p under kin selection is given by:
+Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency $p$ under kin selection is given by
 $$
-W_{B.\text{kin}} = w(B, B) + (1 - r) p (w(B, A) - w(B, B))
+W_{B.\text{kin}} = w(B, B) + (1 - r) p (w(B, A) - w(B, B)).
 $$
-In these equations, $r$ denotes the coefficient of relatedness between plants growing next to each other.  In our model, $r$ is equal to the probability that two plants share the same genotype through common decent. As you can see, for $r = 0$ we recover the above case with no relatedness.
+In these equations, $r$ denotes the coefficient of relatedness between plants growing next to each other. In our model, $r$ is equal to the probability that two plants share the same genotype through common decent. Check for yourself that for $r = 0$, we recover the above case with no relatedness.
 
-#### Question b.
-Under the assumption that $r = 0.5$ (as is the case between parent and offspring or between full siblings), determine for the model with kin selection which of the three evolutionary predictions applies (fixation of tall plants, fixation of short plants, coexistence). This analysis can be done in exactly the same manner as for Question 1.
-Explain why your result makes biological sense (1-2 sentences)?
+#### Questions
+b)
+Under the assumption that $r = 0.5$ (as is the case between parent and offspring or between full siblings), determine for the model with kin selection which of the three possible evolutionary endpoints occurs (fixation of tall plants, fixation of short plants, coexistence). This analysis can be done in exactly the same manner as for Question (a).
+Explain why your result makes biological sense?
