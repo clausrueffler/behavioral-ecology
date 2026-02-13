@@ -13,7 +13,7 @@
 
 <title>Games Plants Play</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,9 +280,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -383,21 +390,10 @@ $(document).ready(function () {
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <!-- # Games Plants Play {.tabset} -->
-<div
-id="evolution-of-plant-height-pairwise-invadability-plots-and-coexistence-of-different-strategies."
-class="section level2">
-<h2>Evolution of Plant Height: Pairwise Invadability Plots and
-Coexistence of Different Strategies.</h2>
-<p>On this page, we explore the question whether two plants that differ
-in their height can coexist in the current model. On our way towards
-this goal, we get to know <em>Pairwise Invadability Plots (PIP)</em>, an
-important tool in modern Evolutionary Game Theory. As you will see, it
-seems that in the current model, coexistence is not possible. On the
-next tab, we explore a modification of the plant height game, in which
-coexistence becomes possible.</p>
-<p>We start by repeating the functions <span
-class="math inline">\(f(h)\)</span> and <span
-class="math inline">\(g(h_{\rm m}, h_{\rm r})\)</span>.</p>
+<div id="evolution-of-plant-height-pairwise-invadability-plots-and-coexistence-of-different-strategies." class="section level2">
+<h2>Evolution of Plant Height: Pairwise Invadability Plots and Coexistence of Different Strategies.</h2>
+<p>On this page, we explore the question whether two plants that differ in their height can coexist in the current model. On our way towards this goal, we get to know <em>Pairwise Invadability Plots (PIP)</em>, an important tool in modern Evolutionary Game Theory. As you will see, it seems that in the current model, coexistence is not possible. On the next tab, we explore a modification of the plant height game, in which coexistence becomes possible.</p>
+<p>We start by repeating the functions <span class="math inline">\(f(h)\)</span> and <span class="math inline">\(g(h_{\rm m}, h_{\rm r})\)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(h) { </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="sc">-</span> h<span class="sc">^</span>alpha</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -414,33 +410,11 @@ class="math inline">\(g(h_{\rm m}, h_{\rm r})\)</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">f</span>(h.m) <span class="sc">*</span> <span class="fu">g</span>(h.m, h.r)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>We define the selective advantage <span
-class="math inline">\(s(h_{\rm m}, h_{\rm r})\)</span> (or invasion
-fitness) of a mutant with height <span class="math inline">\(h_{\rm
-m}\)</span> in a population of resident plants with height <span
-class="math inline">\(h_{\rm r}\)</span> as the difference in payoff
-between a mutant when playing against a resident and a resident when
-playing against itself:</p>
+<p>We define the selective advantage <span class="math inline">\(s(h_{\rm m}, h_{\rm r})\)</span> (or invasion fitness) of a mutant with height <span class="math inline">\(h_{\rm m}\)</span> in a population of resident plants with height <span class="math inline">\(h_{\rm r}\)</span> as the difference in payoff between a mutant when playing against a resident and a resident when playing against itself:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.m, h.r) <span class="sc">-</span> <span class="fu">w</span>(h.r, h.r)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>A PIP is in fact simply a <em>contour plot</em> of the function <span
-class="math inline">\(s(h_{\rm m}, h_{\rm r})\)</span> with a contour
-line at height <span class="math inline">\(s(h_{\rm m}, h_{\rm r}) =
-0\)</span>. A contour plot shows the <em>sign</em> of a function with
-two arguments, here <span class="math inline">\(h_{\rm m}\)</span> and
-<span class="math inline">\(h_{\rm r}\)</span>. By definition <span
-class="math inline">\(s(h_{\rm r}, h_{\rm r}) = 0\)</span> and therefore
-a PIP always has a contour line along the diagonal (the 45-degree line).
-But as we will see, mutants <span class="math inline">\(h_{\rm
-m}\)</span> different from <span class="math inline">\(h_{\rm
-r}\)</span> can also have zero-invasion fitness and these form a second,
-curved contour line in the PIP. Positive areas in the PIP correspond to
-combinations of mutants with trait value <span
-class="math inline">\(h_{\rm m}\)</span> and residents with trait value
-<span class="math inline">\(h_{\rm r}\)</span> for which the mutant has
-positive invasion fitness and can therefore establish itself in the
-population.</p>
+<p>A PIP is in fact simply a <em>contour plot</em> of the function <span class="math inline">\(s(h_{\rm m}, h_{\rm r})\)</span> with a contour line at height <span class="math inline">\(s(h_{\rm m}, h_{\rm r}) = 0\)</span>. A contour plot shows the <em>sign</em> of a function with two arguments, here <span class="math inline">\(h_{\rm m}\)</span> and <span class="math inline">\(h_{\rm r}\)</span>. By definition <span class="math inline">\(s(h_{\rm r}, h_{\rm r}) = 0\)</span> and therefore a PIP always has a contour line along the diagonal (the 45-degree line). But as we will see, mutants <span class="math inline">\(h_{\rm m}\)</span> different from <span class="math inline">\(h_{\rm r}\)</span> can also have zero-invasion fitness and these form a second, curved contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value <span class="math inline">\(h_{\rm m}\)</span> and residents with trait value <span class="math inline">\(h_{\rm r}\)</span> for which the mutant has positive invasion fitness and can therefore establish itself in the population.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PIP <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.005</span>), s)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the computes s(h&#39;, h) for all combinations of h&#39; and h</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -450,10 +424,7 @@ population.</p>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&quot;</span>[m])</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>               )</span></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>In order to determine whether a mutant <span
-class="math inline">\(h_{\rm m}\)</span> will replace a resident <span
-class="math inline">\(h_{\rm r}\)</span> or coexist with it, we plot the
-mirror image of a PIP (mirrored over the 45-degree line).</p>
+<p>In order to determine whether a mutant <span class="math inline">\(h_{\rm m}\)</span> will replace a resident <span class="math inline">\(h_{\rm r}\)</span> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(h.r, h.m) <span class="sc">-</span> <span class="fu">w</span>(h.m, h.m)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -465,9 +436,7 @@ mirror image of a PIP (mirrored over the 45-degree line).</p>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&quot;</span>[r]),</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>[m]))</span></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>In order to determine if there are strategies (i.e., heights) that
-can coexist with each other, we superimpose the PIP with its mirror
-image.</p>
+<p>In order to determine if there are strategies (i.e., heights) that can coexist with each other, we superimpose the PIP with its mirror image.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>TEP <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PIP <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PIP <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
@@ -479,47 +448,19 @@ image.</p>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="Evolution1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>In this last plot, the red area corresponds to combinations of
-heights <span class="math inline">\(h_{\rm m}\)</span> and <span
-class="math inline">\(h_{\rm r}\)</span> where neither strategy can
-invade the other. In other words: whoever was first, wins! The blue
-areas correspond to combinations of heights where either the mutant or
-the resident wins. Importantly, there is NO area where the two strategy
-values can invade each other! Taken together, these results show that in
-the current model coexistence of plant species with different heights is
-not possible.
-<!--: there always exists a unique height that will win against plants with any other height.--></p>
-<p>In fact there is quite a bit more one can read from this plot. These
-techniques involving PIPs are often referred to as <em>Adaptive
-Dynamics</em> or <em>Evolutionary Invasion Analysis</em>. If you want to
-learn more about this, Chapter 7 in the book by Hanna Kokko (2007) is a
-good starting point.</p>
+<p>In this last plot, the red area corresponds to combinations of heights <span class="math inline">\(h_{\rm m}\)</span> and <span class="math inline">\(h_{\rm r}\)</span> where neither strategy can invade the other. In other words: whoever was first, wins! The blue areas correspond to combinations of heights where either the mutant or the resident wins. Importantly, there is NO area where the two strategy values can invade each other! Taken together, these results show that in the current model coexistence of plant species with different heights is not possible. <!--: there always exists a unique height that will win against plants with any other height.--></p>
+<p>In fact there is quite a bit more one can read from this plot. These techniques involving PIPs are often referred to as <em>Adaptive Dynamics</em> or <em>Evolutionary Invasion Analysis</em>. If you want to learn more about this, Chapter 7 in the book by Hanna Kokko (2007) is a good starting point.</p>
 <div id="tasks" class="section level3">
 <h3>TASKS</h3>
 <ol style="list-style-type: decimal">
-<li><p>Evaluate the above code. Understand what the results mean. Try to
-understand the code as much as possible (but note that code is not
-relevant for the exam), and that this course is not primarily about
-learning R. But feel free to ask about code!</p></li>
-<li><p>Repeat the above analysis for different parameter values.
-Describe for each case, how the value of the ESS changes. Explain why
-your findings makes biological sense.</p>
+<li><p>Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam), and that this course is not primarily about learning R. But feel free to ask about code!</p></li>
+<li><p>Repeat the above analysis for different parameter values. Describe for each case, how the value of the ESS changes. Explain why your findings makes biological sense.</p>
 <ul>
-<li>Change <span class="math inline">\(\alpha\)</span> from 3 to 1. This
-is the parameter in the function <span
-class="math inline">\(f(h)\)</span> that regulates how fast the amount
-of leaf biomass decreases with increasing plant height.</li>
-<li>Change <span class="math inline">\(\alpha\)</span> back to 3 but now
-change <span class="math inline">\(\beta\)</span> from 5 to 10. This is
-the parameter in the function <span class="math inline">\(g(h_{\rm m},
-h_{\rm r})\)</span> that describes how fast photosynthesis changes with
-increasing height difference between the mutant and resident plant.</li>
+<li>Change <span class="math inline">\(\alpha\)</span> from 3 to 1. This is the parameter in the function <span class="math inline">\(f(h)\)</span> that regulates how fast the amount of leaf biomass decreases with increasing plant height.</li>
+<li>Change <span class="math inline">\(\alpha\)</span> back to 3 but now change <span class="math inline">\(\beta\)</span> from 5 to 10. This is the parameter in the function <span class="math inline">\(g(h_{\rm m}, h_{\rm r})\)</span> that describes how fast photosynthesis changes with increasing height difference between the mutant and resident plant.</li>
 </ul></li>
 </ol>
-<p>Submit your results as an html file, either by using the <em>compile
-report</em>-button or by producing an Rmarkdown document (if you know
-how to do this, you can find a very short introduction to Rmarkdown <a
-href="https://clausrueffler.github.io/CodingWithR/Markdown.html"><strong>here</strong></a>).</p>
+<p>Submit your results as an html file, either by using the <em>compile report</em>-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown <a href="https://clausrueffler.github.io/CodingWithR/Markdown.html"><strong>here</strong></a>).</p>
 </div>
 </div>
 

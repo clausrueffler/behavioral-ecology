@@ -13,7 +13,7 @@
 
 <title>The Evolution of Altruism</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,9 +280,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -385,36 +392,10 @@ $(document).ready(function () {
 <!-- # Games Plants Play {.tabset} -->
 <div id="the-evolution-of-altruism" class="section level2">
 <h2>The Evolution of Altruism</h2>
-<p>NOTATION ALERT: In this exercise, mutant strategies are named <span
-class="math inline">\(x&#39;\)</span> in the running text and <span
-class="math inline">\(x.m\)</span> in the R-code. Similarly, resident
-strategies are named <span class="math inline">\(x\)</span> in the
-running text and <span class="math inline">\(x.r\)</span> in the R-code.
-Thus, <span class="math inline">\(x&#39; = x.m\)</span> and <span
-class="math inline">\(x = x.r\)</span>. The reason for the different
-naming in the R-code is that <span class="math inline">\(x&#39;\)</span>
-is not a permitted name in R-code.</p>
-<p>On this page, we explore a model for the evolution of altruism.
-Specifically, we investigate the possibility that individuals sacrifice
-their own life in order to increase the survival of other individuals.
-As we will see, such behavior can evolve if a self-sacrifice benefits
-related individuals.</p>
-<p>In this example, <em>payoff</em> is equal to <em>survival</em>.
-Individuals are characterized by a strategy <span
-class="math inline">\(x\)</span>, which is the probability that they
-sacrifice their life in order to increase the survival of another
-individual with which they interact. For examples, a focal individual
-can give its resources to another individual. As a result, the focal
-individual dies while the survival of the interacting individual
-increases by an amount <span class="math inline">\(B\)</span>.</p>
-<p>The survival of an individual that sacrifices itself is zero. If an
-individual does not sacrifice its life it survives with probability
-<span class="math inline">\(S\)</span>. This survival probability can be
-increased by an amount <span class="math inline">\(B\)</span> if the
-interacting individual sacrifices its life. With this, the expected
-survival of an individual with strategy <span
-class="math inline">\(x&#39;\)</span> that interacts with an individual
-with strategy <span class="math inline">\(x\)</span> is</p>
+<p>NOTATION ALERT: In this exercise, mutant strategies are named <span class="math inline">\(x&#39;\)</span> in the running text and <span class="math inline">\(x.m\)</span> in the R-code. Similarly, resident strategies are named <span class="math inline">\(x\)</span> in the running text and <span class="math inline">\(x.r\)</span> in the R-code. Thus, <span class="math inline">\(x&#39; = x.m\)</span> and <span class="math inline">\(x = x.r\)</span>. The reason for the different naming in the R-code is that <span class="math inline">\(x&#39;\)</span> is not a permitted name in R-code.</p>
+<p>On this page, we explore a model for the evolution of altruism. Specifically, we investigate the possibility that individuals sacrifice their own life in order to increase the survival of other individuals. As we will see, such behavior can evolve if a self-sacrifice benefits related individuals.</p>
+<p>In this example, <em>payoff</em> is equal to <em>survival</em>. Individuals are characterized by a strategy <span class="math inline">\(x\)</span>, which is the probability that they sacrifice their life in order to increase the survival of another individual with which they interact. For examples, a focal individual can give its resources to another individual. As a result, the focal individual dies while the survival of the interacting individual increases by an amount <span class="math inline">\(B\)</span>.</p>
+<p>The survival of an individual that sacrifices itself is zero. If an individual does not sacrifice its life it survives with probability <span class="math inline">\(S\)</span>. This survival probability can be increased by an amount <span class="math inline">\(B\)</span> if the interacting individual sacrifices its life. With this, the expected survival of an individual with strategy <span class="math inline">\(x&#39;\)</span> that interacts with an individual with strategy <span class="math inline">\(x\)</span> is</p>
 <p><span class="math display">\[
 \begin{align}
 W(x&#39;, x) &amp; = (1 - x&#39;) (S + B x)
@@ -432,18 +413,13 @@ $$
 
 We here use the notation $W_C$ for individuals that self-sacrifice (*C* stands for cooperate) and $W_D$ for individuals that do not self-sacrifice (*D* stands for defect). *Cooperate* and *defect* is a common terminology in game theory in the context of altruism. Now let us consider a rare mutant that self-sacrifices with probability $x'$. With probability $x'$ this individuals dies and with probability $(1-x')$ it survives with probability $W_D(x)$. Taken together, the survival of a rare mutant individual with strategy $x'$ in a resident population with strategy $x$ is given by
 -->
-<p>Similarly, the expected survival of an individual with strategy <span
-class="math inline">\(x\)</span> interacting with another individual
-with strategy <span class="math inline">\(x\)</span> is given by</p>
+<p>Similarly, the expected survival of an individual with strategy <span class="math inline">\(x\)</span> interacting with another individual with strategy <span class="math inline">\(x\)</span> is given by</p>
 <p><span class="math display">\[
 \begin{align}
 W(x, x) &amp; = (1 - x) (S + B x)
 \end{align}
 \]</span></p>
-<p>The invasion fitness (or fitness advantage) of a rare mutant with
-strategy <span class="math inline">\(x&#39;\)</span> in a resident
-population with strategy <span class="math inline">\(x\)</span> can then
-be written as</p>
+<p>The invasion fitness (or fitness advantage) of a rare mutant with strategy <span class="math inline">\(x&#39;\)</span> in a resident population with strategy <span class="math inline">\(x\)</span> can then be written as</p>
 <p><span class="math display">\[
 \begin{align}
 s(x&#39;, x) &amp; = W(x&#39;, x) - W(x, x)\\
@@ -451,29 +427,8 @@ s(x&#39;, x) &amp; = W(x&#39;, x) - W(x, x)\\
         &amp; = (x - x&#39;) (S + B x).
 \end{align}
 \]</span></p>
-<p>Since only mutants with <span class="math inline">\(s(x&#39;, x) &gt;
-0\)</span> can invade, we can see from the above equation that a mutant
-<span class="math inline">\(x&#39;\)</span> can invade a resident
-population with strategy <span class="math inline">\(x\)</span> only if
-<span class="math inline">\(x&#39; &lt; x\)</span>. From this, we can
-conclude that <span class="math inline">\(x\)</span> will evolve to
-<span class="math inline">\(x=0\)</span>: no individual sacrifices its
-life to increase the survival of another individual. Also, <span
-class="math inline">\(x^*=0\)</span> is an ESS, since any possible
-mutant will then have a negative invasion fitness. This result makes
-intuitive sense: We do not expect that natural selection favors to give
-away ones life for the benefit of another individual.</p>
-<p>We can confirm this result by plotting a <em>Pairwise Invadability
-Plot</em>. Remember that a PIP is a contour plot of invasion fitness
-<em>s(x’, x)</em>. PIP’s have a contour-line where <em>s(x’, x) =
-0</em>. Since by definition <em>s(x, x) = 0</em>, PIP’s always have a
-contour line along the diagonal (the 45-degree line). But as we have
-seen in the plant-height model, mutants <em>x’</em> different from
-<em>x</em> can also have zero-invasion fitness and these form a second
-contour line in the PIP. Positive areas in the PIP correspond to
-combinations of mutants with trait value <em>x’</em> and residents with
-trait value <em>x</em> such that the mutant has positive invasion
-fitness and can therefore establish itself in the population.</p>
+<p>Since only mutants with <span class="math inline">\(s(x&#39;, x) &gt; 0\)</span> can invade, we can see from the above equation that a mutant <span class="math inline">\(x&#39;\)</span> can invade a resident population with strategy <span class="math inline">\(x\)</span> only if <span class="math inline">\(x&#39; &lt; x\)</span>. From this, we can conclude that <span class="math inline">\(x\)</span> will evolve to <span class="math inline">\(x=0\)</span>: no individual sacrifices its life to increase the survival of another individual. Also, <span class="math inline">\(x^*=0\)</span> is an ESS, since any possible mutant will then have a negative invasion fitness. This result makes intuitive sense: We do not expect that natural selection favors to give away ones life for the benefit of another individual.</p>
+<p>We can confirm this result by plotting a <em>Pairwise Invadability Plot</em>. Remember that a PIP is a contour plot of invasion fitness <em>s(x’, x)</em>. PIP’s have a contour-line where <em>s(x’, x) = 0</em>. Since by definition <em>s(x, x) = 0</em>, PIP’s always have a contour line along the diagonal (the 45-degree line). But as we have seen in the plant-height model, mutants <em>x’</em> different from <em>x</em> can also have zero-invasion fitness and these form a second contour line in the PIP. Positive areas in the PIP correspond to combinations of mutants with trait value <em>x’</em> and residents with trait value <em>x</em> such that the mutant has positive invasion fitness and can therefore establish itself in the population.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -494,132 +449,58 @@ fitness and can therefore establish itself in the population.</p>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident x&quot;</span>),</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant x&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>Note, that yellow areas indicate combinations of mutants and
-residents such that the mutant has a negative invasion fitness (it
-cannot invade), while red corresponds to combinations of mutants and
-residents such that the mutant has a positive invasion fitness (it can
-invade). As we can see, only mutants with <span
-class="math inline">\(x&#39; &lt; x\)</span> can invade, confirming our
-above analytical result.</p>
-<p>We can arrive at the same conclusion by looking at the partial
-derivative of <span class="math inline">\(W(x&#39;, x)\)</span> with
-respect to <span class="math inline">\(x&#39;\)</span> when evaluated at
-<span class="math inline">\(x&#39; = x\)</span>, which equals</p>
+<p>Note, that yellow areas indicate combinations of mutants and residents such that the mutant has a negative invasion fitness (it cannot invade), while red corresponds to combinations of mutants and residents such that the mutant has a positive invasion fitness (it can invade). As we can see, only mutants with <span class="math inline">\(x&#39; &lt; x\)</span> can invade, confirming our above analytical result.</p>
+<p>We can arrive at the same conclusion by looking at the partial derivative of <span class="math inline">\(W(x&#39;, x)\)</span> with respect to <span class="math inline">\(x&#39;\)</span> when evaluated at <span class="math inline">\(x&#39; = x\)</span>, which equals</p>
 <p><span class="math display">\[
-\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} = -(S +
-B x),
-\]</span> which is always negative, indicating selection for lower
-values of the helping trait <span class="math inline">\(x\)</span>.</p>
+\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} = -(S + B x),
+\]</span> which is always negative, indicating selection for lower values of the helping trait <span class="math inline">\(x\)</span>.</p>
 <div id="interaction-between-relatives" class="section level3">
 <h3>Interaction between relatives</h3>
-<p>In the above derivation, we assumed that individuals interact
-randomly with each other. This means that a rare mutant with trait value
-<span class="math inline">\(x&#39;\)</span> will almost always interact
-with a resident individual with trait value <span
-class="math inline">\(x\)</span>. Let us now assume that the mutation
-occurs in a mother and that her offspring share the mutant allele with
-her with probability <em>r</em>. Such siblings share the allele due to
-<em>identity by decent</em>. If we assume a randomly mating population
-in which the strategy is coded by a single diploid locus, then two full
-siblings share the mutant allele <span
-class="math inline">\(x&#39;\)</span> with probability <em>1/2</em> (one
-of the siblings could have inherited the resident allele from the father
-instead of from the mother). Crucially, we now assume that interactions
-occur not with random individuals in the population but among siblings.
-Under this assumption, an individual carrying the mutant allele <span
-class="math inline">\(x&#39;\)</span> <em>does not</em> sacrifice itself
-with probability <span class="math inline">\(1 - x&#39;\)</span> and
-then interacts with probability <span class="math inline">\(r\)</span>
-with an individual carrying the same allele and with probability <span
-class="math inline">\(1-r\)</span> with an individual carrying the
-resident allele <span class="math inline">\(x\)</span>. Taken together,
-the survival probability of a mutant individual with allele <span
-class="math inline">\(x&#39;\)</span> that interacts with relatives in a
-population where the resident allele is <span
-class="math inline">\(x\)</span> is given by</p>
+<p>In the above derivation, we assumed that individuals interact randomly with each other. This means that a rare mutant with trait value <span class="math inline">\(x&#39;\)</span> will almost always interact with a resident individual with trait value <span class="math inline">\(x\)</span>. Let us now assume that the mutation occurs in a mother and that her offspring share the mutant allele with her with probability <em>r</em>. Such siblings share the allele due to <em>identity by decent</em>. If we assume a randomly mating population in which the strategy is coded by a single diploid locus, then two full siblings share the mutant allele <span class="math inline">\(x&#39;\)</span> with probability <em>1/2</em> (one of the siblings could have inherited the resident allele from the father instead of from the mother). Crucially, we now assume that interactions occur not with random individuals in the population but among siblings. Under this assumption, an individual carrying the mutant allele <span class="math inline">\(x&#39;\)</span> <em>does not</em> sacrifice itself with probability <span class="math inline">\(1 - x&#39;\)</span> and then interacts with probability <span class="math inline">\(r\)</span> with an individual carrying the same allele and with probability <span class="math inline">\(1-r\)</span> with an individual carrying the resident allele <span class="math inline">\(x\)</span>. Taken together, the survival probability of a mutant individual with allele <span class="math inline">\(x&#39;\)</span> that interacts with relatives in a population where the resident allele is <span class="math inline">\(x\)</span> is given by</p>
 <p><span class="math display">\[
 \begin{align}
 w(x&#39;, x_{\mathrm r}, x) &amp; = (1 - x&#39;)(S + B x_{\mathrm r}).
 \end{align}
 \]</span></p>
-<p>Here, the first argument <span class="math inline">\(x&#39;\)</span>
-denotes the strategy of the focal individual, the second argument <span
-class="math inline">\(x_{\mathrm r}\)</span> denotes the strategy of the
-interacting individual, given by <span
-class="math inline">\(x&#39;\)</span> (with probability <span
-class="math inline">\(r\)</span>) or <span
-class="math inline">\(x\)</span> (the third argument, with probability
-<span class="math inline">\(1-r\)</span>). The allelic fitness for <span
-class="math inline">\(x&#39;\)</span> and <span
-class="math inline">\(x\)</span> can then be written as</p>
+<p>Here, the first argument <span class="math inline">\(x&#39;\)</span> denotes the strategy of the focal individual, the second argument <span class="math inline">\(x_{\mathrm r}\)</span> denotes the strategy of the interacting individual, given by <span class="math inline">\(x&#39;\)</span> (with probability <span class="math inline">\(r\)</span>) or <span class="math inline">\(x\)</span> (the third argument, with probability <span class="math inline">\(1-r\)</span>). The allelic fitness for <span class="math inline">\(x&#39;\)</span> and <span class="math inline">\(x\)</span> can then be written as</p>
 <p><span class="math display">\[
 \begin{align}
 W(x&#39;, x) &amp; = r w(x&#39;, x&#39;, x) + (1 - r) w(x&#39;, x, x) \\
-        &amp; = (1 - x&#39;)\left(r (S + B x&#39;) + (1 - r) (S + B
-x)\right) \\
-        &amp; = (1 - x&#39;) \left((S + B x) + r B (x&#39; -
-x)\right),\\
+        &amp; = (1 - x&#39;)\left(r (S + B x&#39;) + (1 - r) (S + B x)\right) \\
+        &amp; = (1 - x&#39;) \left((S + B x) + r B (x&#39; - x)\right),\\
         \\
 W(x, x) &amp; = r w(x, x, x) + (1 - r) w(x, x, x) \\
         &amp; = w(x, x, x)\\
         &amp; = (1 - x)(S + B x),
 \end{align}
 \]</span></p>
-<p>respectively. With this, the fitness difference, or invasion fitness,
-equals</p>
+<p>respectively. With this, the fitness difference, or invasion fitness, equals</p>
 <p><span class="math display">\[
 \begin{align}
 s(x&#39;, x) &amp; = W(x&#39;, x) - W(x, x)\\
-         &amp; = (1 - x&#39;) \left((S + B x) + r B (x&#39; - x)\right)
-- (1 - x)(S + B x)\\
+         &amp; = (1 - x&#39;) \left((S + B x) + r B (x&#39; - x)\right) - (1 - x)(S + B x)\\
          &amp; = -(S + B x) (x&#39; - x) + r (1 - x&#39;) B\\
          &amp; = (x&#39; - x) \left(-(S + B x) + r (1 - x&#39;) B\right)
 \end{align}
 \]</span></p>
-<p>Let us define <span class="math inline">\(c := (S + B x)\)</span> and
-<span class="math inline">\(b := (1 - x&#39;) B\)</span>. Here, <span
-class="math inline">\(c\)</span> is the survival probability of an
-individual interacting with an individual with allele <span
-class="math inline">\(x\)</span>. This is the potential survival that is
-lost if an individual sacrifices itself, and therefore appears as a
-direct cost. In contrast, <span class="math inline">\(b\)</span> is the
-expected increase in survival when interacting with an individual with
-allele <span class="math inline">\(x&#39;\)</span> and is thus an
-indirect benefit.</p>
+<p>Let us define <span class="math inline">\(c := (S + B x)\)</span> and <span class="math inline">\(b := (1 - x&#39;) B\)</span>. Here, <span class="math inline">\(c\)</span> is the survival probability of an individual interacting with an individual with allele <span class="math inline">\(x\)</span>. This is the potential survival that is lost if an individual sacrifices itself, and therefore appears as a direct cost. In contrast, <span class="math inline">\(b\)</span> is the expected increase in survival when interacting with an individual with allele <span class="math inline">\(x&#39;\)</span> and is thus an indirect benefit.</p>
 <p><span class="math display">\[
 s(x&#39;, x)  = (x&#39; - x) (-c + r b),
 \]</span></p>
-<p>indicating that a mutant <span class="math inline">\(x&#39;\)</span>
-that increases the probability of self-sacrifice (<span
-class="math inline">\(x&#39; &gt; x\)</span>) can invade only if</p>
+<p>indicating that a mutant <span class="math inline">\(x&#39;\)</span> that increases the probability of self-sacrifice (<span class="math inline">\(x&#39; &gt; x\)</span>) can invade only if</p>
 <p><span class="math display">\[
 r b &gt; c.
 \]</span></p>
-<p>This last inequality is known as <strong>Hamilton’s Rule</strong>. It
-says that an altruistic act can evolve only if the benefit <span
-class="math inline">\(b\)</span> of an altruistic act, weighted by the
-coefficient of relatedness <span class="math inline">\(r\)</span>
-between the actor and receiver, is larger than the costs <span
-class="math inline">\(c\)</span> to the actor.</p>
-<p>We can also derive at this conclusion by looking at the partial
-derivative of <span class="math inline">\(W(x&#39;, x)\)</span> with
-respect to <span class="math inline">\(x&#39;\)</span> when evaluated at
-<span class="math inline">\(x&#39; = x\)</span>, as we did in the
-lecture. Then we obtain</p>
+<p>This last inequality is known as <strong>Hamilton’s Rule</strong>. It says that an altruistic act can evolve only if the benefit <span class="math inline">\(b\)</span> of an altruistic act, weighted by the coefficient of relatedness <span class="math inline">\(r\)</span> between the actor and receiver, is larger than the costs <span class="math inline">\(c\)</span> to the actor.</p>
+<p>We can also derive at this conclusion by looking at the partial derivative of <span class="math inline">\(W(x&#39;, x)\)</span> with respect to <span class="math inline">\(x&#39;\)</span> when evaluated at <span class="math inline">\(x&#39; = x\)</span>, as we did in the lecture. Then we obtain</p>
 <p><span class="math display">\[
 \begin{align}
-\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} &amp; =
-r B -(S + Bx) + rBx - 2rBx
-\\
-&amp; = -\underbrace{(S + B x)}_{\text{costs} \,\, c} + r \underbrace{(1
-- x)B}_{\text{benefits} \,\, b},
+\frac{\partial W(x&#39;, x)}{\partial x&#39;}\bigg|_{x&#39; = x} &amp; = r B -(S + Bx) + rBx - 2rBx
+ \\
+ &amp; = -\underbrace{(S + B x)}_{\text{costs} \,\, c} + r \underbrace{(1 - x)B}_{\text{benefits} \,\, b},
 \end{align}
-\]</span> indicating that selection favors mutants with increased
-propensity to self-sacrifice if and only if <span
-class="math inline">\(rb&gt;c\)</span>, that is, if Hamilton’s rule is
-fulfilled.</p>
-<p>What is the ESS for this model? To answer this question we again plot
-the PIP.</p>
+\]</span> indicating that selection favors mutants with increased propensity to self-sacrifice if and only if <span class="math inline">\(rb&gt;c\)</span>, that is, if Hamilton’s rule is fulfilled.</p>
+<p>What is the ESS for this model? To answer this question we again plot the PIP.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="cf">function</span>(x.m, x.r) {</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">-</span> x.m) <span class="sc">*</span> (r <span class="sc">*</span> (S <span class="sc">+</span> B <span class="sc">*</span> x.m) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> r) <span class="sc">*</span> (S <span class="sc">+</span> B <span class="sc">*</span> x.r))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -638,14 +519,8 @@ the PIP.</p>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident x&quot;</span>),</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant x&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>From this graph, we can read that <span class="math inline">\(x^* =
-0.33\)</span> is an ESS. If the resident strategy is equal to this
-value, then <span class="math inline">\(s(x&#39;, x^*) &lt; 0\)</span>
-for all <span class="math inline">\(x&#39; \neq x^*\)</span>.</p>
-<p>In order to determine whether a mutant <span
-class="math inline">\(x&#39;\)</span> will replace the resident <span
-class="math inline">\(x\)</span> or coexist with it, we plot the mirror
-image of a PIP (mirrored over the 45-degree line).</p>
+<p>From this graph, we can read that <span class="math inline">\(x^* = 0.33\)</span> is an ESS. If the resident strategy is equal to this value, then <span class="math inline">\(s(x&#39;, x^*) &lt; 0\)</span> for all <span class="math inline">\(x&#39; \neq x^*\)</span>.</p>
+<p>In order to determine whether a mutant <span class="math inline">\(x&#39;\)</span> will replace the resident <span class="math inline">\(x\)</span> or coexist with it, we plot the mirror image of a PIP (mirrored over the 45-degree line).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>s.flipped.roles <span class="ot">&lt;-</span> <span class="cf">function</span>(x.m, x.r) {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">w</span>(x.r, x.m) <span class="sc">-</span> <span class="fu">w</span>(x.m, x.m)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -657,9 +532,7 @@ image of a PIP (mirrored over the 45-degree line).</p>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;x&quot;</span>),</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;x&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>In order to determine whether there are strategies (i.e.,
-probabilities to self-sacrifice) that can coexist with each other, we
-superimpose the PIP with its mirror image.</p>
+<p>In order to determine whether there are strategies (i.e., probabilities to self-sacrifice) that can coexist with each other, we superimpose the PIP with its mirror image.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>TEP <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(PIP <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="fu">ifelse</span>(PIP <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> PIP.mirrored <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">pty=</span><span class="st">&quot;s&quot;</span>)</span>
@@ -671,21 +544,8 @@ superimpose the PIP with its mirror image.</p>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="SelfSacrifice_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>The green region in the last plot shows combinations of
-self-sacrifice strategies <span class="math inline">\(x&#39;\)</span>
-and <span class="math inline">\(x\)</span> that each have a positive
-invasion fitness when rare. Thus, these different strategies are able to
-coexist with each other in a stable polymorphism.</p>
-<p>Importantly, there is NO <em>evolutionary branching point</em> in
-this model. Thus, such a polymorphism cannot emerge by gradual evolution
-of <span class="math inline">\(x\)</span>. It can only emerge through a
-mutation with a relatively large mutational effect on <span
-class="math inline">\(x\)</span>. However, one can show that for areas
-of coexistence that are not connected to an evolutionary branching
-point, further evolution of the two coexisting strategies results in the
-convergence of the two strategy values and ultimately in the loss of one
-of them. Evolution will then result in the ESS <span
-class="math inline">\(x^*\)</span>.</p>
+<p>The green region in the last plot shows combinations of self-sacrifice strategies <span class="math inline">\(x&#39;\)</span> and <span class="math inline">\(x\)</span> that each have a positive invasion fitness when rare. Thus, these different strategies are able to coexist with each other in a stable polymorphism.</p>
+<p>Importantly, there is NO <em>evolutionary branching point</em> in this model. Thus, such a polymorphism cannot emerge by gradual evolution of <span class="math inline">\(x\)</span>. It can only emerge through a mutation with a relatively large mutational effect on <span class="math inline">\(x\)</span>. However, one can show that for areas of coexistence that are not connected to an evolutionary branching point, further evolution of the two coexisting strategies results in the convergence of the two strategy values and ultimately in the loss of one of them. Evolution will then result in the ESS <span class="math inline">\(x^*\)</span>.</p>
 </div>
 </div>
 

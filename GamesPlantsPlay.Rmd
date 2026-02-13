@@ -211,7 +211,7 @@ In fact, this Nash equilibrium is also an evolutionary stable strategy (ESS). Th
 Evaluate the above code. Understand what the results mean. Try to understand the code as much as possible (but note that code is not relevant for the exam), and that this course is not primarily about learning R. But feel free to ask about code!
 
   (2)
-Produce the graphs *photosynthesis/leaf vs. plant height* and *payoff* $W(h_{\text m}, h_{\text r})$ vs. height $h_{\text m}$ for a different value of the resident strategy $h_{\text r}$. Select an $h_{\text r}$-value of your own choice. To do this, you have to change ```h.r <- 0.5``` and then rerun the code producing the figures. How do your graphs differ from those produced based on $h_{\text r} = 0.5$? Give an explanation for the observed difference.
+Produce the graphs *photosynthesis/leaf vs. plant height* and *payoff* $W(h_{\text m}, h_{\text r})$ vs. height $h_{\text m}$ for a different value of the resident strategy $h_{\text r}$. Select an $h_{\text r}$-value of your own choice. To do this, you have to change  $h_{\text r}$ in all places where it is specified (which in some places is done using the assignment arrow, ```h.r <- 0.5```, and in other places using the equality sign, ```h.r = 0.5```), and then rerun the code producing the figures. How do your graphs differ from those produced based on $h_{\text r} = 0.5$? Give an explanation for the observed difference.
 
 Submit your results as an html file, either by using the *compile report*-button or by producing an Rmarkdown document (if you know how to do this, you can find a very short introduction to Rmarkdown [**here**](https://clausrueffler.github.io/CodingWithR/Markdown.html)).
 
