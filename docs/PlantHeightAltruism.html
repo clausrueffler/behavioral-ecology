@@ -13,7 +13,7 @@
 
 <title>Games Plants Play</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,16 +280,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -390,17 +383,46 @@ $(document).ready(function () {
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <!-- # Games Plants Play {.tabset} -->
-<div id="the-plant-height-model-with-kin-selection" class="section level2">
+<div id="the-plant-height-model-with-kin-selection"
+class="section level2">
 <h2>The Plant Height Model with Kin Selection</h2>
-<p>NOTATION ALERT: In this exercise, I use the same notation as in the previous tab on the evolution of altruism, but with <span class="math inline">\(x\)</span> replaced by <span class="math inline">\(h\)</span>. Thus, in short, <span class="math inline">\(h&#39; = h.m\)</span> and <span class="math inline">\(h = h.r\)</span>.</p>
-<p>Let us go back to our first model for the evolution of plant height, but assume that seeds do not disperse far so that young plants grow next to their mother plant. Mother plants and their offspring share the gene for tree height by common descent with probability <span class="math inline">\(r\)</span>, the relatedness coefficient. The payoff to a rare mutant with allele <span class="math inline">\(h&#39;\)</span> is then given by</p>
+<p>NOTATION ALERT: In this exercise, I use the same notation as in the
+previous tab on the evolution of altruism, but with <span
+class="math inline">\(x\)</span> replaced by <span
+class="math inline">\(h\)</span>. Thus, in short, <span
+class="math inline">\(h&#39; = h.m\)</span> and <span
+class="math inline">\(h = h.r\)</span>.</p>
+<p>Let us go back to our first model for the evolution of plant height,
+but assume that seeds do not disperse far so that young plants grow next
+to their mother plant. Mother plants and their offspring share the gene
+for tree height by common descent with probability <span
+class="math inline">\(r\)</span>, the relatedness coefficient. The
+payoff to a rare mutant with allele <span
+class="math inline">\(h&#39;\)</span> is then given by</p>
 <p><span class="math display">\[
 \begin{align}
-W(h&#39;, h)    &amp; = r w(h&#39;, h&#39;, h) + (1 - r)w(h&#39;, h, h) \\
-            &amp; = r f(h&#39;)g(h&#39;, h&#39;) + (1 -r) f(h&#39;)g(h&#39;, h),
+W(h&#39;, h)    &amp; = r w(h&#39;, h&#39;, h) + (1 - r)w(h&#39;, h, h)
+\\
+            &amp; = r f(h&#39;)g(h&#39;, h&#39;) + (1 -r)
+f(h&#39;)g(h&#39;, h),
 \end{align}
-\]</span> where <span class="math inline">\(w(h&#39;, h_{\mathrm r}, h)\)</span> is the payoff to a focal plant with height <span class="math inline">\(h&#39;\)</span> growing next to a plant with height <span class="math inline">\(h_{\mathrm r}\)</span> in a population where the height of the resident plants is <span class="math inline">\(h\)</span>. With probability <span class="math inline">\(r\)</span> the focal individual and the interacting individual share the gene for plant height by common descent, in which case <span class="math inline">\(h_{\mathrm r}=h&#39;\)</span>, and with probability <span class="math inline">\(1-r\)</span> the focal individual and the interacting individual do not share the gene for plant height by common descent, in which case <span class="math inline">\(h_{\mathrm r}=h\)</span>.</p>
-<p>We use the same functions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> as in the unmodified plant height game, namely</p>
+\]</span> where <span class="math inline">\(w(h&#39;, h_{\mathrm r},
+h)\)</span> is the payoff to a focal plant with height <span
+class="math inline">\(h&#39;\)</span> growing next to a plant with
+height <span class="math inline">\(h_{\mathrm r}\)</span> in a
+population where the height of the resident plants is <span
+class="math inline">\(h\)</span>. With probability <span
+class="math inline">\(r\)</span> the focal individual and the
+interacting individual share the gene for plant height by common
+descent, in which case <span class="math inline">\(h_{\mathrm
+r}=h&#39;\)</span>, and with probability <span
+class="math inline">\(1-r\)</span> the focal individual and the
+interacting individual do not share the gene for plant height by common
+descent, in which case <span class="math inline">\(h_{\mathrm
+r}=h\)</span>.</p>
+<p>We use the same functions <span class="math inline">\(f\)</span> and
+<span class="math inline">\(g\)</span> as in the unmodified plant height
+game, namely</p>
 <p><span class="math display">\[
 f(h)=1-h^\alpha,
 \]</span></p>
@@ -415,7 +437,9 @@ g(h&#39;, h)=P_L+\frac{P_H-P_L}{1+\exp\left(-\beta(h&#39; - h)\right)}.
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(h.m, h.r) {<span class="co"># photosynthetic rate as a function of difference in tree height</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  P.L <span class="sc">+</span> (P.H <span class="sc">-</span> P.L)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>beta<span class="sc">*</span>(h.m <span class="sc">-</span> h.r)))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Next, let us plot a PIP to investigate the effect of kin selection on ESS tree height. For this, we compute invasion fitness, here defined as the difference in payoff between mutant and resident.</p>
+<p>Next, let us plot a PIP to investigate the effect of kin selection on
+ESS tree height. For this, we compute invasion fitness, here defined as
+the difference in payoff between mutant and resident.</p>
 <p><span class="math display">\[
 \begin{align}
 s(h&#39;, h) &amp; = W(h&#39;, h) - W(h, h)
@@ -442,24 +466,59 @@ s(h&#39;, h) &amp; = W(h&#39;, h) - W(h, h)
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="st">&quot;resident height h&quot;</span>),</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;mutant height h&#39;&quot;</span>))</span></code></pre></div>
 <p><img src="PlantHeightAltruism_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>When comparing with the results from the second tab (Evolution of Plant Height), we see that kin selection reduces the ESS plant height from approximately 0.62 to approximately 0.5. Does this result makes sense to you? Try to explain in your own words.</p>
+<p>When comparing with the results from the second tab (Evolution of
+Plant Height), we see that kin selection reduces the ESS plant height
+from approximately 0.62 to approximately 0.5. Does this result makes
+sense to you? Try to explain in your own words.</p>
 <div id="advanced-optional" class="section level3">
 <h3>Advanced (optional)</h3>
-<p>We can understand this result by determining the partial derivative of <span class="math inline">\(W(h&#39;, h)\)</span> with respect to <span class="math inline">\(h&#39;\)</span>, evaluated at <span class="math inline">\(h&#39; = h\)</span>, with the aim to recover Hamilton’s rule:</p>
+<p>We can understand this result by determining the partial derivative
+of <span class="math inline">\(W(h&#39;, h)\)</span> with respect to
+<span class="math inline">\(h&#39;\)</span>, evaluated at <span
+class="math inline">\(h&#39; = h\)</span>, with the aim to recover
+Hamilton’s rule:</p>
 <p><span class="math display">\[
 \begin{align}
-\frac{\partial W(h&#39;, h)}{\partial h&#39;}\bigg|_{h&#39; = h} 
-  &amp; =\frac{\partial}{\partial h&#39;} \left(w(h&#39;, h&#39;, h) + w(h&#39;, h, h)\right)\big|_{h&#39; = h} \\
-  &amp; = r \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;, h&#39;)\big|_{h&#39; = h} + (1 -r) \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;, h)\big|_{h&#39; = h}, \\
-  &amp; = r \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;, h_r)\big|_{h&#39; = h} + r \frac{\partial}{\partial h_r} f(h&#39;)g(h&#39;, h_r)\big|_{h&#39; = h} + (1 -r) \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;, h)\big|_{h&#39; = h} \\
-&amp; = \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;, h)\big|_{h&#39; = h} + r \frac{\partial}{\partial h} f(h&#39;)g(h&#39;, h)\big|_{h&#39; = h}.
+\frac{\partial W(h&#39;, h)}{\partial h&#39;}\bigg|_{h&#39; = h}
+  &amp; =\frac{\partial}{\partial h&#39;} \left(w(h&#39;, h&#39;, h) +
+w(h&#39;, h, h)\right)\big|_{h&#39; = h} \\
+  &amp; = r \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;,
+h&#39;)\big|_{h&#39; = h} + (1 -r) \frac{\partial}{\partial h&#39;}
+f(h&#39;)g(h&#39;, h)\big|_{h&#39; = h}, \\
+  &amp; = r \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;,
+h_r)\big|_{h&#39; = h} + r \frac{\partial}{\partial h_r}
+f(h&#39;)g(h&#39;, h_r)\big|_{h&#39; = h} + (1 -r)
+\frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;, h)\big|_{h&#39; = h}
+\\
+&amp; = \frac{\partial}{\partial h&#39;} f(h&#39;)g(h&#39;,
+h)\big|_{h&#39; = h} + r \frac{\partial}{\partial h} f(h&#39;)g(h&#39;,
+h)\big|_{h&#39; = h}.
 \end{align}
 \]</span></p>
-<p>To understand the last two rows in this derivation, you have to revisit the slide “Selection gradient and Hamilton’s rule” from the lecture.</p>
+<p>To understand the last two rows in this derivation, you have to
+revisit the slide “Selection gradient and Hamilton’s rule” from the
+lecture.</p>
 <!--
 First, let us note that in the plant height game, growing *less tall* can be considered an act of altruism (if the costs of doing so are positive) or an act of cooperation (if the costs of doing so are negative). This is the reason why in the above equation, the first term is defined as $c$ and the second term as $-b$ (compare with the corresponding equation in the self-sacrificing game).
 -->
-<p>The first term describes the effect of increasing the strategy value <span class="math inline">\(h&#39;\)</span> of the actor on the payoff of the actor itself. This term is zero when <span class="math inline">\(h&#39;=h^*\)</span>, where <span class="math inline">\(h^*\)</span> is the evolutionary stable strategy value in the absence of kin competition, it is negative when <span class="math inline">\(h&#39;&gt;h^*\)</span>, and positive when <span class="math inline">\(h^*&lt;h&#39;\)</span>. Thus, for a plant to decrease its height to a value lower than <span class="math inline">\(h^*\)</span> can be considered an act of altruism. The derivative in the second term describes the effect of a trait change of the interacting individual (the recipient) on the payoff of the actor. This term is always negative (if the neighboring plant grows higher, the focal individual is more shaded). Thus, given that the first term is zero for <span class="math inline">\(h=h^*\)</span> and the second negative, we can conclude that competition with kin always selects for a lower ESS-value compared to the model without kin selection.</p>
+<p>The first term describes the effect of increasing the strategy value
+<span class="math inline">\(h&#39;\)</span> of the actor on the payoff
+of the actor itself. This term is zero when <span
+class="math inline">\(h&#39;=h^*\)</span>, where <span
+class="math inline">\(h^*\)</span> is the evolutionary stable strategy
+value in the absence of kin competition, it is negative when <span
+class="math inline">\(h&#39;&gt;h^*\)</span>, and positive when <span
+class="math inline">\(h^*&lt;h&#39;\)</span>. Thus, for a plant to
+decrease its height to a value lower than <span
+class="math inline">\(h^*\)</span> can be considered an act of altruism.
+The derivative in the second term describes the effect of a trait change
+of the interacting individual (the recipient) on the payoff of the
+actor. This term is always negative (if the neighboring plant grows
+higher, the focal individual is more shaded). Thus, given that the first
+term is zero for <span class="math inline">\(h=h^*\)</span> and the
+second negative, we can conclude that competition with kin always
+selects for a lower ESS-value compared to the model without kin
+selection.</p>
 <!--
 ## The Modified Plant Height Model with Kin Selection
 

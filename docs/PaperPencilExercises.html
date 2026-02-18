@@ -13,7 +13,7 @@
 
 <title>Paper and Pencil exercises</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -170,8 +170,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -179,16 +179,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -289,68 +282,175 @@ $(document).ready(function () {
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
 <!-- # Games Plants Play {.tabset} -->
-<div id="evolutionary-game-theory-paper-and-pencil-exercises" class="section level2">
+<div id="evolutionary-game-theory-paper-and-pencil-exercises"
+class="section level2">
 <h2>Evolutionary Game Theory: Paper and Pencil Exercises</h2>
 <div id="competition-for-light-and-plant-height" class="section level3">
 <h3>1) Competition for Light and Plant Height</h3>
-<p>For the modified plant height game, we produced the following pairwise invisibility plot (PIP).</p>
+<p>For the modified plant height game, we produced the following
+pairwise invisibility plot (PIP).</p>
 <p><img src="PaperPencilExercises_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>In this plot, red corresponds to combinations of mutant and resident plant heights for which the mutant has a positive invasion fitness while yellow corresponds to combinations of mutant and resident plant heights for which mutants have a negative invasion fitness.</p>
+<p>In this plot, red corresponds to combinations of mutant and resident
+plant heights for which the mutant has a positive invasion fitness while
+yellow corresponds to combinations of mutant and resident plant heights
+for which mutants have a negative invasion fitness.</p>
 <div id="questions" class="section level4">
 <h4>Questions</h4>
 <ol style="list-style-type: lower-alpha">
-<li><p>Give John Maynard Smith’s definition of an evolutionary stable strategy (ESS). Note that this definition consists of two parts!</p></li>
-<li><p>Does this model have an evolutionary stable strategy (ESS)? Give the reason behind your answer.</p></li>
-<li><p>Based on this PIP, describe the predicted course of the evolutionary dynamics for plant height under the assumption that mutants occur rarely and differ only by a small amount from the resident strategy from which they originated. What do you predict is the endpoint of this evolutionary dynamics?</p></li>
+<li><p>Give John Maynard Smith’s definition of an evolutionary stable
+strategy (ESS). Note that this definition consists of two
+parts!</p></li>
+<li><p>Does this model have an evolutionary stable strategy (ESS)? Give
+the reason behind your answer.</p></li>
+<li><p>Based on this PIP, describe the predicted course of the
+evolutionary dynamics for plant height under the assumption that mutants
+occur rarely and differ only by a small amount from the resident
+strategy from which they originated. What do you predict is the endpoint
+of this evolutionary dynamics?</p></li>
 </ol>
 </div>
 </div>
 <div id="fishers-sex-ratio-theory" class="section level3">
 <h3>2) Fisher’s Sex Ratio Theory</h3>
-<p>Consider a population consisting of <span class="math inline">\(N\)</span> adult individuals. At the end of each season, all adult individuals die, and the next generation, again <span class="math inline">\(N\)</span> individuals, is recruited from the offspring of the previous season. Let us assume that the sex ratio is maternally determined and encoded in a strategy <span class="math inline">\(x\)</span>, such that a female’s offspring is a son with probability <span class="math inline">\(x\)</span> and a daughter with probability <span class="math inline">\(1-x\)</span>. Due to the fact that all individuals have a mother and a father, a son can expect to contribute to <span class="math inline">\(N/xN\)</span> offspring in the next generation (which of course simplifies to <span class="math inline">\(1/x\)</span>). This can be understood as follows: the next generation consists of <span class="math inline">\(N\)</span> individuals, and there are <span class="math inline">\(xN\)</span> fathers this generation that all have an equal chance to contribute to the next generation. Similarly, a daughter can expect to contribute to <span class="math inline">\(N/(1-x)N\)</span> (which of simplifies to <span class="math inline">\(1/(1-x)\)</span>). The reason is that the <span class="math inline">\(N\)</span> offspring in the next generation are shared among the <span class="math inline">\((1-x)N\)</span> mothers this generation.</p>
-<p>Now consider a mutant female with sex ratio strategy <span class="math inline">\(x&#39;\)</span>. With probability <span class="math inline">\(x&#39;\)</span>, she produces a son that can expect to gives rise to <span class="math inline">\(1/x\)</span> offspring and with probability <span class="math inline">\((1-x&#39;)\)</span> she produces a daughter that can expect to give rise to <span class="math inline">\(1/(1-x)\)</span> offspring. Thus, a mutant female can expect that each of her offspring gives rise to <span class="math display">\[
-w(x&#39;, x) = \frac{x&#39;}{x} + \frac{1-x&#39;}{1-x} 
-\]</span> offspring. In other words, a mutant female can expect to have <span class="math inline">\(w(x&#39;, x)\)</span> grandchildren. Note that <span class="math inline">\(w(x, x) = 2\)</span>, indicating that in a sexual population that does not change in size each individual gives on average rise to two offspring. We use <span class="math inline">\(w(x&#39; x)\)</span> as a fitness measure.</p>
+<p>Consider a population consisting of <span
+class="math inline">\(N\)</span> adult individuals. At the end of each
+season, all adult individuals die, and the next generation, again <span
+class="math inline">\(N\)</span> individuals, is recruited from the
+offspring of the previous season. Let us assume that the sex ratio is
+maternally determined and encoded in a strategy <span
+class="math inline">\(x\)</span>, such that a female’s offspring is a
+son with probability <span class="math inline">\(x\)</span> and a
+daughter with probability <span class="math inline">\(1-x\)</span>. Due
+to the fact that all individuals have a mother and a father, a son can
+expect to contribute to <span class="math inline">\(N/xN\)</span>
+offspring in the next generation (which of course simplifies to <span
+class="math inline">\(1/x\)</span>). This can be understood as follows:
+the next generation consists of <span class="math inline">\(N\)</span>
+individuals, and there are <span class="math inline">\(xN\)</span>
+fathers this generation that all have an equal chance to contribute to
+the next generation. Similarly, a daughter can expect to contribute to
+<span class="math inline">\(N/(1-x)N\)</span> (which of simplifies to
+<span class="math inline">\(1/(1-x)\)</span>). The reason is that the
+<span class="math inline">\(N\)</span> offspring in the next generation
+are shared among the <span class="math inline">\((1-x)N\)</span> mothers
+this generation.</p>
+<p>Now consider a mutant female with sex ratio strategy <span
+class="math inline">\(x&#39;\)</span>. With probability <span
+class="math inline">\(x&#39;\)</span>, she produces a son that can
+expect to gives rise to <span class="math inline">\(1/x\)</span>
+offspring and with probability <span
+class="math inline">\((1-x&#39;)\)</span> she produces a daughter that
+can expect to give rise to <span class="math inline">\(1/(1-x)\)</span>
+offspring. Thus, a mutant female can expect that each of her offspring
+gives rise to <span class="math display">\[
+w(x&#39;, x) = \frac{x&#39;}{x} + \frac{1-x&#39;}{1-x}
+\]</span> offspring. In other words, a mutant female can expect to have
+<span class="math inline">\(w(x&#39;, x)\)</span> grandchildren. Note
+that <span class="math inline">\(w(x, x) = 2\)</span>, indicating that
+in a sexual population that does not change in size each individual
+gives on average rise to two offspring. We use <span
+class="math inline">\(w(x&#39; x)\)</span> as a fitness measure.</p>
 <div id="questions-1" class="section level4">
 <h4>Questions</h4>
 <ol style="list-style-type: lower-alpha">
-<li><p>Show that <span class="math inline">\(x = 0.5\)</span> is the evolutionary stable sex ratio. To answer this question, you have to apply the two ESS conditions formulated by John Maynard Smith.</p></li>
-<li><p>Sketch the best response curve for this game (as we did for the Hawk-Dove game).</p></li>
-<li><p>Draw the PIP corresponding to this model. What conclusion can you derive from it?</p></li>
+<li><p>Sketch the best response curve for this game (as we did for the
+Hawk-Dove game).</p></li>
+<li><p>Draw the PIP corresponding to this model. Explain what
+predictions you can you derive from the PIP about the evolution of the
+sex ratio <span class="math inline">\(x\)</span>?</p></li>
 </ol>
 </div>
 </div>
-<div id="competition-for-ligth-and-kin-competition" class="section level3">
+<div id="competition-for-ligth-and-kin-competition"
+class="section level3">
 <h3>3) Competition for Ligth and Kin Competition</h3>
-<p>Let us revisit the plant height game. But this time, consider only two different plant heights. Specifically, plants carrying allele <span class="math inline">\(A\)</span> are relatively tall while plants carrying allele <span class="math inline">\(B\)</span> are shorter. We denote the frequency of allele <span class="math inline">\(A\)</span> with <span class="math inline">\(p\)</span>. Thus, the frequency of allele <span class="math inline">\(B\)</span> is <span class="math inline">\((1-p)\)</span>. In this model, we are interested in the change in frequency of the alleles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. It is thus an example of a game of two competing pure strategies (as our very first example of the Hawk-Dove game). Evolution by natural selection can produce the following three outcomes. First, the allele A, coding for tall plants, reaches fixation (<span class="math inline">\(p = 1\)</span>). Second, the allele B, coding for short plants, reaches fixation (<span class="math inline">\(p = 0\)</span>). Third, the two alleles coexist at an intermediate frequency (a protected polymorphism).</p>
-<p>Before we can analyse which of these outcomes will occur, we have to specify the payoffs of the four possible interactions between two neighboring plants.</p>
+<p>Let us revisit the plant height game. But this time, consider only
+two different plant heights. Specifically, plants carrying allele <span
+class="math inline">\(A\)</span> are relatively tall while plants
+carrying allele <span class="math inline">\(B\)</span> are shorter. We
+denote the frequency of allele <span class="math inline">\(A\)</span>
+with <span class="math inline">\(p\)</span>. Thus, the frequency of
+allele <span class="math inline">\(B\)</span> is <span
+class="math inline">\((1-p)\)</span>. In this model, we are interested
+in the change in frequency of the alleles <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>. It is thus an example of a game of two
+competing pure strategies (as our very first example of the Hawk-Dove
+game). Evolution by natural selection can produce the following three
+outcomes. First, the allele A, coding for tall plants, reaches fixation
+(<span class="math inline">\(p = 1\)</span>). Second, the allele B,
+coding for short plants, reaches fixation (<span class="math inline">\(p
+= 0\)</span>). Third, the two alleles coexist at an intermediate
+frequency (a protected polymorphism).</p>
+<p>Before we can analyse which of these outcomes will occur, we have to
+specify the payoffs of the four possible interactions between two
+neighboring plants.</p>
 <ol style="list-style-type: decimal">
-<li>A tall plant growing next to another tall plant has payoff <span class="math inline">\(w(A, A) = 1\)</span>.</li>
-<li>A tall plant growing next to a short plant has payoff <span class="math inline">\(w(A, B) = 4\)</span>.</li>
-<li>A short plant growing next to a tall plant has payoff <span class="math inline">\(w(B, A) = 0.5\)</span>.</li>
-<li>A short plant growing next to another short plant has payoff <span class="math inline">\(w(B, B) = 3\)</span>.</li>
+<li>A tall plant growing next to another tall plant has payoff <span
+class="math inline">\(w(A, A) = 1\)</span>.</li>
+<li>A tall plant growing next to a short plant has payoff <span
+class="math inline">\(w(A, B) = 4\)</span>.</li>
+<li>A short plant growing next to a tall plant has payoff <span
+class="math inline">\(w(B, A) = 0.5\)</span>.</li>
+<li>A short plant growing next to another short plant has payoff <span
+class="math inline">\(w(B, B) = 3\)</span>.</li>
 </ol>
-<p>The expected fitness of a tall plant in a population where tall plants occur with frequency <span class="math inline">\(p\)</span> is then <span class="math display">\[
+<p>The expected fitness of a tall plant in a population where tall
+plants occur with frequency <span class="math inline">\(p\)</span> is
+then <span class="math display">\[
 W_A(p) = p w(A, A) + (1-p) w(A, B).
-\]</span> Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency <span class="math inline">\(p\)</span> is then <span class="math display">\[
+\]</span> Similarly, the expected fitness of a short plant in a
+population where tall plants occur with frequency <span
+class="math inline">\(p\)</span> is then <span class="math display">\[
 W_B(p) = p w(B, A) + (1-p) w(B, B).
 \]</span></p>
 <div id="questions-2" class="section level4">
 <h4>Questions</h4>
 <ol style="list-style-type: lower-alpha">
-<li>For the above fitness values, determine which is the endpoint of the dynamics for the allele frequency <span class="math inline">\(p\)</span>. To answer this question, you have to understand how the fitness of each allele changes with allele frequency <span class="math inline">\(p\)</span>, and which allele has higher fitness when <span class="math inline">\(p\)</span> changes as a result of natural selection. You can answer this question in purely mathematically or by combining this with graphical methods. Based on your analysis, does selection increase population mean fitness? How can your finding be understood in terms of biology?</li>
+<li>For the above fitness values, determine which is the endpoint of the
+dynamics for the allele frequency <span
+class="math inline">\(p\)</span>. To answer this question, you have to
+understand how the fitness of each allele changes with allele frequency
+<span class="math inline">\(p\)</span>, and which allele has higher
+fitness when <span class="math inline">\(p\)</span> changes as a result
+of natural selection. You can answer this question in purely
+mathematically or by combining this with graphical methods. Based on
+your analysis, does selection increase population mean fitness? How can
+your finding be understood in terms of biology?</li>
 </ol>
-<p>In the scenario described above, it is implicitly assumed that the two genotypes occur randomly in space as would be the case if seeds are dispersed over large distances. Let us now consider an alternative scenario in which seed dispersal is limited. A consequence of limited seed dispersal is that related plants grow next to each other, and we have to investigate a kin selection model.</p>
-<p>It can be shown that the expected fitness of a tall plant in a population where tall plants occur with frequency <span class="math inline">\(p\)</span> under kin selection is given by <span class="math display">\[
+<p>In the scenario described above, it is implicitly assumed that the
+two genotypes occur randomly in space as would be the case if seeds are
+dispersed over large distances. Let us now consider an alternative
+scenario in which seed dispersal is limited. A consequence of limited
+seed dispersal is that related plants grow next to each other, and we
+have to investigate a kin selection model.</p>
+<p>It can be shown that the expected fitness of a tall plant in a
+population where tall plants occur with frequency <span
+class="math inline">\(p\)</span> under kin selection is given by <span
+class="math display">\[
 W_{A.\text{kin}}(p) = w(A, B) + (r + (1 - r) p)(w(A, A) - w(A, B)).
-\]</span> Similarly, the expected fitness of a short plant in a population where tall plants occur with frequency <span class="math inline">\(p\)</span> under kin selection is given by <span class="math display">\[
+\]</span> Similarly, the expected fitness of a short plant in a
+population where tall plants occur with frequency <span
+class="math inline">\(p\)</span> under kin selection is given by <span
+class="math display">\[
 W_{B.\text{kin}} = w(B, B) + (1 - r) p (w(B, A) - w(B, B)).
-\]</span> In these equations, <span class="math inline">\(r\)</span> denotes the coefficient of relatedness between plants growing next to each other. In our model, <span class="math inline">\(r\)</span> is equal to the probability that two plants share the same genotype through common decent. Check for yourself that for <span class="math inline">\(r = 0\)</span>, we recover the above case with no relatedness.</p>
+\]</span> In these equations, <span class="math inline">\(r\)</span>
+denotes the coefficient of relatedness between plants growing next to
+each other. In our model, <span class="math inline">\(r\)</span> is
+equal to the probability that two plants share the same genotype through
+common decent. Check for yourself that for <span class="math inline">\(r
+= 0\)</span>, we recover the above case with no relatedness.</p>
 </div>
 <div id="questions-3" class="section level4">
 <h4>Questions</h4>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>Under the assumption that <span class="math inline">\(r = 0.5\)</span> (as is the case between parent and offspring or between full siblings), determine for the model with kin selection which of the three possible evolutionary endpoints occurs (fixation of tall plants, fixation of short plants, coexistence). This analysis can be done in exactly the same manner as for Question (a). Explain why your result makes biological sense?</li>
+<li>Under the assumption that <span class="math inline">\(r =
+0.5\)</span> (as is the case between parent and offspring or between
+full siblings), determine for the model with kin selection which of the
+three possible evolutionary endpoints occurs (fixation of tall plants,
+fixation of short plants, coexistence). This analysis can be done in
+exactly the same manner as for Question (a). Explain why your result
+makes biological sense?</li>
 </ol>
 </div>
 </div>

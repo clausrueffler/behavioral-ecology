@@ -85,13 +85,10 @@ offspring. In other words, a mutant female can expect to have $w(x', x)$ grandch
 
 #### Questions
 a)
-Show that $x = 0.5$ is the evolutionary stable sex ratio. To answer this question, you have to apply the two ESS conditions formulated by John Maynard Smith.
-
-b)
 Sketch the best response curve for this game (as we did for the Hawk-Dove game).
 
-c)
-Draw the PIP corresponding to this model. What conclusion can you derive from it?
+b)
+Draw the PIP corresponding to this model. Explain what predictions you can you derive from the PIP about the evolution of the sex ratio $x$?
 
 ### 3) Competition for Ligth and Kin Competition
 
